@@ -1,9 +1,16 @@
 import express from "express";
+import { fileURLToPath } from "url";
+import path from "path";
 import { ProductManager } from "./ProductManager.js";
+
+const __filename = fileURLToPath(import.meta.url); // Get the current module's file path
+const __dirname = path.dirname(__filename); // Get the current module's directory
 
 const app = express();
 const port = 8080;
-const productManager = new ProductManager("./products.json");
+const productManager = new ProductManager(
+  path.join(__dirname, "../products.json")
+); // Use path.join to resolve the file path
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -13,6 +20,7 @@ app.get("/products", async (req, res) => {
   try {
     const { limit } = req.query;
     const products = await productManager.getProducts();
+
     if (limit) {
       const limitedProducts = products.slice(0, parseInt(limit));
       res.json(limitedProducts);
