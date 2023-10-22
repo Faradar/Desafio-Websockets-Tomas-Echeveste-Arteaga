@@ -1,4 +1,4 @@
-const ProductManager = require("./ProductManager");
+import ProductManager from "./ProductManager.js";
 
 // Testing
 const test = async () => {

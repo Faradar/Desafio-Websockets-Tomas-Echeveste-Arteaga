@@ -1,4 +1,5 @@
-const fs = require("fs");
+import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 
 class ProductManager {
   constructor() {
@@ -32,30 +33,12 @@ class ProductManager {
     }
   }
 
-  generateNonRepeatingId(existingIds) {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const length = 8; // Adjust the length of the generated ID as needed
-    let id = "";
-
-    do {
-      for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        id += characters.charAt(randomIndex);
-      }
-    } while (existingIds.includes(id)); // Check if the generated ID already exists in the existing IDs array
-
-    return id;
-  }
-
   async addProduct(product) {
     try {
       const products = await this.getProducts();
 
       // Generate a new id
-      const existingIds = products.map((p) => p.id);
-      const id = this.generateNonRepeatingId(existingIds);
-      product.id = id;
+      product.id = uuidv4();
 
       // Add the product to the array
       products.push(product);
@@ -124,4 +107,4 @@ class ProductManager {
   }
 }
 
-module.exports = ProductManager;
+export default ProductManager;
