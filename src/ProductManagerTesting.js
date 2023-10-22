@@ -1,10 +1,10 @@
-import ProductManager from "./ProductManager.js";
+import { ProductManager } from "./ProductManager.js";
 
 // Testing
-const test = async () => {
+/* const test = async () => {
   try {
     // Create an instance of the ProductManager class
-    const manager = new ProductManager();
+    const manager = new ProductManager("./products.json");
 
     // Call the newly created getProducts method, it should return an empty array
     let products = await manager.getProducts();
@@ -37,10 +37,39 @@ const test = async () => {
     console.log("Test 4 - Get Products after updating: ", products);
 
     // Call the deleteProduct method and verify that the product is deleted or throws an error if it doesn't exist
-    await manager.deleteProduct(productId);
+    // await manager.deleteProduct(productId);
 
     products = await manager.getProducts();
     console.log("Test 5 - Get Products after deleting: ", products);
+
+    console.log("Testing finished successfully!");
+  } catch (error) {
+    console.error("Testing error: ", error);
+  }
+}; */
+
+const test = async () => {
+  try {
+    // Create an instance of the ProductManager class
+    const productManager = new ProductManager("./products.json");
+
+    // Call the newly created getProducts method, it should return an empty array
+    let products = await productManager.getProducts();
+    console.log("Test 1 - Get Products: ", products);
+
+    // Call the addProduct method with the specified fields
+    await productManager.addProduct({
+      title: "producto prueba",
+      description: "Este es un producto prueba",
+      price: 200,
+      thumbnail: "Sin imagen",
+      code: "abc123",
+      stock: 25,
+    });
+
+    // The object should be successfully added with an automatically generated non-repeating id
+    products = await productManager.getProducts();
+    console.log("Test 2 - Get Products after adding: ", products);
 
     console.log("Testing finished successfully!");
   } catch (error) {

@@ -1,9 +1,8 @@
 import fs from "fs";
-import { v4 as uuidv4 } from "uuid";
 
-class ProductManager {
-  constructor() {
-    this.path = "./products.json";
+export class ProductManager {
+  constructor(path) {
+    this.path = path;
   }
 
   async getProducts() {
@@ -16,7 +15,41 @@ class ProductManager {
         return [];
       }
     } catch (error) {
-      console.error("Error al consultar los productos:", error);
+      console.error(
+        "Could not find the product under the following error:",
+        error
+      );
+    }
+  }
+
+  async #getMaxId() {
+    let maxId = 0;
+    const products = await this.getProducts();
+    products.map((product) => {
+      if (product.id > maxId) {
+        maxId = product.id;
+      }
+    });
+    return maxId;
+  }
+
+  async addProduct(obj) {
+    try {
+      const product = { id: (await this.#getMaxId()) + 1, ...obj };
+      const products = await this.getProducts();
+
+      // Add the product to the array
+      products.push(product);
+
+      // Save the updated array to the file
+      await fs.promises.writeFile(this.path, JSON.stringify(products));
+      console.log("Product created succesfully");
+      // return product;
+    } catch (error) {
+      console.error(
+        "Could not create the product under the following error: ",
+        error
+      );
     }
   }
 
@@ -28,28 +61,6 @@ class ProductManager {
     } catch (error) {
       console.error(
         "Could not find the product under the following error: ",
-        error
-      );
-    }
-  }
-
-  async addProduct(product) {
-    try {
-      const products = await this.getProducts();
-
-      // Generate a new id
-      product.id = uuidv4();
-
-      // Add the product to the array
-      products.push(product);
-
-      // Save the updated array to the file
-      await fs.promises.writeFile(this.path, JSON.stringify(products));
-
-      console.log("Product created succesfully");
-    } catch (error) {
-      console.error(
-        "Could not create the product under the following error: ",
         error
       );
     }
@@ -106,5 +117,3 @@ class ProductManager {
     }
   }
 }
-
-export default ProductManager;
