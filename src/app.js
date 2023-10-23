@@ -37,10 +37,10 @@ app.get("/products", async (req, res) => {
 });
 
 // Endpoint to get a specific product by id
-app.get("/products/:pid", async (req, res) => {
+app.get("/products/:productId", async (req, res) => {
   try {
-    const { pid } = req.params;
-    const product = await productManager.getProductById(parseInt(pid));
+    const { productId } = req.params;
+    const product = await productManager.getProductById(parseInt(productId));
     if (!product) {
       res.status(404).json({ error: "Product not found" });
     } else {
