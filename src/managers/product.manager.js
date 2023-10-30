@@ -72,7 +72,11 @@ export class ProductManager {
         // throw new Error("Product not found");
         return false;
       }
-      const updatedProduct = { ...products[productIndex], ...updatedFields };
+      const updatedProduct = {
+        ...products[productIndex],
+        ...updatedFields,
+        id: id,
+      };
       products[productIndex] = updatedProduct;
       await fs.promises.writeFile(this.path, JSON.stringify(products));
       console.log("Product updated succesfully");
