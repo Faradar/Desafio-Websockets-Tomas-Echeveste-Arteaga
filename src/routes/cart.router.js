@@ -47,10 +47,6 @@ router.post("/:cid/products/:pid", async (req, res) => {
     }
 
     const updatedCart = await cartManager.saveProductToCart(idCart, idProd);
-
-    console.log(updatedCart);
-    console.log(cart);
-
     res.status(200).json(updatedCart);
   } catch (error) {
     res.status(500).json(error.message);
