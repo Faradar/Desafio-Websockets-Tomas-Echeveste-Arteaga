@@ -1,1 +1,163 @@
-[{"id":1,"title":"producto prueba 1","description":"Este es un producto prueba 1","code":"abc123","price":420,"status":true,"stock":25,"category":"Electronics","thumbnails":["img1","img2","img3"]},{"id":2,"title":"producto prueba 2","description":"Este es un producto prueba 2","code":"bcd456","price":200,"status":true,"stock":32,"category":"Home & Kitchen","thumbnails":["img1","img2","img3"]},{"id":3,"title":"Título cambiado","description":"Este es un producto prueba 3","code":"bjd452","price":3400,"status":true,"stock":72,"category":"Sports & Outdoors","thumbnails":["img1","img2","img3"]},{"id":4,"title":"producto prueba 4","description":"Este es un producto prueba 4","code":"ove306","price":73,"status":true,"stock":92,"category":"Fashion & Accessories","thumbnails":["img1","img2","img3"]},{"id":5,"title":"producto prueba 5","description":"Este es un producto prueba 5","code":"qwe123","price":576,"status":true,"stock":732,"category":"Beauty & Personal Care","thumbnails":["img1","img2","img3"]},{"id":6,"title":"producto prueba 6","description":"Este es un producto prueba 6","code":"vut837","price":483,"status":true,"stock":69,"category":"Electronics","thumbnails":["img1","img2","img3"]},{"id":7,"title":"producto prueba 7","description":"Este es un producto prueba 7","code":"def456","price":500,"status":true,"stock":10,"category":"Home & Kitchen","thumbnails":["img1","img2","img3"]},{"id":8,"title":"producto prueba 8","description":"Este es un producto prueba 8","code":"ghi789","price":800,"status":true,"stock":50,"category":"Sports & Outdoors","thumbnails":["img1","img2","img3"]},{"id":9,"title":"producto prueba 9","description":"Este es un producto prueba 9","code":"jkl012","price":300,"status":true,"stock":70,"category":"Fashion & Accessories","thumbnails":["img1","img2","img3"]},{"id":10,"title":"producto prueba 10","description":"Este es un producto prueba 10","code":"mno345","price":150,"status":true,"stock":15,"category":"Beauty & Personal Care","thumbnails":["img1","img2","img3"]},{"id":11,"status":true,"title":"Producto de prueba Luis","description":"Este es un producto de prueba","code":"123956","price":99.99,"stock":10,"category":"Prueba","thumbnails":"url img"}]
+[
+  {
+    "id": 1,
+    "title": "producto prueba 1",
+    "description": "Este es un producto prueba 1",
+    "code": "abc123",
+    "price": 420,
+    "status": true,
+    "stock": 25,
+    "category": "Electronics",
+    "thumbnails": [
+      "https://picsum.photos/id/1/500/500",
+      "https://picsum.photos/id/2/500/500",
+      "https://picsum.photos/id/3/500/500"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "producto prueba 2",
+    "description": "Este es un producto prueba 2",
+    "code": "bcd456",
+    "price": 200,
+    "status": true,
+    "stock": 32,
+    "category": "Home & Kitchen",
+    "thumbnails": [
+      "https://picsum.photos/id/4/500/500",
+      "https://picsum.photos/id/5/500/500",
+      "https://picsum.photos/id/6/500/500"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Título cambiado",
+    "description": "Este es un producto prueba 3",
+    "code": "bjd452",
+    "price": 3400,
+    "status": true,
+    "stock": 72,
+    "category": "Sports & Outdoors",
+    "thumbnails": [
+      "https://picsum.photos/id/7/500/500",
+      "https://picsum.photos/id/8/500/500",
+      "https://picsum.photos/id/9/500/500"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "producto prueba 4",
+    "description": "Este es un producto prueba 4",
+    "code": "ove306",
+    "price": 73,
+    "status": true,
+    "stock": 92,
+    "category": "Fashion & Accessories",
+    "thumbnails": [
+      "https://picsum.photos/id/10/500/500",
+      "https://picsum.photos/id/11/500/500",
+      "https://picsum.photos/id/12/500/500"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "producto prueba 5",
+    "description": "Este es un producto prueba 5",
+    "code": "qwe123",
+    "price": 576,
+    "status": true,
+    "stock": 732,
+    "category": "Beauty & Personal Care",
+    "thumbnails": [
+      "https://picsum.photos/id/13/500/500",
+      "https://picsum.photos/id/14/500/500",
+      "https://picsum.photos/id/15/500/500"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "producto prueba 6",
+    "description": "Este es un producto prueba 6",
+    "code": "vut837",
+    "price": 483,
+    "status": true,
+    "stock": 69,
+    "category": "Electronics",
+    "thumbnails": [
+      "https://picsum.photos/id/16/500/500",
+      "https://picsum.photos/id/17/500/500",
+      "https://picsum.photos/id/18/500/500"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "producto prueba 7",
+    "description": "Este es un producto prueba 7",
+    "code": "def456",
+    "price": 500,
+    "status": true,
+    "stock": 10,
+    "category": "Home & Kitchen",
+    "thumbnails": [
+      "https://picsum.photos/id/19/500/500",
+      "https://picsum.photos/id/20/500/500",
+      "https://picsum.photos/id/21/500/500"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "producto prueba 8",
+    "description": "Este es un producto prueba 8",
+    "code": "ghi789",
+    "price": 800,
+    "status": true,
+    "stock": 50,
+    "category": "Sports & Outdoors",
+    "thumbnails": [
+      "https://picsum.photos/id/22/500/500",
+      "https://picsum.photos/id/23/500/500",
+      "https://picsum.photos/id/24/500/500"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "producto prueba 9",
+    "description": "Este es un producto prueba 9",
+    "code": "jkl012",
+    "price": 300,
+    "status": true,
+    "stock": 70,
+    "category": "Fashion & Accessories",
+    "thumbnails": [
+      "https://picsum.photos/id/25/500/500",
+      "https://picsum.photos/id/26/500/500",
+      "https://picsum.photos/id/27/500/500"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "producto prueba 10",
+    "description": "Este es un producto prueba 10",
+    "code": "mno345",
+    "price": 150,
+    "status": true,
+    "stock": 15,
+    "category": "Beauty & Personal Care",
+    "thumbnails": [
+      "https://picsum.photos/id/28/500/500",
+      "https://picsum.photos/id/29/500/500",
+      "https://picsum.photos/id/30/500/500"
+    ]
+  },
+  {
+    "id": 11,
+    "status": true,
+    "title": "Producto de prueba Luis",
+    "description": "Este es un producto de prueba",
+    "code": "123956",
+    "price": 99.99,
+    "stock": 10,
+    "category": "Prueba",
+    "thumbnails": "url img"
+  }
+]
