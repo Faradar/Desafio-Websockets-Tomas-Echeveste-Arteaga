@@ -11,9 +11,7 @@ export class ProductManager {
         const productsJSON = await fs.promises.readFile(this.path, "utf-8");
         const products = JSON.parse(productsJSON);
         return products;
-      } else {
-        return [];
-      }
+      } else return [];
     } catch (error) {
       console.error(
         "Could not find the product under the following error:",
@@ -33,18 +31,20 @@ export class ProductManager {
     return maxId;
   }
 
-  async addProduct(obj) {
+  async createProduct(obj) {
     try {
-      const product = { id: (await this.#getMaxId()) + 1, ...obj };
+      const product = {
+        id: (await this.#getMaxId()) + 1,
+        status: true,
+        ...obj,
+      };
       const products = await this.getProducts();
 
-      // Add the product to the array
       products.push(product);
 
-      // Save the updated array to the file
       await fs.promises.writeFile(this.path, JSON.stringify(products));
       console.log("Product created succesfully");
-      // return product;
+      return product;
     } catch (error) {
       console.error(
         "Could not create the product under the following error: ",
@@ -56,7 +56,7 @@ export class ProductManager {
   async getProductById(id) {
     try {
       const products = await this.getProducts();
-      const product = products.find((p) => p.id === id);
+      const product = products.find((product) => product.id === id);
       return product;
     } catch (error) {
       console.error(
@@ -70,9 +70,10 @@ export class ProductManager {
     try {
       const products = await this.getProducts();
 
-      const productIndex = products.findIndex((p) => p.id === id);
+      const productIndex = products.findIndex((product) => product.id === id);
       if (productIndex === -1) {
-        throw new Error("Producto no encontrado");
+        // throw new Error("Product not found");
+        return false;
       }
 
       // Merge the updated fields with the existing product
@@ -97,9 +98,10 @@ export class ProductManager {
     try {
       const products = await this.getProducts();
 
-      const productIndex = products.findIndex((p) => p.id === id);
+      const productIndex = products.findIndex((product) => product.id === id);
       if (productIndex === -1) {
-        throw new Error("Product not found");
+        // throw new Error("Product not found");
+        return false;
       }
 
       // Remove the product from the array

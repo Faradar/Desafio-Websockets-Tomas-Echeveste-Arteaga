@@ -1,21 +1,27 @@
 import express from "express";
-import { fileURLToPath } from "url";
-import path from "path";
-import { ProductManager } from "./ProductManager.js";
+import productRouter from "./routes/product.router.js";
+import cartRouter from "./routes/cart.router.js";
 
-const __filename = fileURLToPath(import.meta.url); // Get the current module's file path
-const __dirname = path.dirname(__filename); // Get the current module's directory
+/* import { fileURLToPath } from "url";
+import path from "path";
+import { ProductManager } from "./managers/product.manager.js"; */
+
+/* const __filename = fileURLToPath(import.meta.url); // Get the current module's file path
+const __dirname = path.dirname(__filename); // Get the current module's directory */
 
 const app = express();
-const port = 8080;
-const productManager = new ProductManager(
+
+/* const productManager = new ProductManager(
   path.join(__dirname, "../products.json")
-); // Use path.join to resolve the file path
+); // Use path.join to resolve the file path */
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Endpoint to get all products
+app.use("/api/products", productRouter);
+app.use("/api/carts", cartRouter);
+
+/* // Endpoint to get all products
 app.get("/products", async (req, res) => {
   try {
     const { limit } = req.query;
@@ -23,16 +29,12 @@ app.get("/products", async (req, res) => {
 
     if (limit) {
       const limitedProducts = products.slice(0, parseInt(limit));
-      res.json(limitedProducts);
+      res.status(200).json(limitedProducts);
     } else {
       res.status(200).json(products);
     }
   } catch (error) {
-    console.error(
-      "Could not find the product under the following error:",
-      error
-    );
-    res.status(500).json({ error: "Could not find the product" });
+    res.status(500).json(error.message);
   }
 });
 
@@ -53,7 +55,9 @@ app.get("/products/:productId", async (req, res) => {
     );
     res.status(500).json({ error: "Could not find the product" });
   }
-});
+}); */
+
+const port = 8080;
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
