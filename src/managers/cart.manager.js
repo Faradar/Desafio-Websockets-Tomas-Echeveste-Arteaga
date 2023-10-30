@@ -35,9 +35,7 @@ export class CartManager {
         products: [],
       };
       const cartsFile = await this.getCarts();
-
       cartsFile.push(cart);
-
       await fs.promises.writeFile(this.path, JSON.stringify(cartsFile));
       console.log("Carrito creado exitosamente");
       return cart;
@@ -61,7 +59,6 @@ export class CartManager {
     try {
       const carts = await this.getCarts();
       const cartExists = await this.getCartById(idCart);
-
       if (cartExists) {
         const existProductInCart = cartExists.products.find(
           (product) => product.product === idProd
