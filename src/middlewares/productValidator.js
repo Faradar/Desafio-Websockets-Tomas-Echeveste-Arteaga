@@ -14,7 +14,7 @@ export const productValidator = (req, res, next) => {
     product.category === undefined ||
     typeof product.category !== "string"
   ) {
-    res.status(404).json({ message: "Invalid body" });
+    res.status(400).json({ message: "Invalid body" });
   } else {
     next();
   }
