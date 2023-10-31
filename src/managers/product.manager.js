@@ -1,4 +1,5 @@
 import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 
 export class ProductManager {
   constructor(path) {
@@ -20,21 +21,10 @@ export class ProductManager {
     }
   }
 
-  async #getMaxId() {
-    let maxId = 0;
-    const products = await this.getProducts();
-    products.map((product) => {
-      if (product.id > maxId) {
-        maxId = product.id;
-      }
-    });
-    return maxId;
-  }
-
   async createProduct(obj) {
     try {
       const product = {
-        id: (await this.#getMaxId()) + 1,
+        id: uuidv4(),
         status: true,
         ...obj,
       };

@@ -1,4 +1,5 @@
 import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 
 export class CartManager {
   constructor(path) {
@@ -17,21 +18,10 @@ export class CartManager {
     }
   }
 
-  async #getMaxId() {
-    let maxId = 0;
-    const carts = await this.getCarts();
-    carts.map((cart) => {
-      if (cart.id > maxId) {
-        maxId = cart.id;
-      }
-    });
-    return maxId;
-  }
-
   async createCart() {
     try {
       const cart = {
-        id: (await this.#getMaxId()) + 1,
+        id: uuidv4(),
         products: [],
       };
       const cartsFile = await this.getCarts();
