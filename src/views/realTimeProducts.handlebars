@@ -1,0 +1,76 @@
+<h2>Real-Time Product List</h2>
+
+<form id="product-form" method="POST">
+  <label for="title">Title:</label>
+  <input
+    type="text"
+    id="title"
+    name="title"
+    placeholder="Product Title"
+    required
+  />
+  <p></p>
+  <label for="description">Description:</label>
+  <input
+    type="text"
+    id="description"
+    name="description"
+    placeholder="Product Description"
+    required
+  />
+  <p></p>
+  <label for="code">Code:</label>
+  <input
+    type="text"
+    id="code"
+    name="code"
+    placeholder="Product Code"
+    required
+  />
+  <p></p>
+  <label for="price">Price:</label>
+  <input
+    type="number"
+    id="price"
+    name="price"
+    placeholder="456"
+    pattern="[0-9]+"
+    required
+  />
+  <p></p>
+  <label for="stock">Stock:</label>
+  <input
+    type="number"
+    id="stock"
+    name="stock"
+    placeholder="123"
+    pattern="[0-9]+"
+    required
+  />
+  <p></p>
+  <label for="category">Category:</label>
+  <input
+    type="text"
+    id="category"
+    name="category"
+    placeholder="Product Category"
+    required
+  />
+  <p></p>
+  <label for="thumbnails">Thumbnails:</label>
+  <input
+    type="text"
+    id="thumbnails"
+    name="thumbnails"
+    placeholder="Thumbnail1, Thumbnail2"
+  />
+  <p></p>
+  <button>Add Product</button>
+</form>
+
+<div id="error-container" style="color: red;"></div>
+
+<div id="product-list"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/index.js"></script>

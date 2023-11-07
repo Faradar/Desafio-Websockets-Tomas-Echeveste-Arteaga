@@ -1,0 +1,8 @@
+button {
+  margin-left: 4rem;
+  transition: transform 1s;
+}
+
+button:hover {
+  transform: scale(1.2);
+}
