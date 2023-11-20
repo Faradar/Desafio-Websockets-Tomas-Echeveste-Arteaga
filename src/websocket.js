@@ -1,8 +1,10 @@
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
-import { ProductManager } from "./managers/product.manager.js";
+import ProductDaoFS from "./daos/filesystem/product.dao.js";
 
-const productManager = new ProductManager(__dirname + "/data/products.json");
+const productManager = new ProductDaoFS(
+  __dirname + "/daos/filesystem/data/products.json"
+);
 
 export function configureWebSocket(httpServer) {
   const io = new Server(httpServer);

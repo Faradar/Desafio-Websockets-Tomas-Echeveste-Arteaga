@@ -1,7 +1,7 @@
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 
-export class ProductManager {
+export default class ProductDaoFS {
   constructor(path) {
     this.path = path;
   }
@@ -12,10 +12,28 @@ export class ProductManager {
         const productsJSON = await fs.promises.readFile(this.path, "utf-8");
         const products = JSON.parse(productsJSON);
         return products;
-      } else return [];
+      } else {
+        return [];
+      }
     } catch (error) {
       console.error(
         "Could not find the product under the following error:",
+        error
+      );
+    }
+  }
+
+  async getProductById(id) {
+    try {
+      const products = await this.getProducts();
+      const product = products.find((product) => product.id === Number(id));
+      if (product) {
+        return product;
+      }
+      return false;
+    } catch (error) {
+      console.error(
+        "Could not find the product under the following error: ",
         error
       );
     }
@@ -41,26 +59,12 @@ export class ProductManager {
     }
   }
 
-  async getProductById(id) {
-    try {
-      const products = await this.getProducts();
-      const product = products.find((product) => product.id === id);
-      return product;
-    } catch (error) {
-      console.error(
-        "Could not find the product under the following error: ",
-        error
-      );
-    }
-  }
-
   async updateProduct(id, updatedFields) {
     try {
       const products = await this.getProducts();
       const productIndex = products.findIndex((product) => product.id === id);
       if (productIndex === -1) {
-        // throw new Error("Product not found");
-        return false;
+        throw new Error(`Id ${id} not found`);
       }
       const updatedProduct = {
         ...products[productIndex],
@@ -83,8 +87,7 @@ export class ProductManager {
       const products = await this.getProducts();
       const productIndex = products.findIndex((product) => product.id === id);
       if (productIndex === -1) {
-        // throw new Error("Product not found");
-        return false;
+        throw new Error(`Id ${id} not found`);
       }
       products.splice(productIndex, 1);
       await fs.promises.writeFile(this.path, JSON.stringify(products));

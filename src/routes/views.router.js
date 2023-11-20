@@ -2,8 +2,10 @@ import { __dirname } from "../utils.js";
 import { Router } from "express";
 const router = Router();
 
-import { ProductManager } from "../managers/product.manager.js";
-const productManager = new ProductManager(__dirname + "/data/products.json");
+import ProductDaoFS from "../daos/filesystem/product.dao.js";
+const productManager = new ProductDaoFS(
+  __dirname + "/daos/filesystem/data/products.json"
+);
 
 router.get("/", async (req, res) => {
   try {

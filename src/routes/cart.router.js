@@ -2,11 +2,15 @@ import { __dirname } from "../utils.js";
 import { Router } from "express";
 const router = Router();
 
-import { CartManager } from "../managers/cart.manager.js";
-const cartManager = new CartManager(__dirname + "/data/carts.json");
+import CartManager from "../daos/filesystem/cart.dao.js";
+const cartManager = new CartManager(
+  __dirname + "/daos/filesystem/data/carts.json"
+);
 
-import { ProductManager } from "../managers/product.manager.js";
-const productManager = new ProductManager(__dirname + "/data/products.json");
+import ProductDaoFS from "../daos/filesystem/product.dao.js";
+const productManager = new ProductDaoFS(
+  __dirname + "/daos/filesystem/data/products.json"
+);
 
 router.get("/", async (req, res) => {
   try {
