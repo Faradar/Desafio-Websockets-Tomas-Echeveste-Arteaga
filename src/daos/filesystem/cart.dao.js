@@ -1,7 +1,10 @@
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 
-export default class CartManager {
+import ProductDaoFS from "./product.dao.js";
+const prodDao = new ProductDaoFS();
+
+export default class CartDaoFS {
   constructor(path) {
     this.path = path;
   }
@@ -12,9 +15,24 @@ export default class CartManager {
         const cartsJSON = await fs.promises.readFile(this.path, "utf-8");
         const cartsJS = JSON.parse(cartsJSON);
         return cartsJS;
-      } else return [];
+      } else {
+        return [];
+      }
     } catch (error) {
-      console.error("Error al consultar el carrito: ", error);
+      console.error("Error when querying the cart: ", error);
+    }
+  }
+
+  async getCartById(id) {
+    try {
+      const carts = await this.getCarts();
+      const cart = carts.find((cart) => cart.id === id);
+      if (!cart) {
+        return false;
+      }
+      return cart;
+    } catch (error) {
+      console.error("Error when searching for the user: ", error);
     }
   }
 
@@ -27,21 +45,10 @@ export default class CartManager {
       const cartsFile = await this.getCarts();
       cartsFile.push(cart);
       await fs.promises.writeFile(this.path, JSON.stringify(cartsFile));
-      console.log("Carrito creado exitosamente");
+      console.log("Cart created successfully");
       return cart;
     } catch (error) {
-      console.error("Error al crear el carrito: ", error);
-    }
-  }
-
-  async getCartById(id) {
-    try {
-      const carts = await this.getCarts();
-      const cart = carts.find((cart) => cart.id === id);
-      if (!cart) return false;
-      return cart;
-    } catch (error) {
-      console.error("Error al buscar el usuario: ", error);
+      console.error("Error creating the cart: ", error);
     }
   }
 
@@ -49,32 +56,38 @@ export default class CartManager {
     try {
       const carts = await this.getCarts();
       const cartExists = await this.getCartById(idCart);
+      const productExists = await prodDao.getProductById(idProd);
+
       if (cartExists) {
-        const existProductInCart = cartExists.products.find(
-          (product) => product.product === idProd
-        );
-        if (existProductInCart) {
-          existProductInCart.quantity += 1;
+        if (productExists) {
+          const existProductInCart = cartExists.products.find(
+            (product) => product.product === idProd
+          );
+          if (existProductInCart) {
+            existProductInCart.quantity += 1;
+          } else {
+            const prod = {
+              product: idProd,
+              quantity: 1,
+            };
+            cartExists.products.push(prod);
+          }
+          const index = carts.findIndex((cart) => cart.id === idCart);
+          if (index !== -1) {
+            carts[index] = cartExists;
+          }
+          await fs.promises.writeFile(this.path, JSON.stringify(carts));
+          console.log("cart exists = ", cartExists);
+          console.log("carts = ", carts);
+          return cartExists;
         } else {
-          const prod = {
-            product: idProd,
-            quantity: 1,
-          };
-          cartExists.products.push(prod);
+          console.log("Product not found");
         }
-        const index = carts.findIndex((cart) => cart.id === idCart);
-        if (index !== -1) {
-          carts[index] = cartExists;
-        }
-        await fs.promises.writeFile(this.path, JSON.stringify(carts));
-        console.log("cart exists = ", cartExists);
-        console.log("carts = ", carts);
-        return cartExists;
       } else {
-        console.log("Carrito no encontrado");
+        console.log("Cart not found");
       }
     } catch (error) {
-      console.error("Error al guardar el producto al carrito: ", error);
+      console.error("Error saving the product to the cart: ", error);
     }
   }
 }

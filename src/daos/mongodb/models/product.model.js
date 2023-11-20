@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
 
-export const productsCollectionName = "product";
+export const productCollectionName = "product";
 
-const productsSchema = new Schema({
+const productSchema = new Schema({
   status: { type: Boolean, required: true, default: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
@@ -13,4 +13,4 @@ const productsSchema = new Schema({
   thumbnails: [{ type: String }],
 });
 
-export const ProductModel = model(productsCollectionName, productsSchema);
+export const ProductModel = model(productCollectionName, productSchema);

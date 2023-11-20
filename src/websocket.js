@@ -23,7 +23,7 @@ export function configureWebSocket(httpServer) {
       try {
         const newProduct = await productManager.createProduct(productData);
         if (newProduct) {
-          const updatedProducts = await productManager.getProducts(); // Updated to use 'await'
+          const updatedProducts = await productManager.getProducts();
           io.emit("updateProducts", updatedProducts);
         } else {
           socket.emit("productCreationFailed", "Failed to create the product.");
