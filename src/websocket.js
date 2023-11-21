@@ -1,10 +1,13 @@
 import { Server } from "socket.io";
-import { __dirname } from "./utils.js";
-import ProductDaoFS from "./daos/filesystem/product.dao.js";
 
-const productManager = new ProductDaoFS(
-  __dirname + "/daos/filesystem/data/products.json"
-);
+import ProductDaoMongoDB from "./daos/mongodb/product.dao.js";
+const prodDao = new ProductDaoMongoDB();
+
+// import { __dirname } from "./utils.js";
+// import ProductDaoFS from "./daos/filesystem/product.dao.js";
+// const prodDao = new ProductDaoFS(
+//   __dirname + "/daos/filesystem/data/products.json"
+// );
 
 export function configureWebSocket(httpServer) {
   const io = new Server(httpServer);
@@ -13,7 +16,7 @@ export function configureWebSocket(httpServer) {
     console.log(`🟢 User connected ${socket.id}`);
 
     try {
-      const products = await productManager.getProducts();
+      const products = await prodDao.getProducts();
       socket.emit("updateProducts", products);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -21,9 +24,9 @@ export function configureWebSocket(httpServer) {
 
     socket.on("addProduct", async (productData) => {
       try {
-        const newProduct = await productManager.createProduct(productData);
+        const newProduct = await prodDao.createProduct(productData);
         if (newProduct) {
-          const updatedProducts = await productManager.getProducts();
+          const updatedProducts = await prodDao.getProducts();
           io.emit("updateProducts", updatedProducts);
         } else {
           socket.emit("productCreationFailed", "Failed to create the product.");
