@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io("/product");
 
 socket.on("connect", () => {
   console.log("Connected to WebSocket server");

@@ -4,8 +4,8 @@ export const cartCollectionName = "carts";
 
 const productInCartSchema = new Schema(
   {
-    product: { type: Schema.Types.ObjectId, ref: "products", required: true },
-    quantity: { type: Number, required: true },
+    product: { type: Schema.Types.ObjectId, ref: "products" },
+    quantity: Number,
   },
   { _id: false }
 );

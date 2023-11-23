@@ -1,4 +1,3 @@
-import { Server } from "socket.io";
 import * as service from "../services/product.services.js";
 
 // import { __dirname } from "./utils.js";
@@ -7,11 +6,9 @@ import * as service from "../services/product.services.js";
 //   __dirname + "/daos/filesystem/data/products.json"
 // );
 
-export function productWebSocket(httpServer) {
-  const io = new Server(httpServer);
-
-  io.on("connection", async (socket) => {
-    console.log(`🟢 User connected ${socket.id}`);
+export function productWebSocket(productNamespace) {
+  productNamespace.on("connection", async (socket) => {
+    console.log(`🟢 User ${socket.id} connected to products`);
 
     try {
       const products = await service.getProducts();
@@ -25,7 +22,7 @@ export function productWebSocket(httpServer) {
         const newProduct = await service.createProduct(productData);
         if (newProduct) {
           const updatedProducts = await service.getProducts();
-          io.emit("updateProducts", updatedProducts);
+          productNamespace.emit("updateProducts", updatedProducts);
         } else {
           socket.emit("productCreationFailed", "Failed to create the product.");
         }
@@ -36,7 +33,7 @@ export function productWebSocket(httpServer) {
     });
 
     socket.on("disconnect", () => {
-      console.log(`🔴 User disconnected ${socket.id}`);
+      console.log(`🔴 User ${socket.id} disconnected from the products`);
     });
   });
 }

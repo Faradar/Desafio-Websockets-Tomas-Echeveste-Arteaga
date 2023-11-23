@@ -1,12 +1,9 @@
-import { Server } from "socket.io";
 import * as service from "../services/chat.services.js";
 
-export function chatWebSocket(httpServer) {
-  const io = new Server(httpServer);
-
-  io.on("connection", async (socket) => {
-    console.log(`🟢 User connected ${socket.id}`);
-    io.emit("messages", await service.getMessages());
+export function chatWebSocket(chatNamespace) {
+  chatNamespace.on("connection", async (socket) => {
+    console.log(`🟢 User ${socket.id} connected to the chat`);
+    chatNamespace.emit("messages", await service.getMessages());
 
     socket.on("newUser", (user) => {
       console.log(`👤 User ${user} has logged on`);
@@ -14,7 +11,7 @@ export function chatWebSocket(httpServer) {
 
     socket.on("chat:message", async (data) => {
       await service.createMessage(data);
-      io.emit("messages", await service.getMessages());
+      chatNamespace.emit("messages", await service.getMessages());
     });
 
     socket.on("newUser", (user) => {
@@ -26,7 +23,7 @@ export function chatWebSocket(httpServer) {
     });
 
     socket.on("disconnect", () => {
-      console.log(`🔴 User disconnected ${socket.id}`);
+      console.log(`🔴 User ${socket.id} disconnected from the chat`);
     });
   });
 }

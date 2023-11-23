@@ -1,7 +1,5 @@
 import { CartModel } from "./models/cart.model.js";
-
-import ProductDaoMongoDB from "./product.dao.js";
-const prodDao = new ProductDaoMongoDB();
+import * as service from "../../services/product.services.js";
 
 export default class CartDaoMongoDB {
   async getCarts() {
@@ -34,7 +32,7 @@ export default class CartDaoMongoDB {
   async saveProductToCart(idCart, idProd) {
     try {
       const cartExists = await this.getCartById(idCart);
-      const productExists = await prodDao.getProductById(idProd);
+      const productExists = await service.getProductById(idProd);
       if (cartExists) {
         if (productExists) {
           const existProductInCart = cartExists.products.find(

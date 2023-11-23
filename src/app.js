@@ -1,6 +1,7 @@
 import express from "express";
 import handlebars from "express-handlebars";
 import morgan from "morgan";
+import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
 import { productWebSocket } from "./websockets/product.websocket.js";
 import { chatWebSocket } from "./websockets/chat.websocket.js";
@@ -40,5 +41,8 @@ const httpServer = app.listen(port, () => {
 });
 
 // Websockets
-productWebSocket(httpServer);
-chatWebSocket(httpServer);
+const io = new Server(httpServer);
+const productNamespace = io.of("/product");
+const chatNamespace = io.of("/chat");
+productWebSocket(productNamespace);
+chatWebSocket(chatNamespace);
