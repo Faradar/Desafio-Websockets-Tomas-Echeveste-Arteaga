@@ -3,7 +3,7 @@ import { ProductModel } from "./models/product.model.js";
 export default class ProductDaoMongoDB {
   async getProducts() {
     try {
-      const response = await ProductModel.find({});
+      const response = await ProductModel.find({}).lean();
       return response;
     } catch (error) {
       console.log(error);
@@ -12,7 +12,7 @@ export default class ProductDaoMongoDB {
 
   async getProductById(id) {
     try {
-      const response = await ProductModel.findById(id);
+      const response = await ProductModel.findById(id).lean();
       return response;
     } catch (error) {
       console.log(error);

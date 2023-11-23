@@ -7,4 +7,6 @@ router.get("/", controller.home);
 
 router.get("/realtimeproducts", controller.realTimeProducts);
 
+router.get("/chat", controller.chat);
+
 export default router;

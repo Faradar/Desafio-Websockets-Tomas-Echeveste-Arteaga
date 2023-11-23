@@ -27,6 +27,16 @@ export const getProductById = async (id) => {
 
 export const createProduct = async (obj) => {
   try {
+    // if (
+    //   !obj.title ||
+    //   !obj.description ||
+    //   !obj.price ||
+    //   !obj.thumbnails ||
+    //   !obj.code ||
+    //   !obj.stock
+    // ) {
+    //   throw new Error("Missing fields");
+    // }
     const newProd = await prodDao.createProduct(obj);
     if (!newProd) return false;
     else return newProd;

@@ -2,7 +2,8 @@ import express from "express";
 import handlebars from "express-handlebars";
 import morgan from "morgan";
 import { __dirname } from "./utils.js";
-import { configureWebSocket } from "./websocket.js";
+import { productWebSocket } from "./websockets/product.websocket.js";
+import { chatWebSocket } from "./websockets/chat.websocket.js";
 import productRouter from "./routes/product.router.js";
 import cartRouter from "./routes/cart.router.js";
 import viewsRouter from "./routes/views.router.js";
@@ -38,5 +39,6 @@ const httpServer = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// Websocket
-configureWebSocket(httpServer);
+// Websockets
+productWebSocket(httpServer);
+chatWebSocket(httpServer);

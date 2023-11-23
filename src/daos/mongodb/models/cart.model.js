@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-export const cartCollectionName = "cart";
+export const cartCollectionName = "carts";
 
 const productInCartSchema = new Schema(
   {

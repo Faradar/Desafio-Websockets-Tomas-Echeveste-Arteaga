@@ -46,9 +46,9 @@ productForm.addEventListener("submit", (event) => {
 });
 
 socket.on("productCreationFailed", (message) => {
-  console.error("Product creation failed: " + errorMessage);
+  console.error("Product creation failed: " + message);
   const errorContainer = document.getElementById("error-container");
-  errorContainer.textContent = errorMessage;
+  errorContainer.textContent = message;
   errorContainer.style.display = "block";
 });
 

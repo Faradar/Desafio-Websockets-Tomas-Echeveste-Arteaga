@@ -35,7 +35,7 @@ export const createProduct = async (req, res, next) => {
     if (!newProd) {
       res.status(400).json({ message: "Product could not be created" });
     } else {
-      res.status(200).json(newProd);
+      res.status(201).json(newProd);
     }
   } catch (error) {
     next(error.message);
