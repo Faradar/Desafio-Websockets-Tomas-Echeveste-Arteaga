@@ -16,3 +16,36 @@ export const realTimeProducts = (req, res) => {
 export const chat = (req, res) => {
   res.render("chat", { style: "chat.css" });
 };
+
+export const products = async (req, res, next) => {
+  try {
+    const { page, limit } = req.query;
+    const products = await service.getProductsViews(page, limit);
+    const response = {
+      products: products.docs,
+      prevLink: products.hasPrevPage
+        ? `/products?page=${products.prevPage}` +
+          (limit ? `&limit=${limit}` : "")
+        : null,
+      nextLink: products.hasNextPage
+        ? `/products?page=${products.nextPage}` +
+          (limit ? `&limit=${limit}` : "")
+        : null,
+    };
+    res.render("products", { style: "product.css", ...response });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const productDetails = async (req, res, next) => {
+  try {
+    const { pid } = req.params;
+    const product = await service.getProductById(pid);
+
+    console.log("product is: ", product);
+    res.render("productDetails", { style: "product.css", product });
+  } catch (error) {
+    next(error);
+  }
+};

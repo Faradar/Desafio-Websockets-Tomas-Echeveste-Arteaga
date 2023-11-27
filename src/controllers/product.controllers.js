@@ -80,7 +80,7 @@ export const deleteProduct = async (req, res, next) => {
     if (!prodDel) {
       res.status(404).json({ message: "Product not found" });
     } else {
-      res.status(200).json({ message: `Product id: ${pid} deleted` });
+      res.status(204).json({ message: `Product id: ${pid} deleted` });
     }
   } catch (error) {
     next(error);

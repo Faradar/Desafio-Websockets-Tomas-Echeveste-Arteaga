@@ -1,3 +1,4 @@
+import * as service from "./product.services.js";
 import CartDaoMongoDB from "../daos/mongodb/cart.dao.js";
 const cartDao = new CartDaoMongoDB();
 
@@ -11,7 +12,8 @@ export const getCarts = async () => {
   try {
     return await cartDao.getCarts();
   } catch (error) {
-    console.log(error);
+    console.error(`Error in getCarts service: ${error.message}`);
+    throw error;
   }
 };
 
@@ -21,7 +23,8 @@ export const getCartById = async (id) => {
     if (!cart) return false;
     else return cart;
   } catch (error) {
-    console.log(error);
+    console.error(`Error in getCartById service: ${error.message}`);
+    throw error;
   }
 };
 
@@ -31,15 +34,27 @@ export const createCart = async (obj) => {
     if (!newCart) return false;
     else return newCart;
   } catch (error) {
-    console.log(error);
+    console.error(`Error in createCart service: ${error.message}`);
+    throw error;
   }
 };
 
 export const saveProductToCart = async (idCart, idProd) => {
   try {
-    return await cartDao.saveProductToCart(idCart, idProd);
+    const cartExists = await cartDao.getCartById(idCart);
+    const productExists = await service.getProductById(idProd);
+    if (cartExists) {
+      if (productExists) {
+        return await cartDao.saveProductToCart(idCart, idProd);
+      } else {
+        console.log("Product not found");
+      }
+    } else {
+      console.log("Cart not found");
+    }
   } catch (error) {
-    console.log(error);
+    console.error(`Error in saveProductToCart service: ${error.message}`);
+    throw error;
   }
 };
 
@@ -51,30 +66,59 @@ export const saveProductToCart = async (idCart, idProd) => {
 //     const updatedCart = await cartDao.updateCartProducts(idCart, newProducts);
 //     return updatedCart;
 //   } catch (error) {
-//     console.log(error);
+//     console.error(`Error in updateCartProducts service: ${error.message}`);
+//     throw error;
 //   }
 // };
 
 export const updateProductQuantity = async (idCart, idProd, quantity) => {
   try {
-    return await cartDao.updateProductQuantity(idCart, idProd, quantity);
+    const cartExists = await cartDao.getCartById(idCart);
+    const productExists = await service.getProductById(idProd);
+    if (cartExists) {
+      if (productExists) {
+        return await cartDao.updateProductQuantity(idCart, idProd, quantity);
+      } else {
+        console.log("Product not found");
+      }
+    } else {
+      console.log("Cart not found");
+    }
   } catch (error) {
-    console.log(error);
+    console.error(`Error in updateProductQuantity service: ${error.message}`);
+    throw error;
   }
 };
 
 export const deleteProductsFromCart = async (idCart) => {
   try {
-    return await cartDao.deleteProductsFromCart(idCart);
+    const cartExists = await cartDao.getCartById(idCart);
+    if (cartExists) {
+      return await cartDao.deleteProductsFromCart(idCart);
+    } else {
+      console.log("Cart not found");
+    }
   } catch (error) {
-    console.log(error);
+    console.error(`Error in deleteProductsFromCart service: ${error.message}`);
+    throw error;
   }
 };
 
 export const deleteProductFromCart = async (idCart, idProd) => {
   try {
-    return await cartDao.deleteProductFromCart(idCart, idProd);
+    const cartExists = await cartDao.getCartById(idCart);
+    const productExists = await service.getProductById(idProd);
+    if (cartExists) {
+      if (productExists) {
+        return await cartDao.deleteProductFromCart(idCart, idProd);
+      } else {
+        console.log("Product not found");
+      }
+    } else {
+      console.log("Cart not found");
+    }
   } catch (error) {
-    console.log(error);
+    console.error(`Error in deleteProductFromCart service: ${error.message}`);
+    throw error;
   }
 };

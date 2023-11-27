@@ -89,7 +89,7 @@ export const deleteProductsFromCart = async (req, res, next) => {
   try {
     const { cid } = req.params;
     const updatedCart = await service.deleteProductsFromCart(cid);
-    res.status(200).json(updatedCart);
+    res.status(204).json(updatedCart);
   } catch (error) {
     next(error);
   }
@@ -102,7 +102,7 @@ export const deleteProductFromCart = async (req, res, next) => {
     if (!updatedCart) {
       res.status(400).json({ message: "Product could not be deleted" });
     } else {
-      res.status(200).json(updatedCart);
+      res.status(204).json(updatedCart);
     }
   } catch (error) {
     next(error);

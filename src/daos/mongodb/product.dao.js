@@ -7,7 +7,22 @@ export default class ProductDaoMongoDB {
       const response = await ProductModel.find({}).lean();
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(`Error fetching all products: ${error.message}`);
+      throw error;
+    }
+  }
+
+  // getProductsViews is for the view '/products'
+  async getProductsViews(page = 1, limit = 10) {
+    try {
+      const response = await ProductModel.paginate(
+        {},
+        { page, limit, lean: true }
+      );
+      return response;
+    } catch (error) {
+      console.error(`Error fetching products for views: ${error.message}`);
+      throw error;
     }
   }
 
@@ -28,16 +43,18 @@ export default class ProductDaoMongoDB {
       });
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(`Error fetching products with queries: ${error.message}`);
+      throw error;
     }
   }
 
   async getProductById(id) {
     try {
-      const response = await ProductModel.findById(id);
+      const response = await ProductModel.findById(id).lean();
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(`Error fetching product by ID ${id}: ${error.message}`);
+      throw error;
     }
   }
 
@@ -46,7 +63,8 @@ export default class ProductDaoMongoDB {
       const response = await ProductModel.create(obj);
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(`Error creating product with obj ${obj}: ${error.message}`);
+      throw error;
     }
   }
 
@@ -57,7 +75,8 @@ export default class ProductDaoMongoDB {
       });
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(`Error updating product with ID ${id}: ${error.message}`);
+      throw error;
     }
   }
 
@@ -66,7 +85,8 @@ export default class ProductDaoMongoDB {
       const response = await ProductModel.findByIdAndDelete(id);
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(`Error deleting product with ID ${id}: ${error.message}`);
+      throw error;
     }
   }
 }

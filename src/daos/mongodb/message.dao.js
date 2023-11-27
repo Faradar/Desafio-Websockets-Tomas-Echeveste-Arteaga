@@ -7,6 +7,7 @@ export default class MessageDaoMongoDB {
       return response;
     } catch (error) {
       console.error("Error fetching messages:", error);
+      throw error;
     }
   }
 
@@ -16,6 +17,7 @@ export default class MessageDaoMongoDB {
       return response;
     } catch (error) {
       console.error(`Error getting message with ${id} id:`, error);
+      throw error;
     }
   }
 
@@ -25,6 +27,7 @@ export default class MessageDaoMongoDB {
       return response;
     } catch (error) {
       console.error("Error creating message:", error);
+      throw error;
     }
   }
 
@@ -35,7 +38,8 @@ export default class MessageDaoMongoDB {
       });
       return response;
     } catch (error) {
-      console.error(`Error updating ${id} message: error`);
+      console.error(`Error updating ${id} message: ${error}`);
+      throw error;
     }
   }
 
@@ -45,6 +49,7 @@ export default class MessageDaoMongoDB {
       console.log("Messages deleted successfully");
     } catch (error) {
       console.error("Error deleting all messages:", error);
+      throw error;
     }
   }
 
@@ -54,6 +59,7 @@ export default class MessageDaoMongoDB {
       return response;
     } catch (error) {
       console.error(`Error deleting ${id} message: ${error}`);
+      throw error;
     }
   }
 }

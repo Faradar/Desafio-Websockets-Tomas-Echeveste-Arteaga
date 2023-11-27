@@ -1,0 +1,16 @@
+<h2>{{product.title}}</h2>
+<p>Description: {{product.description}}</p>
+<p>Code: {{product.code}}</p>
+<p>Price: ${{product.price}}</p>
+<p>Stock: {{product.stock}}</p>
+<p>Category: {{product.category}}</p>
+<p>Thumbnails: {{product.thumbnails}}</p>
+
+<!-- Add to Cart form, similar to your products page -->
+<form action="/carts/add-to-cart" method="post">
+  <input type="hidden" name="productId" value="{{product._id}}" />
+  <input type="submit" value="Add to Cart" />
+</form>
+
+<!-- Back to Products link -->
+<a href="/products">Back to Products</a>

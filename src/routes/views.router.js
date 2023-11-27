@@ -9,4 +9,8 @@ router.get("/realtimeproducts", controller.realTimeProducts);
 
 router.get("/chat", controller.chat);
 
+router.get("/products", controller.products);
+
+router.get("/products/:pid", controller.productDetails);
+
 export default router;
