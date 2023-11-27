@@ -56,18 +56,20 @@ export const saveProductToCart = async (req, res, next) => {
   }
 };
 
-// export const updateCartProducts = async (req, res, next) => {
-//   try {
-//     const { cid } = req.params;
-//     const { products } = req.body;
-
-//     const updatedCart = await service.updateCartProducts(cid, products);
-
-//     res.status(200).json(updatedCart);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+export const updateCart = async (req, res, next) => {
+  try {
+    const { cid } = req.params;
+    const { products } = req.body;
+    const updatedCart = await service.updateCart(cid, products);
+    res.status(200).json({
+      status: "success",
+      message: "Cart updated successfully",
+      updatedCart,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const updateProductQuantity = async (req, res, next) => {
   try {

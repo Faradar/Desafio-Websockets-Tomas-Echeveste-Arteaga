@@ -62,24 +62,22 @@ export default class CartDaoMongoDB {
     }
   }
 
-  // async updateCartProducts(idCart, newProducts) {
-  //   try {
-  //     const newProducts2 = [newProducts];
+  async updateCart(idCart, newProducts) {
+    try {
+      const updatedCart = await CartModel.findByIdAndUpdate(
+        idCart,
+        { products: newProducts },
+        { new: true }
+      );
 
-  //     const updatedCart = await CartModel.findByIdAndUpdate(
-  //       idCart,
-  //       { products: newProducts2 },
-  //       { new: true }
-  //     );
-
-  //     return updatedCart;
-  //   } catch (error) {
-  //     console.error(
-  //       `Error updating the products in the ${idCart} cart: ${error.message}`
-  //     );
-  //     throw error;
-  //   }
-  // }
+      return updatedCart;
+    } catch (error) {
+      console.error(
+        `Error updating the products in the ${idCart} cart: ${error.message}`
+      );
+      throw error;
+    }
+  }
 
   async updateProductQuantity(idCart, idProd, quantity) {
     try {

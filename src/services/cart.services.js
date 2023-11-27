@@ -1,6 +1,7 @@
 import * as service from "./product.services.js";
 import CartDaoMongoDB from "../daos/mongodb/cart.dao.js";
 const cartDao = new CartDaoMongoDB();
+import { Types } from "mongoose";
 
 // import CartDaoFS from "../daos/filesystem/cart.dao.js";
 // import { __dirname } from "../utils.js";
@@ -58,18 +59,28 @@ export const saveProductToCart = async (idCart, idProd) => {
   }
 };
 
-// export const updateCartProducts = async (idCart, newProducts) => {
-//   try {
-//     // Ensure the newProducts array is valid according to your schema
-//     // ...
-
-//     const updatedCart = await cartDao.updateCartProducts(idCart, newProducts);
-//     return updatedCart;
-//   } catch (error) {
-//     console.error(`Error in updateCartProducts service: ${error.message}`);
-//     throw error;
-//   }
-// };
+export const updateCart = async (idCart, newProducts) => {
+  try {
+    if (!Array.isArray(newProducts)) {
+      throw new Error("Invalid products array");
+    }
+    newProducts.forEach((product) => {
+      if (
+        !product.product ||
+        !Types.ObjectId.isValid(product.product) ||
+        !Number.isInteger(product.quantity) ||
+        product.quantity <= 0
+      ) {
+        throw new Error("Invalid product format");
+      }
+    });
+    const updatedCart = await cartDao.updateCart(idCart, newProducts);
+    return updatedCart;
+  } catch (error) {
+    console.error(`Error in updateCart service: ${error.message}`);
+    throw error;
+  }
+};
 
 export const updateProductQuantity = async (idCart, idProd, quantity) => {
   try {
