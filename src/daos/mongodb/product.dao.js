@@ -1,6 +1,16 @@
 import { ProductModel } from "./models/product.model.js";
 
 export default class ProductDaoMongoDB {
+  // getAllProducts is for the product.websocket
+  async getAllProducts() {
+    try {
+      const response = await ProductModel.find({}).lean();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async getProducts(page = 1, limit = 10, sort, query) {
     try {
       const queryObj = query ? { category: query } : {};

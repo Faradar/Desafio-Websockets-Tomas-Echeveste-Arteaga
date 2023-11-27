@@ -2,7 +2,7 @@ import * as service from "../services/views.services.js";
 
 export const home = async (req, res, next) => {
   try {
-    const products = await service.getProducts();
+    const products = await service.getAllProducts();
     res.render("home", { style: "product.css", products });
   } catch (error) {
     next(error);

@@ -1,5 +1,4 @@
-import ProductDaoMongoDB from "../daos/mongodb/product.dao.js";
-const prodDao = new ProductDaoMongoDB();
+import * as service from "./product.services.js";
 
 // import ProductDaoFS from "../daos/filesystem/product.dao.js";
 // import { __dirname } from "../utils.js";
@@ -7,9 +6,9 @@ const prodDao = new ProductDaoMongoDB();
 //   __dirname + "/daos/filesystem/data/products.json"
 // );
 
-export const getProducts = async () => {
+export const getAllProducts = async () => {
   try {
-    return await prodDao.getProducts();
+    return await service.getAllProducts();
   } catch (error) {
     console.log(error);
   }

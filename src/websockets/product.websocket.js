@@ -11,7 +11,7 @@ export function productWebSocket(productNamespace) {
     console.log(`🟢 User ${socket.id} connected to products`);
 
     try {
-      const products = await service.getProducts();
+      const products = await service.getAllProducts();
       socket.emit("updateProducts", products);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -21,7 +21,7 @@ export function productWebSocket(productNamespace) {
       try {
         const newProduct = await service.createProduct(productData);
         if (newProduct) {
-          const updatedProducts = await service.getProducts();
+          const updatedProducts = await service.getAllProducts();
           productNamespace.emit("updateProducts", updatedProducts);
         } else {
           socket.emit("productCreationFailed", "Failed to create the product.");

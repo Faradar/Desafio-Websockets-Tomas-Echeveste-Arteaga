@@ -7,6 +7,15 @@ const prodDao = new ProductDaoMongoDB();
 //   __dirname + "/daos/filesystem/data/products.json"
 // );
 
+// getAllProducts is for the product.websocket
+export const getAllProducts = async () => {
+  try {
+    return await prodDao.getAllProducts();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getProducts = async (page, limit, sort, query) => {
   try {
     return await prodDao.getProducts(page, limit, sort, query);
