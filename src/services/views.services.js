@@ -15,11 +15,11 @@ export const getAllProducts = async () => {
   }
 };
 
-export const getProductsViews = async (page, limit) => {
+export const getProducts = async (page, limit, sort, query) => {
   try {
-    return await service.getProductsViews(page, limit);
+    return await service.getProducts(page, limit, sort, query);
   } catch (error) {
-    console.error(`Error in views getProductsViews service: ${error.message}`);
+    console.error(`Error in views getProducts service: ${error.message}`);
     throw error;
   }
 };

@@ -12,20 +12,6 @@ export default class ProductDaoMongoDB {
     }
   }
 
-  // getProductsViews is for the view '/products'
-  async getProductsViews(page = 1, limit = 10) {
-    try {
-      const response = await ProductModel.paginate(
-        {},
-        { page, limit, lean: true }
-      );
-      return response;
-    } catch (error) {
-      console.error(`Error fetching products for views: ${error.message}`);
-      throw error;
-    }
-  }
-
   async getProducts(page = 1, limit = 10, sort, query) {
     try {
       const queryObj = query ? { category: query } : {};
@@ -39,6 +25,7 @@ export default class ProductDaoMongoDB {
       const response = await ProductModel.paginate(queryObj, {
         page,
         limit,
+        lean: true,
         sort: sortObj,
       });
       return response;

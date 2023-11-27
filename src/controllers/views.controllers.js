@@ -19,17 +19,28 @@ export const chat = (req, res) => {
 
 export const products = async (req, res, next) => {
   try {
-    const { page, limit } = req.query;
-    const products = await service.getProductsViews(page, limit);
+    const { page, limit, sort, query } = req.query;
+    const products = await service.getProducts(page, limit, sort, query);
     const response = {
-      products: products.docs,
+      status: "success",
+      payload: products.docs,
+      totalPages: products.totalPages,
+      prevPage: products.prevPage,
+      nextPage: products.nextPage,
+      page: products.page,
+      hasPrevPage: products.hasPrevPage,
+      hasNextPage: products.hasNextPage,
       prevLink: products.hasPrevPage
         ? `/products?page=${products.prevPage}` +
-          (limit ? `&limit=${limit}` : "")
+          (limit ? `&limit=${limit}` : "") +
+          (sort ? `&sort=${sort}` : "") +
+          (query ? `&query=${query}` : "")
         : null,
       nextLink: products.hasNextPage
         ? `/products?page=${products.nextPage}` +
-          (limit ? `&limit=${limit}` : "")
+          (limit ? `&limit=${limit}` : "") +
+          (sort ? `&sort=${sort}` : "") +
+          (query ? `&query=${query}` : "")
         : null,
     };
     res.render("products", { style: "product.css", ...response });

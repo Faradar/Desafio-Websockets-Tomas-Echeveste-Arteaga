@@ -17,16 +17,6 @@ export const getAllProducts = async () => {
   }
 };
 
-// getProductsViews is for the view '/products'
-export const getProductsViews = async (page, limit) => {
-  try {
-    return await prodDao.getProductsViews(page, limit);
-  } catch (error) {
-    console.error(`Error in getProductsViews service: ${error.message}`);
-    throw error;
-  }
-};
-
 export const getProducts = async (page, limit, sort, query) => {
   try {
     return await prodDao.getProducts(page, limit, sort, query);
