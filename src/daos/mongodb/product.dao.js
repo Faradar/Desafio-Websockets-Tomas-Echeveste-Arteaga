@@ -1,9 +1,21 @@
 import { ProductModel } from "./models/product.model.js";
 
 export default class ProductDaoMongoDB {
-  async getProducts() {
+  async getProducts(page = 1, limit = 10, sort, query) {
     try {
-      const response = await ProductModel.find({}).lean();
+      const queryObj = query ? { category: query } : {};
+      const sortObj = sort
+        ? sort === "asc"
+          ? { price: 1 }
+          : sort === "desc"
+          ? { price: -1 }
+          : {}
+        : {};
+      const response = await ProductModel.paginate(queryObj, {
+        page,
+        limit,
+        sort: sortObj,
+      });
       return response;
     } catch (error) {
       console.log(error);
@@ -12,7 +24,7 @@ export default class ProductDaoMongoDB {
 
   async getProductById(id) {
     try {
-      const response = await ProductModel.findById(id).lean();
+      const response = await ProductModel.findById(id);
       return response;
     } catch (error) {
       console.log(error);

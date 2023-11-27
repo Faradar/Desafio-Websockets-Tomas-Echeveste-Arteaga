@@ -11,7 +11,7 @@ export const getCarts = async (req, res, next) => {
       res.status(200).json(carts);
     }
   } catch (error) {
-    next(error.message);
+    next(error);
   }
 };
 
@@ -25,7 +25,7 @@ export const getCartById = async (req, res, next) => {
       res.status(200).json(cart);
     }
   } catch (error) {
-    next(error.message);
+    next(error);
   }
 };
 
@@ -38,7 +38,7 @@ export const createCart = async (req, res, next) => {
       res.status(201).json(newCart);
     }
   } catch (error) {
-    next(error.message);
+    next(error);
   }
 };
 
@@ -52,6 +52,59 @@ export const saveProductToCart = async (req, res, next) => {
       res.status(200).json(updatedCart);
     }
   } catch (error) {
-    next(error.message);
+    next(error);
+  }
+};
+
+// export const updateCartProducts = async (req, res, next) => {
+//   try {
+//     const { cid } = req.params;
+//     const { products } = req.body;
+
+//     const updatedCart = await service.updateCartProducts(cid, products);
+
+//     res.status(200).json(updatedCart);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+export const updateProductQuantity = async (req, res, next) => {
+  try {
+    const { cid, pid } = req.params;
+    const { quantity } = req.body;
+    // Validate if quantity is a positive integer
+    if (!Number.isInteger(quantity) || quantity <= 0) {
+      return res.status(400).json({ message: "Invalid quantity value" });
+    }
+    const updatedCart = await service.updateProductQuantity(cid, pid, quantity);
+    res.status(200).json(updatedCart);
+  } catch (error) {
+    console.error(`Error updating product quantity in cart: ${error}`);
+    next(error);
+  }
+};
+
+export const deleteProductsFromCart = async (req, res, next) => {
+  try {
+    const { cid } = req.params;
+    const updatedCart = await service.deleteProductsFromCart(cid);
+    res.status(200).json(updatedCart);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteProductFromCart = async (req, res, next) => {
+  try {
+    const { cid, pid } = req.params;
+    const updatedCart = await service.deleteProductFromCart(cid, pid);
+    if (!updatedCart) {
+      res.status(400).json({ message: "Product could not be deleted" });
+    } else {
+      res.status(200).json(updatedCart);
+    }
+  } catch (error) {
+    next(error);
   }
 };

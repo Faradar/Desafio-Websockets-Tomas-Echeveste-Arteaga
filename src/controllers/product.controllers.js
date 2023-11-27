@@ -2,16 +2,33 @@ import * as service from "../services/product.services.js";
 
 export const getProducts = async (req, res, next) => {
   try {
-    const { limit } = req.query;
-    const products = await service.getProducts();
-    if (limit) {
-      const limitedProducts = products.slice(0, Number(limit));
-      res.status(200).json(limitedProducts);
-    } else {
-      res.status(200).json(products);
-    }
+    const { page, limit, sort, query } = req.query;
+    const products = await service.getProducts(page, limit, sort, query);
+    const response = {
+      status: "success",
+      payload: products.docs,
+      totalPages: products.totalPages,
+      prevPage: products.prevPage,
+      nextPage: products.nextPage,
+      page: products.page,
+      hasPrevPage: products.hasPrevPage,
+      hasNextPage: products.hasNextPage,
+      prevLink: products.hasPrevPage
+        ? `/api/products?page=${products.prevPage}` +
+          (limit ? `&limit=${limit}` : "") +
+          (sort ? `&sort=${sort}` : "") +
+          (query ? `&query=${query}` : "")
+        : null,
+      nextLink: products.hasNextPage
+        ? `/api/products?page=${products.nextPage}` +
+          (limit ? `&limit=${limit}` : "") +
+          (sort ? `&sort=${sort}` : "") +
+          (query ? `&query=${query}` : "")
+        : null,
+    };
+    res.status(200).json(response);
   } catch (error) {
-    next(error.message);
+    next(error);
   }
 };
 
@@ -25,7 +42,7 @@ export const getProductById = async (req, res, next) => {
       res.status(200).json(product);
     }
   } catch (error) {
-    next(error.message);
+    next(error);
   }
 };
 
@@ -38,7 +55,7 @@ export const createProduct = async (req, res, next) => {
       res.status(201).json(newProd);
     }
   } catch (error) {
-    next(error.message);
+    next(error);
   }
 };
 
@@ -52,7 +69,7 @@ export const updateProduct = async (req, res, next) => {
       res.status(200).json(prodUpd);
     }
   } catch (error) {
-    next(error.message);
+    next(error);
   }
 };
 
@@ -66,6 +83,6 @@ export const deleteProduct = async (req, res, next) => {
       res.status(200).json({ message: `Product id: ${pid} deleted` });
     }
   } catch (error) {
-    next(error.message);
+    next(error);
   }
 };

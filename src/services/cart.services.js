@@ -42,3 +42,39 @@ export const saveProductToCart = async (idCart, idProd) => {
     console.log(error);
   }
 };
+
+// export const updateCartProducts = async (idCart, newProducts) => {
+//   try {
+//     // Ensure the newProducts array is valid according to your schema
+//     // ...
+
+//     const updatedCart = await cartDao.updateCartProducts(idCart, newProducts);
+//     return updatedCart;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+export const updateProductQuantity = async (idCart, idProd, quantity) => {
+  try {
+    return await cartDao.updateProductQuantity(idCart, idProd, quantity);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteProductsFromCart = async (idCart) => {
+  try {
+    return await cartDao.deleteProductsFromCart(idCart);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteProductFromCart = async (idCart, idProd) => {
+  try {
+    return await cartDao.deleteProductFromCart(idCart, idProd);
+  } catch (error) {
+    console.log(error);
+  }
+};

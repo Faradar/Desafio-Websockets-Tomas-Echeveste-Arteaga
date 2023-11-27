@@ -35,7 +35,7 @@ export default class MessageDaoMongoDB {
       });
       return response;
     } catch (error) {
-      console.error("Error updating message:", error);
+      console.error(`Error updating ${id} message: error`);
     }
   }
 
@@ -53,7 +53,7 @@ export default class MessageDaoMongoDB {
       const response = await MessageModel.findByIdAndDelete(id);
       return response;
     } catch (error) {
-      console.error("Error deleting message:", error);
+      console.error(`Error deleting ${id} message: ${error}`);
     }
   }
 }

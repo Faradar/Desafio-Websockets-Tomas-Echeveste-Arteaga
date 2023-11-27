@@ -5,7 +5,7 @@ export const home = async (req, res, next) => {
     const products = await service.getProducts();
     res.render("home", { style: "product.css", products });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 
