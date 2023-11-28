@@ -26,6 +26,15 @@ export const getProducts = async (page, limit, sort, query) => {
   }
 };
 
+export const getCategories = async () => {
+  try {
+    const categories = await prodDao.getCategories();
+    return categories;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getProductById = async (id) => {
   try {
     const prod = await prodDao.getProductById(id);

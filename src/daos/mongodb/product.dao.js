@@ -35,6 +35,16 @@ export default class ProductDaoMongoDB {
     }
   }
 
+  async getCategories() {
+    try {
+      const response = await ProductModel.distinct("category");
+      return response;
+    } catch (error) {
+      console.error(`Error fetching categories: ${error.message}`);
+      throw error;
+    }
+  }
+
   async getProductById(id) {
     try {
       const response = await ProductModel.findById(id).lean();

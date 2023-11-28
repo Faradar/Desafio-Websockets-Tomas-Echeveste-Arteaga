@@ -24,6 +24,15 @@ export const getProducts = async (page, limit, sort, query) => {
   }
 };
 
+export const getCategories = async () => {
+  try {
+    const categories = await service.getCategories();
+    return categories;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getProductById = async (id) => {
   try {
     return await service.getProductById(id);

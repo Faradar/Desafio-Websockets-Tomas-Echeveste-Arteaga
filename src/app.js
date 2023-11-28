@@ -18,7 +18,14 @@ app.use(express.static(__dirname + "/public"));
 app.use(morgan("dev"));
 
 // Handlebars
-app.engine("handlebars", handlebars.engine());
+const hbs = handlebars.create({
+  helpers: {
+    isInArray: function (value, array) {
+      return array && array.includes(value);
+    },
+  },
+});
+app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
 

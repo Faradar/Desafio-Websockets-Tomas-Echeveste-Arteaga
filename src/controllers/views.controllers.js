@@ -19,8 +19,9 @@ export const chat = (req, res) => {
 
 export const products = async (req, res, next) => {
   try {
-    const { page, limit, sort, query } = req.query;
+    let { page, limit, sort, query } = req.query;
     const products = await service.getProducts(page, limit, sort, query);
+    const categories = await service.getCategories();
     const response = {
       status: "success",
       payload: products.docs,
@@ -42,6 +43,7 @@ export const products = async (req, res, next) => {
           (sort ? `&sort=${sort}` : "") +
           (query ? `&query=${query}` : "")
         : null,
+      categories,
     };
     res.render("products", { style: "product.css", ...response });
   } catch (error) {
