@@ -1,16 +1,18 @@
 <h2>List of Products</h2>
 
+<script>
+  console.log("idCart:", `${{idCart}}`);
+</script>
+
 {{#each payload}}
   <div>
     <h3>{{this.title}}</h3>
     <p>Price: ${{this.price}}</p>
     <p>Category: {{this.category}}</p>
-
-    <!-- Option 1: Link to view full details -->
+    <!-- Link to view full details -->
     <a href="/products/{{_id}}">View Details</a>
-
-    <!-- Option 2: Button to add to cart -->
-    <form action="/carts/add-to-cart" method="post">
+    <!-- Button to add to hardcoded cart -->
+    <form action="/api/carts/655af643f9decfeb47bcd04e/products/{{_id}}" method="post">
       <input type="hidden" name="productId" value="{{_id}}" />
       <input type="submit" value="Add to Cart" />
     </form>

@@ -22,6 +22,7 @@ export const products = async (req, res, next) => {
     let { page, limit, sort, query } = req.query;
     const products = await service.getProducts(page, limit, sort, query);
     const categories = await service.getCategories();
+
     const response = {
       status: "success",
       payload: products.docs,
@@ -45,6 +46,7 @@ export const products = async (req, res, next) => {
         : null,
       categories,
     };
+    // console.log("response: ", response);
     res.render("products", { style: "product.css", ...response });
   } catch (error) {
     next(error);

@@ -5,9 +5,13 @@
 <p>Stock: {{product.stock}}</p>
 <p>Category: {{product.category}}</p>
 <p>Thumbnails: {{product.thumbnails}}</p>
+<p>ID: {{product._id}}</p>
 
-<!-- Add to Cart form, similar to your products page -->
-<form action="/carts/add-to-cart" method="post">
+<!-- Add to hardcoded Cart form -->
+<form
+  action="/api/carts/655af643f9decfeb47bcd04e/products/{{product._id}}"
+  method="post"
+>
   <input type="hidden" name="productId" value="{{product._id}}" />
   <input type="submit" value="Add to Cart" />
 </form>
