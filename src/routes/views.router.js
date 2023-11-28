@@ -13,4 +13,6 @@ router.get("/products", controller.products);
 
 router.get("/products/:pid", controller.productDetails);
 
+router.get("/carts/:cid", controller.cartDetails);
+
 export default router;

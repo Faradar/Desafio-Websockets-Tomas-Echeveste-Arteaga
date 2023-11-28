@@ -1,4 +1,5 @@
 import * as service from "./product.services.js";
+import * as cartService from "./cart.services.js";
 
 // import ProductDaoFS from "../daos/filesystem/product.dao.js";
 // import { __dirname } from "../utils.js";
@@ -38,6 +39,15 @@ export const getProductById = async (id) => {
     return await service.getProductById(id);
   } catch (error) {
     console.error(`Error in views getProductById service: ${error.message}`);
+    throw error;
+  }
+};
+
+export const getCartById = async (id) => {
+  try {
+    return await cartService.getCartById(id);
+  } catch (error) {
+    console.error(`Error in views getCartById service: ${error.message}`);
     throw error;
   }
 };

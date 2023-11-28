@@ -46,7 +46,6 @@ export const products = async (req, res, next) => {
         : null,
       categories,
     };
-    // console.log("response: ", response);
     res.render("products", { style: "product.css", ...response });
   } catch (error) {
     next(error);
@@ -57,9 +56,25 @@ export const productDetails = async (req, res, next) => {
   try {
     const { pid } = req.params;
     const product = await service.getProductById(pid);
+    if (!product) {
+      res.status(404).json({ message: "Product not found" });
+    } else {
+      res.render("productDetails", { style: "product.css", product });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 
-    console.log("product is: ", product);
-    res.render("productDetails", { style: "product.css", product });
+export const cartDetails = async (req, res, next) => {
+  try {
+    const { cid } = req.params;
+    const cart = await service.getCartById(cid);
+    if (!cart) {
+      res.status(404).json({ message: "Cart not found" });
+    } else {
+      res.render("cart", { style: "cart.css", cart });
+    }
   } catch (error) {
     next(error);
   }
