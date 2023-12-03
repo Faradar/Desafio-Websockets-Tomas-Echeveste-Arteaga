@@ -73,9 +73,29 @@ export const cartDetails = async (req, res, next) => {
     if (!cart) {
       res.status(404).json({ message: "Cart not found" });
     } else {
-      res.render("cart", { style: "cart.css", cart });
+      res.render("cart", { style: "product.css", cart });
     }
   } catch (error) {
     next(error);
   }
+};
+
+export const register = (req, res) => {
+  res.render("register", { style: "product.css" });
+};
+
+export const login = (req, res) => {
+  res.render("login", { style: "product.css" });
+};
+
+export const profile = (req, res) => {
+  res.render("profile", { style: "product.css" });
+};
+
+export const registerError = (req, res) => {
+  res.render("register-error", { style: "product.css" });
+};
+
+export const loginError = (req, res) => {
+  res.render("login-error", { style: "product.css" });
 };

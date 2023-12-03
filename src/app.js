@@ -1,21 +1,27 @@
 import express from "express";
 import handlebars from "express-handlebars";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
+import session from "express-session";
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
 import { productWebSocket } from "./websockets/product.websocket.js";
 import { chatWebSocket } from "./websockets/chat.websocket.js";
-import productRouter from "./routes/product.router.js";
-import cartRouter from "./routes/cart.router.js";
-import viewsRouter from "./routes/views.router.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { initMongoDB } from "./daos/mongodb/connection.js";
+import { mongoStoreOptions } from "./daos/mongodb/connection.js";
+import productRouter from "./routes/product.router.js";
+import cartRouter from "./routes/cart.router.js";
+import userRouter from "./routes/user.router.js";
+import viewsRouter from "./routes/views.router.js";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
+app.use(cookieParser());
 app.use(morgan("dev"));
+app.use(session(mongoStoreOptions));
 
 // Handlebars
 const hbs = handlebars.create({
@@ -32,6 +38,7 @@ app.set("views", __dirname + "/views");
 // Routes
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
+app.use("/api/users", userRouter);
 app.use("/", viewsRouter);
 
 // Middleware

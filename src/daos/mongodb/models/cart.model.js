@@ -1,7 +1,5 @@
 import { Schema, model } from "mongoose";
 
-export const cartCollectionName = "carts";
-
 const productInCartSchema = new Schema(
   {
     product: { type: Schema.Types.ObjectId, ref: "products" },
@@ -18,4 +16,4 @@ const cartSchema = new Schema({
 //   this.populate("products.product");
 // });
 
-export const CartModel = model(cartCollectionName, cartSchema);
+export const CartModel = model("carts", cartSchema);

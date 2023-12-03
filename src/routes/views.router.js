@@ -15,4 +15,14 @@ router.get("/products/:pid", controller.productDetails);
 
 router.get("/carts/:cid", controller.cartDetails);
 
+router.get("/register", controller.register);
+
+router.get("/login", controller.login);
+
+router.get("/profile", controller.profile);
+
+router.get("/register-error", controller.registerError);
+
+router.get("/login-error", controller.loginError);
+
 export default router;
