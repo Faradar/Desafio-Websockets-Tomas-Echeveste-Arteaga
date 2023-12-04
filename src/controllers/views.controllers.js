@@ -1,13 +1,13 @@
 import * as service from "../services/views.services.js";
 
-export const home = async (req, res, next) => {
-  try {
-    const products = await service.getAllProducts();
-    res.render("home", { style: "product.css", products });
-  } catch (error) {
-    next(error);
-  }
-};
+// export const home = async (req, res, next) => {
+//   try {
+//     const products = await service.getAllProducts();
+//     res.render("home", { style: "product.css", products });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 export const realTimeProducts = (req, res) => {
   res.render("realTimeProducts", { style: "product.css" });
@@ -25,6 +25,7 @@ export const products = async (req, res, next) => {
 
     const response = {
       status: "success",
+      user: req.session.user,
       payload: products.docs,
       totalPages: products.totalPages,
       prevPage: products.prevPage,
@@ -89,7 +90,7 @@ export const login = (req, res) => {
 };
 
 export const profile = (req, res) => {
-  res.render("profile", { style: "product.css" });
+  res.render("profile", { style: "product.css", user: req.session.user });
 };
 
 export const registerError = (req, res) => {

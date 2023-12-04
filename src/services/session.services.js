@@ -1,14 +1,14 @@
-import UserDaoMongoDB from "../daos/mongodb/user.dao.js";
-const userDao = new UserDaoMongoDB();
+import SessionDaoMongoDB from "../daos/mongodb/session.dao.js";
+const sessionDao = new SessionDaoMongoDB();
 
-export default class UserService {
+export default class SessionService {
   async register(user) {
     try {
       // Perform any additional business logic related to user registration
 
       // For example, you might want to validate the user data before registration
 
-      const registeredUser = await userDao.register(user);
+      const registeredUser = await sessionDao.register(user);
 
       if (!registeredUser) {
         return { success: false, message: "User already exists" };
@@ -25,7 +25,7 @@ export default class UserService {
     try {
       // Perform any additional business logic related to user login
 
-      const loggedInUser = await userDao.login(email, password);
+      const loggedInUser = await sessionDao.login(email, password);
 
       if (!loggedInUser) {
         return { success: false, message: "Invalid email or password" };

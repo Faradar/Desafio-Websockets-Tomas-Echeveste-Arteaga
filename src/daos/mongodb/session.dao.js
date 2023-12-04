@@ -1,12 +1,9 @@
 import { UserModel } from "./models/user.model.js";
 
-export default class UserDaoMongoDB {
+export default class SessionDaoMongoDB {
   async register(user) {
     try {
-      const { email, password } = user;
-      if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
-        return await UserModel.create({ ...user, role: "admin" });
-      }
+      const { email } = user;
       const exists = await UserModel.findOne({ email });
       if (!exists) return await UserModel.create(user);
       else return false;
@@ -18,6 +15,9 @@ export default class UserDaoMongoDB {
 
   async login(email, password) {
     try {
+      // if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+      //   return await UserModel.create({ ...user, role: "admin" });
+      // }
       const userExist = await UserModel.findOne({ email, password });
       if (!userExist) return false;
       else return userExist;

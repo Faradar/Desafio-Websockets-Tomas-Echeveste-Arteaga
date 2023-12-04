@@ -1,1 +1,14 @@
-<h1>PROFILE</h1>
+<h2>Welcome, {{user.first_name}} {{user.last_name}}!</h2>
+
+<p>Email: {{user.email}}</p>
+<p>Age: {{user.age}}</p>
+<p>Role: {{user.role}}</p>
+<p>ID: {{user._id}}</p>
+
+<!-- Back to Home link -->
+<a href="/products">Start viewing products</a>
+
+<!-- Logout Button -->
+<form action="/api/sessions/logout" method="post">
+  <button type="submit">Logout</button>
+</form>

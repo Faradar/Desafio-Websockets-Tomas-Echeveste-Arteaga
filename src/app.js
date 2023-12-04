@@ -12,7 +12,7 @@ import { initMongoDB } from "./daos/mongodb/connection.js";
 import { mongoStoreOptions } from "./daos/mongodb/connection.js";
 import productRouter from "./routes/product.router.js";
 import cartRouter from "./routes/cart.router.js";
-import userRouter from "./routes/user.router.js";
+import sessionRouter from "./routes/session.router.js";
 import viewsRouter from "./routes/views.router.js";
 
 const app = express();
@@ -38,7 +38,7 @@ app.set("views", __dirname + "/views");
 // Routes
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
-app.use("/api/users", userRouter);
+app.use("/api/sessions", sessionRouter);
 app.use("/", viewsRouter);
 
 // Middleware
