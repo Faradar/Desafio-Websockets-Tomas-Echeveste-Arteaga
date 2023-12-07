@@ -9,6 +9,7 @@ const productInCartSchema = new Schema(
 );
 
 const cartSchema = new Schema({
+  user: { type: Schema.Types.ObjectId, ref: "users" },
   products: [productInCartSchema],
 });
 

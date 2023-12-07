@@ -1,4 +1,5 @@
 import { UserModel } from "./models/user.model.js";
+import { CartModel } from "./models/cart.model.js";
 import { createHash, isValidPass } from "../../utils.js";
 
 export default class SessionDaoMongoDB {
@@ -6,12 +7,15 @@ export default class SessionDaoMongoDB {
     try {
       const { email } = user;
       const exists = await UserModel.findOne({ email });
-      if (!exists)
-        return await UserModel.create({
+      if (!exists) {
+        const newUser = await UserModel.create({
           ...user,
           password: createHash(user.password),
         });
-      else return false;
+        const newCart = await CartModel.create({ user: newUser._id });
+        await UserModel.findByIdAndUpdate(newUser._id, { cart: newCart._id });
+        return newUser;
+      } else return false;
     } catch (error) {
       console.error(`Error registering ${user} user: ${error.message}`);
       throw error;

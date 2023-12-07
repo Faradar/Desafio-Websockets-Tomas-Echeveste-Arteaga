@@ -9,7 +9,7 @@ export default class SessionController {
       } else {
         const result = await sessionService.register(req.body);
         if (result.success) {
-          res.status(201).redirect("/");
+          res.status(201).redirect("/login");
         } else {
           res.status(400).redirect("/register-error");
         }
@@ -56,7 +56,7 @@ export default class SessionController {
           console.error(err);
           return res.status(500).send("Error destroying session");
         }
-        res.redirect("/");
+        res.redirect("/login");
       });
     } catch (error) {
       next(error);

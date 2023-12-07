@@ -1,13 +1,13 @@
 import * as service from "../services/views.services.js";
 
-// export const home = async (req, res, next) => {
-//   try {
-//     const products = await service.getAllProducts();
-//     res.render("home", { style: "product.css", products });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+export const home = async (req, res, next) => {
+  try {
+    const products = await service.getAllProducts();
+    res.render("home", { style: "product.css", products });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const realTimeProducts = (req, res) => {
   res.render("realTimeProducts", { style: "product.css" });
@@ -60,7 +60,13 @@ export const productDetails = async (req, res, next) => {
     if (!product) {
       res.status(404).json({ message: "Product not found" });
     } else {
-      res.render("productDetails", { style: "product.css", product });
+      const response = {
+        status: "success",
+        user: req.session.user,
+        product,
+      };
+      console.log("the response is: ", response);
+      res.render("productDetails", { style: "product.css", ...response });
     }
   } catch (error) {
     next(error);

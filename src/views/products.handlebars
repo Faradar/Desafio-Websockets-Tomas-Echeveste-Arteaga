@@ -11,8 +11,8 @@
     <p>Category: {{this.category}}</p>
     <!-- Link to view full details -->
     <a href="/products/{{_id}}">View Details</a>
-    <!-- Button to add to hardcoded cart -->
-    <form action="/api/carts/655af643f9decfeb47bcd04e/products/{{_id}}" method="post">
+    <!-- Button to add to users cart -->
+    <form action="/api/carts/{{../user.cart}}/products/{{_id}}" method="post">
       <input type="hidden" name="productId" value="{{_id}}" />
       <input type="submit" value="Add to Cart" />
     </form>

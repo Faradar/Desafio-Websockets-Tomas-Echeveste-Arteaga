@@ -8,10 +8,7 @@
 <p>ID: {{product._id}}</p>
 
 <!-- Add to hardcoded Cart form -->
-<form
-  action="/api/carts/655af643f9decfeb47bcd04e/products/{{product._id}}"
-  method="post"
->
+<form action="/api/carts/{{user.cart}}/products/{{product._id}}" method="post">
   <input type="hidden" name="productId" value="{{product._id}}" />
   <input type="submit" value="Add to Cart" />
 </form>
