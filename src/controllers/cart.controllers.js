@@ -46,10 +46,11 @@ export const saveProductToCart = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
     const updatedCart = await service.saveProductToCart(cid, pid);
+    const userSession = req.session.user;
     if (!updatedCart) {
       res.status(400).json({ message: "Cart could not be updated" });
     } else {
-      res.status(200).json(updatedCart);
+      res.status(200).redirect(`/carts/${userSession.cart}`);
     }
   } catch (error) {
     next(error);

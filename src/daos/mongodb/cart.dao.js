@@ -52,7 +52,6 @@ export default class CartDaoMongoDB {
         { products: cartExists.products },
         { new: true }
       );
-      console.log("Cart exists = ", response);
       return response;
     } catch (error) {
       console.error(

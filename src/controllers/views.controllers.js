@@ -65,7 +65,6 @@ export const productDetails = async (req, res, next) => {
         user: req.session.user,
         product,
       };
-      console.log("the response is: ", response);
       res.render("productDetails", { style: "product.css", ...response });
     }
   } catch (error) {
