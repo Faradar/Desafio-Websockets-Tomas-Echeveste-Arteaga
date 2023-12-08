@@ -1,7 +1,5 @@
 <h2>Cart Details</h2>
 
-<p>Cart ID: {{cart._id}}</p>
-
 <h3>Products in Cart:</h3>
 <ul>
   {{#each cart.products}}
@@ -12,3 +10,14 @@
     </li>
   {{/each}}
 </ul>
+
+<!-- Profile link -->
+<a href="/profile">Check your Profile</a>
+
+<!-- Back to Home link -->
+<a href="/products">Start viewing products</a>
+
+<!-- Logout Button -->
+<form action="/api/sessions/logout" method="post">
+  <button type="submit">Logout</button>
+</form>

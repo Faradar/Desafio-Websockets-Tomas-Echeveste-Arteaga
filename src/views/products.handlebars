@@ -2,7 +2,7 @@
 
 <h3>Welcome, {{user.first_name}} {{user.last_name}}! Your role is: {{user.role}}</h3>
 
-<h4><a href="/profile">For more information, check your profile page</a></h4>
+<h4>For more information, check your <a href="/profile">profile page</a> or your <a href="/carts/{{user.cart}}">cart page</a></h4>
 
 {{#each payload}}
   <div>
