@@ -3,6 +3,8 @@ import handlebars from "express-handlebars";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import passport from "passport";
+import "./passport/strategies.js";
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
 import { productWebSocket } from "./websockets/product.websocket.js";
@@ -34,6 +36,10 @@ const hbs = handlebars.create({
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.use("/api/products", productRouter);

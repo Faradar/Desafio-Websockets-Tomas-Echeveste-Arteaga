@@ -7,8 +7,8 @@ export default class SessionController {
       if (req.body.email === "adminCoder@coder.com") {
         res.status(400).redirect("/register-error");
       } else {
-        const result = await sessionService.register(req.body);
-        if (result.success) {
+        const userId = req.session.passport.user;
+        if (userId) {
           res.status(201).redirect("/login");
         } else {
           res.status(400).redirect("/register-error");
@@ -33,11 +33,11 @@ export default class SessionController {
         };
         res.status(200).redirect("/products");
       } else {
-        const result = await sessionService.login(email, password);
-
-        if (result.success) {
+        const userId = req.session.passport.user;
+        if (userId) {
+          const user = await sessionService.getById(userId);
           req.session.user = {
-            ...result.user._doc,
+            ...user._doc,
           };
           res.status(200).redirect("/products");
         } else {
