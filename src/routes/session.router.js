@@ -25,4 +25,21 @@ router.post(
 
 router.post("/logout", checkAuthenticated, controller.logout);
 
+router.get(
+  "/github",
+  checkNotAuthenticated,
+  passport.authenticate("github", {
+    scope: ["user:email"],
+  })
+);
+
+router.get(
+  "/github-callback",
+  checkNotAuthenticated,
+  passport.authenticate("github", {
+    scope: ["user:email"],
+  }),
+  controller.github
+);
+
 export default router;

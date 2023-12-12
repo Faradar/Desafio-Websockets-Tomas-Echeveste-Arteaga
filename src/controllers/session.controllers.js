@@ -62,4 +62,21 @@ export default class SessionController {
       next(error);
     }
   }
+
+  async github(req, res, next) {
+    try {
+      const userId = req.session.passport.user;
+      if (userId) {
+        const user = await sessionService.getById(userId);
+        req.session.user = {
+          ...user._doc,
+        };
+        res.status(200).redirect("/products");
+      } else {
+        res.status(401).redirect("/login-error");
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
 }

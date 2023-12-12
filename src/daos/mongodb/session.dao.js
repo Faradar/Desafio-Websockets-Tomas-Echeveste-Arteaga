@@ -5,16 +5,26 @@ import { createHash, isValidPass } from "../../utils.js";
 export default class SessionDaoMongoDB {
   async register(user) {
     try {
+      console.log("USER IS ====", user);
       const { email } = user;
       const exists = await UserModel.findOne({ email });
       if (!exists) {
-        const newUser = await UserModel.create({
-          ...user,
-          password: createHash(user.password),
-        });
-        const newCart = await CartModel.create({ user: newUser._id });
-        await UserModel.findByIdAndUpdate(newUser._id, { cart: newCart._id });
-        return newUser;
+        if (user.isGithub) {
+          const newUser = await UserModel.create({
+            ...user,
+          });
+          const newCart = await CartModel.create({ user: newUser._id });
+          await UserModel.findByIdAndUpdate(newUser._id, { cart: newCart._id });
+          return newUser;
+        } else {
+          const newUser = await UserModel.create({
+            ...user,
+            password: createHash(user.password),
+          });
+          const newCart = await CartModel.create({ user: newUser._id });
+          await UserModel.findByIdAndUpdate(newUser._id, { cart: newCart._id });
+          return newUser;
+        }
       } else return false;
     } catch (error) {
       console.error(`Error registering ${user} user: ${error.message}`);

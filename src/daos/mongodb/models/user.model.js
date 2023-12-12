@@ -7,7 +7,6 @@ const userSchema = new Schema({
   },
   last_name: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -16,11 +15,11 @@ const userSchema = new Schema({
   },
   age: {
     type: Number,
-    required: true,
+    default: 0,
   },
   password: {
     type: String,
-    required: true,
+    default: "",
   },
   role: {
     type: String,
@@ -29,6 +28,10 @@ const userSchema = new Schema({
   cart: {
     type: Schema.Types.ObjectId,
     ref: "carts",
+  },
+  isGithub: {
+    type: Boolean,
+    default: false,
   },
 });
 
