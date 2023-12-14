@@ -19,7 +19,6 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    default: "",
   },
   role: {
     type: String,
@@ -30,6 +29,10 @@ const userSchema = new Schema({
     ref: "carts",
   },
   isGithub: {
+    type: Boolean,
+    default: false,
+  },
+  isGoogle: {
     type: Boolean,
     default: false,
   },

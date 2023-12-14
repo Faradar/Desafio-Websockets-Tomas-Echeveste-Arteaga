@@ -5,11 +5,10 @@ import { createHash, isValidPass } from "../../utils.js";
 export default class SessionDaoMongoDB {
   async register(user) {
     try {
-      console.log("USER IS ====", user);
       const { email } = user;
       const exists = await UserModel.findOne({ email });
       if (!exists) {
-        if (user.isGithub) {
+        if (user.isGithub || user.isGoogle) {
           const newUser = await UserModel.create({
             ...user,
           });

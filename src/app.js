@@ -6,6 +6,7 @@ import session from "express-session";
 import passport from "passport";
 import "./passport/local.strategies.js";
 import "./passport/github.strategies.js";
+import "./passport/google.strategies.js";
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
 import { productWebSocket } from "./websockets/product.websocket.js";

@@ -79,4 +79,21 @@ export default class SessionController {
       next(error);
     }
   }
+
+  async google(req, res, next) {
+    try {
+      const userId = req.user._id;
+      if (userId) {
+        const user = await sessionService.getById(userId);
+        req.session.user = {
+          ...user._doc,
+        };
+        res.status(200).redirect("/products");
+      } else {
+        res.status(401).redirect("/login-error");
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
 }

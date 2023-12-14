@@ -30,16 +30,17 @@ router.get(
   checkNotAuthenticated,
   passport.authenticate("github", {
     scope: ["user:email"],
-  })
+  }),
+  controller.github
 );
 
 router.get(
-  "/github-callback",
+  "/oauth2/redirect/accounts.google.com",
   checkNotAuthenticated,
-  passport.authenticate("github", {
-    scope: ["user:email"],
+  passport.authenticate("google", {
+    assignProperty: "user",
   }),
-  controller.github
+  controller.google
 );
 
 export default router;
