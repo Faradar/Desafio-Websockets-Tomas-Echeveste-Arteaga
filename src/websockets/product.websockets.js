@@ -6,7 +6,7 @@ import * as service from "../services/product.services.js";
 //   __dirname + "/daos/filesystem/data/products.json"
 // );
 
-export function productWebSocket(productNamespace) {
+function productWebSocket(productNamespace) {
   productNamespace.on("connection", async (socket) => {
     console.log(`🟢 User ${socket.id} connected to products`);
 
@@ -37,3 +37,5 @@ export function productWebSocket(productNamespace) {
     });
   });
 }
+
+export default productWebSocket;

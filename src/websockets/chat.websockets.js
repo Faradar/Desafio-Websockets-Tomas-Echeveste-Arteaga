@@ -1,6 +1,6 @@
 import * as service from "../services/chat.services.js";
 
-export function chatWebSocket(chatNamespace) {
+function chatWebSocket(chatNamespace) {
   chatNamespace.on("connection", async (socket) => {
     console.log(`🟢 User ${socket.id} connected to the chat`);
     chatNamespace.emit("messages", await service.getMessages());
@@ -27,3 +27,5 @@ export function chatWebSocket(chatNamespace) {
     });
   });
 }
+
+export default chatWebSocket;

@@ -1,4 +1,8 @@
 import express from "express";
+import apiRoutes from "./routes/index.routes.js";
+import viewRoutes from "./routes/views.routes.js";
+import productWebSocket from "./websockets/product.websockets.js";
+import chatWebSocket from "./websockets/chat.websockets.js";
 import handlebars from "express-handlebars";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
@@ -9,15 +13,9 @@ import "./passport/github.strategies.js";
 import "./passport/google.strategies.js";
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
-import { productWebSocket } from "./websockets/product.websocket.js";
-import { chatWebSocket } from "./websockets/chat.websocket.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { initMongoDB } from "./daos/mongodb/connection.js";
 import { mongoStoreOptions } from "./daos/mongodb/connection.js";
-import productRouter from "./routes/product.router.js";
-import cartRouter from "./routes/cart.router.js";
-import sessionRouter from "./routes/session.router.js";
-import viewsRouter from "./routes/views.router.js";
 
 const app = express();
 app.use(express.json());
@@ -44,10 +42,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use("/api/products", productRouter);
-app.use("/api/carts", cartRouter);
-app.use("/api/sessions", sessionRouter);
-app.use("/", viewsRouter);
+app.use("/api", apiRoutes);
+app.use("/", viewRoutes);
 
 // Middleware
 app.use(errorHandler);
