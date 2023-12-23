@@ -65,7 +65,7 @@ export default class SessionController {
 
   async github(req, res, next) {
     try {
-      const userId = req.session.passport.user;
+      const userId = req.user._id;
       if (userId) {
         const user = await sessionService.getById(userId);
         req.session.user = {
