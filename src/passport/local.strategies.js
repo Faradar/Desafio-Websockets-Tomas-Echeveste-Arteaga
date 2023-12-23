@@ -12,10 +12,14 @@ const strategyOptions = {
 // Register
 const register = async (req, email, password, done) => {
   try {
-    const user = await userDao.getByEmail(email);
-    if (user) return done(null, false);
-    const newUser = await userDao.register(req.body);
-    return done(null, newUser);
+    const emailRegex = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    if (email.match(emailRegex)) {
+      const user = await userDao.getByEmail(email);
+      if (user) return done(null, false);
+      const newUser = await userDao.register(req.body);
+      return done(null, newUser);
+    }
+    return done(null, false);
   } catch (error) {
     console.log(error);
     return done(null, false);

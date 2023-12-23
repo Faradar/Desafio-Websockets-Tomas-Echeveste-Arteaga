@@ -34,4 +34,8 @@ router.get(
 
 router.get("/chat", checkAuthenticated, controller.chat);
 
+router.get("*", (req, res) => {
+  res.status(404).send("Ruta inexistente");
+});
+
 export default router;
