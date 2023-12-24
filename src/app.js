@@ -1,5 +1,5 @@
 import express from "express";
-import apiRoutes from "./routes/index.routes.js";
+import ApiRouter from "./routes/index.routes.js";
 import viewRoutes from "./routes/views.routes.js";
 import productWebSocket from "./websockets/product.websockets.js";
 import chatWebSocket from "./websockets/chat.websockets.js";
@@ -43,7 +43,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use("/api", apiRoutes);
+const apiRoutes = new ApiRouter();
+app.use("/api", apiRoutes.getRouter());
 app.use("/", viewRoutes);
 
 // Middleware

@@ -3,10 +3,19 @@ import productRouter from "./product.routes.js";
 import cartRouter from "./cart.routes.js";
 import sessionRouter from "./session.routes.js";
 
-const router = Router();
+export default class ApiRouter {
+  constructor() {
+    this.router = Router();
+    this.initRoutes();
+  }
 
-router.use("/products", productRouter);
-router.use("/carts", cartRouter);
-router.use("/sessions", sessionRouter);
+  initRoutes() {
+    this.router.use("/products", productRouter);
+    this.router.use("/carts", cartRouter);
+    this.router.use("/sessions", sessionRouter);
+  }
 
-export default router;
+  getRouter() {
+    return this.router;
+  }
+}
