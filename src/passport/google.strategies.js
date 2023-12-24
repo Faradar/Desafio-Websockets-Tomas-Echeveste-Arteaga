@@ -2,11 +2,11 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
 import SessionDaoMongoDB from "../daos/mongodb/session.dao.js";
 const userDao = new SessionDaoMongoDB();
+import "dotenv/config";
 
 const strategyOptions = {
-  clientID:
-    "533303600072-n1m2unfmeou1vk5kmdl0u4d56gbl5rfi.apps.googleusercontent.com",
-  clientSecret: "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",
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: "/api/sessions/oauth2/redirect/accounts.google.com",
   scope: ["profile", "email"],
   state: true,

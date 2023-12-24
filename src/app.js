@@ -16,6 +16,7 @@ import { __dirname } from "./utils.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { initMongoDB } from "./daos/mongodb/connection.js";
 import { mongoStoreOptions } from "./daos/mongodb/connection.js";
+import "dotenv/config";
 
 const app = express();
 app.use(express.json());
@@ -49,11 +50,11 @@ app.use("/", viewRoutes);
 app.use(errorHandler);
 
 // Persistence
-const persistence = "MONGO";
+const persistence = process.env.PERSISTENCE;
 if (persistence === "MONGO") await initMongoDB();
 
 // Server
-const port = 8080;
+const port = process.env.PORT || 8080;
 const httpServer = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

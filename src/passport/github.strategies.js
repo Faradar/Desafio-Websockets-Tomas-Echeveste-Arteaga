@@ -2,10 +2,11 @@ import { Strategy as GithubStrategy } from "passport-github2";
 import passport from "passport";
 import SessionDaoMongoDB from "../daos/mongodb/session.dao.js";
 const userDao = new SessionDaoMongoDB();
+import "dotenv/config";
 
 const strategyOptions = {
-  clientID: "Iv1.7821b147cd0d8c57",
-  clientSecret: "2edfd5d9fe584a9b4597cec97f3d9d5acc15b54c",
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: "http://localhost:8080/api/sessions/github",
 };
 
