@@ -1,7 +1,7 @@
-import SessionServices from "../services/session.services.js";
-const sessionService = new SessionServices();
+import UserService from "../services/user.services.js";
+const userService = new UserService();
 
-export default class SessionController {
+export default class UserController {
   async register(req, res, next) {
     try {
       if (req.body.email === "adminCoder@coder.com") {
@@ -35,7 +35,7 @@ export default class SessionController {
       } else {
         const userId = req.session.passport.user;
         if (userId) {
-          const user = await sessionService.getById(userId);
+          const user = await userService.getById(userId);
           req.session.user = {
             ...user._doc,
           };
@@ -67,7 +67,7 @@ export default class SessionController {
     try {
       const userId = req.user._id;
       if (userId) {
-        const user = await sessionService.getById(userId);
+        const user = await userService.getById(userId);
         req.session.user = {
           ...user._doc,
         };
@@ -84,7 +84,7 @@ export default class SessionController {
     try {
       const userId = req.user._id;
       if (userId) {
-        const user = await sessionService.getById(userId);
+        const user = await userService.getById(userId);
         req.session.user = {
           ...user._doc,
         };

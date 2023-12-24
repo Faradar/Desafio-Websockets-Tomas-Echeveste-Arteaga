@@ -3,8 +3,8 @@ import {
   checkNotAuthenticated,
   checkAuthenticated,
 } from "../middlewares/auth.js";
-import SessionController from "../controllers/session.controllers.js";
-const controller = new SessionController();
+import UserController from "../controllers/user.controllers.js";
+const controller = new UserController();
 import passport from "passport";
 
 const router = Router();

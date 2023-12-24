@@ -1,9 +1,10 @@
-import * as service from "../services/cart.services.js";
+import CartService from "../services/cart.services.js";
+const service = new CartService();
 
 export const getCarts = async (req, res, next) => {
   try {
     const { limit } = req.query;
-    const carts = await service.getCarts();
+    const carts = await service.getAll();
     if (limit) {
       const limitedCarts = carts.slice(0, Number(limit));
       res.status(200).json(limitedCarts);
@@ -31,7 +32,7 @@ export const getCartById = async (req, res, next) => {
 
 export const createCart = async (req, res, next) => {
   try {
-    const newCart = await service.createCart(req.body);
+    const newCart = await service.create(req.body);
     if (!newCart) {
       res.status(400).json({ message: "Cart could not be created" });
     } else {

@@ -1,10 +1,15 @@
-import SessionDaoMongoDB from "../daos/mongodb/session.dao.js";
-const sessionDao = new SessionDaoMongoDB();
+import Services from "./class.services.js";
+import UserDaoMongoDB from "../daos/mongodb/user/user.dao.js";
+const userDao = new UserDaoMongoDB();
 
-export default class SessionService {
+export default class UserService extends Services {
+  constructor() {
+    super(userDao);
+  }
+
   async register(user) {
     try {
-      const registeredUser = await sessionDao.register(user);
+      const registeredUser = await userDao.register(user);
       if (!registeredUser) {
         return { success: false, message: "User already exists" };
       }
@@ -17,7 +22,7 @@ export default class SessionService {
 
   async login(email, password) {
     try {
-      const loggedInUser = await sessionDao.login(email, password);
+      const loggedInUser = await userDao.login(email, password);
       if (!loggedInUser) {
         return { success: false, message: "Invalid email or password" };
       }
@@ -28,13 +33,13 @@ export default class SessionService {
     }
   }
 
-  async getById(id) {
-    try {
-      const userExist = await sessionDao.getById(id);
-      return userExist;
-    } catch (error) {
-      console.log(error);
-      throw new Error(error);
-    }
-  }
+  // async getById(id) {
+  //   try {
+  //     const userExist = await userDao.getById(id);
+  //     return userExist;
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw new Error(error);
+  //   }
+  // }
 }

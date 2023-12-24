@@ -1,17 +1,18 @@
-import * as service from "../services/chat.services.js";
+import ChatService from "../services/chat.services.js";
+const service = new ChatService();
 
 function chatWebSocket(chatNamespace) {
   chatNamespace.on("connection", async (socket) => {
     console.log(`🟢 User ${socket.id} connected to the chat`);
-    chatNamespace.emit("messages", await service.getMessages());
+    chatNamespace.emit("messages", await service.getAll());
 
     socket.on("newUser", (user) => {
       console.log(`👤 User ${user} has logged on`);
     });
 
     socket.on("chat:message", async (data) => {
-      await service.createMessage(data);
-      chatNamespace.emit("messages", await service.getMessages());
+      await service.create(data);
+      chatNamespace.emit("messages", await service.getAll());
     });
 
     socket.on("newUser", (user) => {

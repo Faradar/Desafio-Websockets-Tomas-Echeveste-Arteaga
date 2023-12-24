@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import SessionDaoMongoDB from "../daos/mongodb/session.dao.js";
-const userDao = new SessionDaoMongoDB();
+import UserDaoMongoDB from "../daos/mongodb/user/user.dao.js";
+const userDao = new UserDaoMongoDB();
 
 const strategyOptions = {
   usernameField: "email",

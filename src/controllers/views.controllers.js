@@ -1,4 +1,5 @@
-import * as service from "../services/views.services.js";
+import ViewService from "../services/views.services.js";
+const service = new ViewService();
 
 export const home = async (req, res, next) => {
   try {

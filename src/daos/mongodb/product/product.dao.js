@@ -1,6 +1,11 @@
-import { ProductModel } from "./models/product.model.js";
+import MongoDao from "../mongo.dao.js";
+import { ProductModel } from "./product.model.js";
 
-export default class ProductDaoMongoDB {
+export default class ProductDaoMongoDB extends MongoDao {
+  constructor() {
+    super(ProductModel);
+  }
+
   // getAllProducts is for the product.websocket
   async getAllProducts() {
     try {
@@ -55,15 +60,15 @@ export default class ProductDaoMongoDB {
     }
   }
 
-  async createProduct(obj) {
-    try {
-      const response = await ProductModel.create(obj);
-      return response;
-    } catch (error) {
-      console.error(`Error creating product with obj ${obj}: ${error.message}`);
-      throw error;
-    }
-  }
+  // async createProduct(obj) {
+  //   try {
+  //     const response = await ProductModel.create(obj);
+  //     return response;
+  //   } catch (error) {
+  //     console.error(`Error creating product with obj ${obj}: ${error.message}`);
+  //     throw error;
+  //   }
+  // }
 
   async updateProduct(id, obj) {
     try {
@@ -77,13 +82,13 @@ export default class ProductDaoMongoDB {
     }
   }
 
-  async deleteProduct(id) {
-    try {
-      const response = await ProductModel.findByIdAndDelete(id);
-      return response;
-    } catch (error) {
-      console.error(`Error deleting product with ID ${id}: ${error.message}`);
-      throw error;
-    }
-  }
+  // async deleteProduct(id) {
+  //   try {
+  //     const response = await ProductModel.findByIdAndDelete(id);
+  //     return response;
+  //   } catch (error) {
+  //     console.error(`Error deleting product with ID ${id}: ${error.message}`);
+  //     throw error;
+  //   }
+  // }
 }

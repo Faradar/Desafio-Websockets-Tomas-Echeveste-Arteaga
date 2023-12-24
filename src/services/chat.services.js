@@ -1,21 +1,27 @@
-import MessageDaoMongoDB from "../daos/mongodb/message.dao.js";
+import Services from "./class.services.js";
+import ChatDaoMongoDB from "../daos/mongodb/chat/chat.dao.js";
+const chatDao = new ChatDaoMongoDB();
 
-const msgDao = new MessageDaoMongoDB();
-
-export const getMessages = async () => {
-  try {
-    const mensajes = await msgDao.getMessages();
-    return mensajes;
-  } catch (error) {
-    console.log(error);
+export default class ChatService extends Services {
+  constructor() {
+    super(chatDao);
   }
-};
+}
 
-export const createMessage = async (msg) => {
-  try {
-    const mensaje = await msgDao.createMessage(msg);
-    return mensaje;
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const getChats = async () => {
+//   try {
+//     const msgs = await chatDao.getAll();
+//     return msgs;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+// export const createChat = async (chat) => {
+//   try {
+//     const msg = await chatDao.create(chat);
+//     return msg;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

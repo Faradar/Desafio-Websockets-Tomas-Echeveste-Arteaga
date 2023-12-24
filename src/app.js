@@ -14,8 +14,8 @@ import "./passport/google.strategies.js";
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
-import { initMongoDB } from "./daos/mongodb/connection.js";
-import { mongoStoreOptions } from "./daos/mongodb/connection.js";
+import { initMongoDB } from "./config/connection.js";
+import { mongoStoreOptions } from "./config/connection.js";
 import "dotenv/config";
 
 const app = express();

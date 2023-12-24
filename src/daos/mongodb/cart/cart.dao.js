@@ -1,15 +1,20 @@
-import { CartModel } from "./models/cart.model.js";
+import MongoDao from "../mongo.dao.js";
+import { CartModel } from "./cart.model.js";
 
-export default class CartDaoMongoDB {
-  async getCarts() {
-    try {
-      const response = await CartModel.find({});
-      return response;
-    } catch (error) {
-      console.error(`Error fetching carts: ${error.message}`);
-      throw error;
-    }
+export default class CartDaoMongoDB extends MongoDao {
+  constructor() {
+    super(CartModel);
   }
+
+  // async getCarts() {
+  //   try {
+  //     const response = await CartModel.find({});
+  //     return response;
+  //   } catch (error) {
+  //     console.error(`Error fetching carts: ${error.message}`);
+  //     throw error;
+  //   }
+  // }
 
   async getCartById(id) {
     try {
@@ -23,15 +28,15 @@ export default class CartDaoMongoDB {
     }
   }
 
-  async createCart(obj) {
-    try {
-      const response = await CartModel.create(obj);
-      return response;
-    } catch (error) {
-      console.error(`Error creating cart with obj ${obj}: ${error.message}`);
-      throw error;
-    }
-  }
+  // async createCart(obj) {
+  //   try {
+  //     const response = await CartModel.create(obj);
+  //     return response;
+  //   } catch (error) {
+  //     console.error(`Error creating cart with obj ${obj}: ${error.message}`);
+  //     throw error;
+  //   }
+  // }
 
   async saveProductToCart(idCart, idProd) {
     try {

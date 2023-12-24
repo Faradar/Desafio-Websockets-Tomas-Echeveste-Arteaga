@@ -1,8 +1,13 @@
-import { UserModel } from "./models/user.model.js";
-import { CartModel } from "./models/cart.model.js";
-import { createHash, isValidPass } from "../../utils.js";
+import MongoDao from "../mongo.dao.js";
+import { UserModel } from "./user.model.js";
+import { CartModel } from "../cart/cart.model.js";
+import { createHash, isValidPass } from "../../../utils.js";
 
-export default class SessionDaoMongoDB {
+export default class UserDaoMongoDB extends MongoDao {
+  constructor() {
+    super(UserModel);
+  }
+
   async register(user) {
     try {
       const { email } = user;
@@ -46,18 +51,18 @@ export default class SessionDaoMongoDB {
     }
   }
 
-  async getById(id) {
-    try {
-      const userExist = await UserModel.findById(id);
-      if (userExist) {
-        return userExist;
-      }
-      return false;
-    } catch (error) {
-      console.log(error);
-      throw new Error(error);
-    }
-  }
+  // async getById(id) {
+  //   try {
+  //     const userExist = await UserModel.findById(id);
+  //     if (userExist) {
+  //       return userExist;
+  //     }
+  //     return false;
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw new Error(error);
+  //   }
+  // }
 
   async getByEmail(email) {
     try {
