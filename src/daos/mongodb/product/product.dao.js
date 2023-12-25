@@ -1,7 +1,7 @@
-import MongoDao from "../mongo.dao.js";
+import Daos from "../class.dao.js";
 import { ProductModel } from "./product.model.js";
 
-export default class ProductDaoMongoDB extends MongoDao {
+export default class ProductDaoMongoDB extends Daos {
   constructor() {
     super(ProductModel);
   }
@@ -70,17 +70,17 @@ export default class ProductDaoMongoDB extends MongoDao {
   //   }
   // }
 
-  async updateProduct(id, obj) {
-    try {
-      const response = await ProductModel.findByIdAndUpdate(id, obj, {
-        new: true,
-      });
-      return response;
-    } catch (error) {
-      console.error(`Error updating product with ID ${id}: ${error.message}`);
-      throw error;
-    }
-  }
+  // async updateProduct(id, obj) {
+  //   try {
+  //     const response = await ProductModel.findByIdAndUpdate(id, obj, {
+  //       new: true,
+  //     });
+  //     return response;
+  //   } catch (error) {
+  //     console.error(`Error updating product with ID ${id}: ${error.message}`);
+  //     throw error;
+  //   }
+  // }
 
   // async deleteProduct(id) {
   //   try {

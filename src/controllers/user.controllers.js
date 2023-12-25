@@ -1,7 +1,8 @@
+import Controllers from "./class.controller.js";
 import UserService from "../services/user.services.js";
 const userService = new UserService();
 
-export default class UserController {
+export default class UserController extends Controllers {
   async register(req, res, next) {
     try {
       if (req.body.email === "adminCoder@coder.com") {

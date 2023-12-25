@@ -3,7 +3,8 @@ import {
   checkAuthenticated,
   checkNotAuthenticated,
 } from "../middlewares/auth.js";
-import * as controller from "../controllers/views.controllers.js";
+import ViewController from "../controllers/views.controllers.js";
+const controller = new ViewController();
 
 const router = Router();
 

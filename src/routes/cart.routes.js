@@ -1,5 +1,6 @@
 import { Router } from "express";
-import * as controller from "../controllers/cart.controllers.js";
+import CartController from "../controllers/cart.controllers.js";
+const controller = new CartController();
 
 const router = Router();
 
@@ -7,7 +8,7 @@ router.get("/", controller.getCarts);
 
 router.get("/:cid", controller.getCartById);
 
-router.post("/", controller.createCart);
+router.post("/", controller.create);
 
 router.post("/:cid/products/:pid", controller.saveProductToCart);
 

@@ -1,7 +1,7 @@
-import MongoDao from "../mongo.dao.js";
+import Daos from "../class.dao.js";
 import { CartModel } from "./cart.model.js";
 
-export default class CartDaoMongoDB extends MongoDao {
+export default class CartDaoMongoDB extends Daos {
   constructor() {
     super(CartModel);
   }

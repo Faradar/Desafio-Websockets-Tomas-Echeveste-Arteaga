@@ -52,38 +52,38 @@ export default class ProductService extends Services {
     }
   }
 
-  async createProduct(obj) {
-    try {
-      const newProd = await prodDao.create(obj);
-      if (!newProd) return false;
-      else return newProd;
-    } catch (error) {
-      console.error(`Error in createProduct service: ${error.message}`);
-      throw error;
-    }
-  }
+  // async createProduct(obj) {
+  //   try {
+  //     const newProd = await prodDao.create(obj);
+  //     if (!newProd) return false;
+  //     else return newProd;
+  //   } catch (error) {
+  //     console.error(`Error in createProduct service: ${error.message}`);
+  //     throw error;
+  //   }
+  // }
 
-  async updateProduct(id, obj) {
-    try {
-      const prodUpd = await prodDao.updateProduct(id, obj);
-      if (!prodUpd) return false;
-      else return prodUpd;
-    } catch (error) {
-      console.error(`Error in updateProduct service: ${error.message}`);
-      throw error;
-    }
-  }
+  // async updateProduct(id, obj) {
+  //   try {
+  //     const prodUpd = await prodDao.updateProduct(id, obj);
+  //     if (!prodUpd) return false;
+  //     else return prodUpd;
+  //   } catch (error) {
+  //     console.error(`Error in updateProduct service: ${error.message}`);
+  //     throw error;
+  //   }
+  // }
 
-  async deleteProduct(id) {
-    try {
-      const prodDel = await prodDao.delete(id);
-      if (!prodDel) return false;
-      else return prodDel;
-    } catch (error) {
-      console.error(`Error in deleteProduct service: ${error.message}`);
-      throw error;
-    }
-  }
+  // async deleteProduct(id) {
+  //   try {
+  //     const prodDel = await prodDao.delete(id);
+  //     if (!prodDel) return false;
+  //     else return prodDel;
+  //   } catch (error) {
+  //     console.error(`Error in deleteProduct service: ${error.message}`);
+  //     throw error;
+  //   }
+  // }
 }
 
 // getAllProducts is for the product.websocket
