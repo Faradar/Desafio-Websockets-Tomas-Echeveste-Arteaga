@@ -97,4 +97,14 @@ export default class UserController extends Controllers {
       next(error);
     }
   }
+
+  async currentUser(req, res, next) {
+    try {
+      const user = req.session.user;
+      if (user) res.status(200).json(user);
+      else res.status(400).json({ message: "Something went wrong" });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

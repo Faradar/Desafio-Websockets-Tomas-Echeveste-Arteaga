@@ -43,4 +43,6 @@ router.get(
   controller.google
 );
 
+router.get("/current", checkAuthenticated, controller.currentUser);
+
 export default router;
