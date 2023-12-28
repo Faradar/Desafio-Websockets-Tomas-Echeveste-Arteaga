@@ -16,7 +16,7 @@ import { __dirname } from "./utils.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { initMongoDB } from "./config/connection.js";
 import { mongoStoreOptions } from "./config/connection.js";
-import "dotenv/config";
+import config from "./config/config.js";
 
 const app = express();
 app.use(express.json());
@@ -51,11 +51,11 @@ app.use("/", viewRoutes);
 app.use(errorHandler);
 
 // Persistence
-const persistence = process.env.PERSISTENCE;
+const persistence = config.PERSISTENCE;
 if (persistence === "MONGO") await initMongoDB();
 
 // Server
-const port = process.env.PORT || 8080;
+const port = config.PORT;
 const httpServer = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
