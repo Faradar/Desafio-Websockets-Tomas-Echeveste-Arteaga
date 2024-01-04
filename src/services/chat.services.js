@@ -1,6 +1,5 @@
 import Services from "./class.services.js";
-import ChatDaoMongoDB from "../daos/mongodb/chat/chat.dao.js";
-const chatDao = new ChatDaoMongoDB();
+import { chatDao } from "../persistence/persistence.js";
 
 export default class ChatService extends Services {
   constructor() {

@@ -1,7 +1,7 @@
 import Daos from "../class.dao.js";
 import { UserModel } from "./user.model.js";
 import { CartModel } from "../cart/cart.model.js";
-import { createHash, isValidPass } from "../../../utils.js";
+import { createHash, isValidPass } from "../../../../utils.js";
 
 export default class UserDaoMongoDB extends Daos {
   constructor() {

@@ -1,6 +1,5 @@
 import { connect } from "mongoose";
 import MongoStore from "connect-mongo";
-import "dotenv/config";
 import config from "./config.js";
 
 export const connectionString = config.MONGO_URL;

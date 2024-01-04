@@ -14,7 +14,6 @@ import "./passport/google.strategies.js";
 import { Server } from "socket.io";
 import { __dirname } from "./utils.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
-import { initMongoDB } from "./config/connection.js";
 import { mongoStoreOptions } from "./config/connection.js";
 import config from "./config/config.js";
 
@@ -49,10 +48,6 @@ app.use("/", viewRoutes);
 
 // Middleware
 app.use(errorHandler);
-
-// Persistence
-const persistence = config.PERSISTENCE;
-if (persistence === "MONGO") await initMongoDB();
 
 // Server
 const port = config.PORT;

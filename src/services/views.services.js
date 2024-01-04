@@ -3,12 +3,6 @@ const service = new ProductService();
 import CartService from "./cart.services.js";
 const cartService = new CartService();
 
-// import ProductDaoFS from "../daos/filesystem/product.dao.js";
-// import { __dirname } from "../utils.js";
-// const prodDao = new ProductDaoFS(
-//   __dirname + "/daos/filesystem/data/products.json"
-// );
-
 export default class ViewService {
   async getAllProducts() {
     try {

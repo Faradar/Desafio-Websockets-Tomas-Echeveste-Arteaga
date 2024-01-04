@@ -1,7 +1,6 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
-import UserDaoMongoDB from "../daos/mongodb/user/user.dao.js";
-const userDao = new UserDaoMongoDB();
+import { userDao } from "../persistence/persistence.js";
 import config from "../config/config.js";
 
 const strategyOptions = {

@@ -1,10 +1,5 @@
-import * as service from "../services/product.services.js";
-
-// import { __dirname } from "./utils.js";
-// import ProductDaoFS from "./daos/filesystem/product.dao.js";
-// const prodDao = new ProductDaoFS(
-//   __dirname + "/daos/filesystem/data/products.json"
-// );
+import ProductService from "../services/product.services.js";
+const service = new ProductService();
 
 function productWebSocket(productNamespace) {
   productNamespace.on("connection", async (socket) => {
