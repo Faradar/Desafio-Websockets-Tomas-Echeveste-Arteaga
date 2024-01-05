@@ -2,16 +2,26 @@ import { connect } from "mongoose";
 import MongoStore from "connect-mongo";
 import config from "./config.js";
 
-export const connectionString = config.MONGO_URL;
+const connectionString = config.MONGO_URL;
 
-export const initMongoDB = async () => {
-  try {
-    await connect(connectionString);
-    console.log("Conectado a la base de datos de MongoDB");
-  } catch (error) {
-    console.log(`ERROR => ${error}`);
+export class ConnectMongoDB {
+  static #instance;
+
+  constructor() {
+    connect(connectionString);
   }
-};
+
+  static getInstance() {
+    if (this.#instance) {
+      console.log("You are already connected to MongoDB");
+      return this.#instance;
+    } else {
+      this.#instance = new ConnectMongoDB();
+      console.log("Connected to MongoDB!");
+      return this.#instance;
+    }
+  }
+}
 
 export const mongoStoreOptions = {
   store: MongoStore.create({

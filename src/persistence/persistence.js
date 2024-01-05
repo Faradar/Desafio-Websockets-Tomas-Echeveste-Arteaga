@@ -6,7 +6,7 @@ import CartDaoMongoDB from "./daos/mongodb/cart/cart.dao.js";
 import ChatDaoMongoDB from "./daos/mongodb/chat/chat.dao.js";
 import ProductDaoMongoDB from "./daos/mongodb/product/product.dao.js";
 import UserDaoMongoDB from "./daos/mongodb/user/user.dao.js";
-import { initMongoDB } from "../config/connection.js";
+import { ConnectMongoDB } from "../config/connection.js";
 
 // Filesystem
 import CartDaoFS from "./daos/filesystem/cart.dao.js";
@@ -27,7 +27,7 @@ switch (persistence) {
     console.log("Persistence is : ", persistence);
     break;
   case "MONGO":
-    await initMongoDB();
+    ConnectMongoDB.getInstance();
     cartDao = new CartDaoMongoDB();
     chatDao = new ChatDaoMongoDB();
     prodDao = new ProductDaoMongoDB();

@@ -1,8 +1,6 @@
 import Services from "./class.services.js";
 import { prodDao } from "../persistence/persistence.js";
 
-console.log("prodDao", prodDao);
-
 export default class ProductService extends Services {
   constructor() {
     super(prodDao);
