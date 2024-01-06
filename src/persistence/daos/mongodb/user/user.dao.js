@@ -12,23 +12,21 @@ export default class UserDaoMongoDB extends Daos {
     try {
       const { email } = user;
       const exists = await UserModel.findOne({ email });
+      let newUser;
       if (!exists) {
         if (user.isGithub || user.isGoogle) {
-          const newUser = await UserModel.create({
+          newUser = await UserModel.create({
             ...user,
           });
-          const newCart = await CartModel.create({ user: newUser._id });
-          await UserModel.findByIdAndUpdate(newUser._id, { cart: newCart._id });
-          return newUser;
         } else {
-          const newUser = await UserModel.create({
+          newUser = await UserModel.create({
             ...user,
             password: createHash(user.password),
           });
-          const newCart = await CartModel.create({ user: newUser._id });
-          await UserModel.findByIdAndUpdate(newUser._id, { cart: newCart._id });
-          return newUser;
         }
+        const newCart = await CartModel.create({ user: newUser._id });
+        await UserModel.findByIdAndUpdate(newUser._id, { cart: newCart._id });
+        return newUser;
       } else return false;
     } catch (error) {
       console.error(`Error registering ${user} user: ${error.message}`);

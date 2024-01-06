@@ -1,11 +1,12 @@
 import Controllers from "./class.controller.js";
 import UserService from "../services/user.services.js";
 const userService = new UserService();
+import config from "../config/config.js";
 
 export default class UserController extends Controllers {
   async register(req, res, next) {
     try {
-      if (req.body.email === "adminCoder@coder.com") {
+      if (req.body.email === config.ADMIN_EMAIL) {
         res.status(400).redirect("/register-error");
       } else {
         const userId = req.session.passport.user;
@@ -23,9 +24,9 @@ export default class UserController extends Controllers {
   async login(req, res, next) {
     try {
       const { email, password } = req.body;
-      if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+      if (email === config.ADMIN_EMAIL && password === config.ADMIN_PASSWORD) {
         req.session.user = {
-          email: "adminCoder@coder.com",
+          email: config.ADMIN_EMAIL,
           role: "admin",
           first_name: "admin",
           last_name: "admin",
