@@ -1,24 +1,21 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { userDao } from "../persistence/persistence.js";
+import config from "../config/config.js";
 
 const strategyOptions = {
   usernameField: "email",
-  passportField: "password",
+  passwordField: "password",
   passReqToCallback: true,
 };
 
 // Register
 const register = async (req, email, password, done) => {
   try {
-    const emailRegex = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-    if (email.match(emailRegex)) {
-      const user = await userDao.getByEmail(email);
-      if (user) return done(null, false);
-      const newUser = await userDao.register(req.body);
-      return done(null, newUser);
-    }
-    return done(null, false);
+    const user = await userDao.getByEmail(email);
+    if (user) return done(null, false);
+    const newUser = await userDao.register(req.body);
+    return done(null, newUser);
   } catch (error) {
     console.log(error);
     return done(null, false);
@@ -28,6 +25,12 @@ const register = async (req, email, password, done) => {
 // Login
 const login = async (req, email, password, done) => {
   try {
+    if (email === config.ADMIN_EMAIL && password === config.ADMIN_PASSWORD) {
+      const adminUser = {
+        role: "admin",
+      };
+      return done(null, adminUser);
+    }
     const userLogin = await userDao.login(email, password);
     if (!userLogin) return done(null, false, { msg: "User not found" });
     return done(null, userLogin);
@@ -48,11 +51,26 @@ passport.use("login", loginStrategy);
 
 // Serialize
 passport.serializeUser((user, done) => {
-  done(null, user._id);
+  if (user.role === "admin") {
+    done(null, "admin");
+  } else {
+    done(null, user._id);
+  }
 });
 
 // Deserialize
 passport.deserializeUser(async (id, done) => {
+  if (id === "admin") {
+    const adminUser = {
+      email: config.ADMIN_EMAIL,
+      role: "admin",
+      first_name: "admin",
+      last_name: "admin",
+      age: 0,
+      _id: "admin",
+    };
+    return done(null, adminUser);
+  }
   const user = await userDao.getById(id);
   return done(null, user);
 });

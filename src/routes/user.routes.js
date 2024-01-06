@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { userValidator } from "../middlewares/userValidator.js";
 import {
   checkNotAuthenticated,
   checkAuthenticated,
@@ -12,6 +13,7 @@ const router = Router();
 router.post(
   "/register",
   checkNotAuthenticated,
+  userValidator,
   passport.authenticate("register"),
   controller.register
 );

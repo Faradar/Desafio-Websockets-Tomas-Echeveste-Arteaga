@@ -6,15 +6,11 @@ import config from "../config/config.js";
 export default class UserController extends Controllers {
   async register(req, res, next) {
     try {
-      if (req.body.email === config.ADMIN_EMAIL) {
-        res.status(400).redirect("/register-error");
+      const userId = req.session.passport.user;
+      if (userId) {
+        res.status(201).redirect("/login");
       } else {
-        const userId = req.session.passport.user;
-        if (userId) {
-          res.status(201).redirect("/login");
-        } else {
-          res.status(400).redirect("/register-error");
-        }
+        res.status(400).redirect("/register-error");
       }
     } catch (error) {
       next(error);
@@ -31,7 +27,7 @@ export default class UserController extends Controllers {
           first_name: "admin",
           last_name: "admin",
           age: 0,
-          _id: 0,
+          _id: "admin",
         };
         res.status(200).redirect("/products");
       } else {
@@ -102,8 +98,20 @@ export default class UserController extends Controllers {
   async currentUser(req, res, next) {
     try {
       const user = req.session.user;
-      if (user) res.status(200).json(user);
-      else res.status(400).json({ message: "Something went wrong" });
+      if (user) {
+        const sanitizedUser = {
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email,
+          age: user.age,
+          role: user.role,
+          isGithub: user.isGithub,
+          isGoogle: user.isGoogle,
+        };
+        res.status(200).json(sanitizedUser);
+      } else {
+        res.status(400).json({ message: "Something went wrong" });
+      }
     } catch (error) {
       next(error);
     }
