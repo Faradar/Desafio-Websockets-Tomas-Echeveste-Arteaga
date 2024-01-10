@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { userDao } from "../persistence/persistence.js";
+import { userDao } from "../factory/factory.js";
 import config from "../config/config.js";
 
 const strategyOptions = {

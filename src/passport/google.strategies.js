@@ -1,6 +1,6 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
-import { userDao } from "../persistence/persistence.js";
+import { userDao } from "../factory/factory.js";
 import config from "../config/config.js";
 
 const strategyOptions = {

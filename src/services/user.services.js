@@ -1,5 +1,5 @@
 import Services from "./class.services.js";
-import { userDao } from "../persistence/persistence.js";
+import { userDao } from "../factory/factory.js";
 
 export default class UserService extends Services {
   constructor() {

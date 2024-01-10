@@ -1,7 +1,7 @@
 import Services from "./class.services.js";
 import ProductService from "./product.services.js";
 const service = new ProductService();
-import { cartDao } from "../persistence/persistence.js";
+import { cartDao } from "../factory/factory.js";
 import { Types } from "mongoose";
 
 export default class CartService extends Services {
