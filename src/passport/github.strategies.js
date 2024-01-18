@@ -7,10 +7,11 @@ const strategyOptions = {
   clientID: config.GITHUB_CLIENT_ID,
   clientSecret: config.GITHUB_CLIENT_SECRET,
   callbackURL: "http://localhost:8080/api/sessions/github",
+  scope: ["user:email"],
 };
 
 const registerOrLogin = async (accessToken, refreshToken, profile, done) => {
-  const email = profile._json.email;
+  const email = profile.emails[0].value;
   const user = await userDao.getByEmail(email);
   if (user) {
     if (!user.isGithub) {
