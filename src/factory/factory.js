@@ -16,7 +16,8 @@ let cartDao;
 let chatDao;
 let prodDao;
 let userDao;
-const persistence = config.PERSISTENCE;
+let persistence = process.argv[2];
+// const persistence = config.PERSISTENCE;
 
 switch (persistence) {
   case "FS":
@@ -35,11 +36,12 @@ switch (persistence) {
     console.log("Persistence is : ", persistence);
     break;
   default:
-    cartDao = new CartDaoFS(__dirname + "/daos/filesystem/data/carts.json");
-    prodDao = new ProductDaoFS(
-      __dirname + "/daos/filesystem/data/products.json"
-    );
-    console.log("Persistence is : ", persistence);
+    ConnectMongoDB.getInstance();
+    cartDao = new CartDaoMongoDB();
+    chatDao = new ChatDaoMongoDB();
+    prodDao = new ProductDaoMongoDB();
+    userDao = new UserDaoMongoDB();
+    console.log("Persistence is : MONGO");
     break;
 }
 
