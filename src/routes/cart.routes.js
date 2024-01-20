@@ -4,20 +4,14 @@ const controller = new CartController();
 
 const router = Router();
 
-router.get("/", controller.getCarts);
-
-router.get("/:cid", controller.getCartById);
-
-router.post("/", controller.create);
-
-router.post("/:cid/products/:pid", controller.saveProductToCart);
-
-router.put("/:cid", controller.updateCart);
-
-router.put("/:cid/products/:pid", controller.updateProductQuantity);
-
-router.delete("/:cid", controller.deleteProductsFromCart);
-
-router.delete("/:cid/products/:pid", controller.deleteProductFromCart);
+router
+  .get("/", controller.getCarts)
+  .get("/:cid", controller.getCartById)
+  .post("/", controller.create)
+  .post("/:cid/products/:pid", controller.saveProductToCart)
+  .put("/:cid", controller.updateCart)
+  .put("/:cid/products/:pid", controller.updateProductQuantity)
+  .delete("/:cid", controller.deleteProductsFromCart)
+  .delete("/:cid/products/:pid", controller.deleteProductFromCart);
 
 export default router;

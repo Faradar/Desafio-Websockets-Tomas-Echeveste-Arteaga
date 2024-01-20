@@ -6,21 +6,3 @@ export default class ChatService extends Services {
     super(chatDao);
   }
 }
-
-// export const getChats = async () => {
-//   try {
-//     const msgs = await chatDao.getAll();
-//     return msgs;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// export const createChat = async (chat) => {
-//   try {
-//     const msg = await chatDao.create(chat);
-//     return msg;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };

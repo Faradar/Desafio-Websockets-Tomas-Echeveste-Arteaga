@@ -59,36 +59,4 @@ export default class ProductDaoMongoDB extends Daos {
       throw error;
     }
   }
-
-  // async createProduct(obj) {
-  //   try {
-  //     const response = await ProductModel.create(obj);
-  //     return response;
-  //   } catch (error) {
-  //     console.error(`Error creating product with obj ${obj}: ${error.message}`);
-  //     throw error;
-  //   }
-  // }
-
-  // async updateProduct(id, obj) {
-  //   try {
-  //     const response = await ProductModel.findByIdAndUpdate(id, obj, {
-  //       new: true,
-  //     });
-  //     return response;
-  //   } catch (error) {
-  //     console.error(`Error updating product with ID ${id}: ${error.message}`);
-  //     throw error;
-  //   }
-  // }
-
-  // async deleteProduct(id) {
-  //   try {
-  //     const response = await ProductModel.findByIdAndDelete(id);
-  //     return response;
-  //   } catch (error) {
-  //     console.error(`Error deleting product with ID ${id}: ${error.message}`);
-  //     throw error;
-  //   }
-  // }
 }

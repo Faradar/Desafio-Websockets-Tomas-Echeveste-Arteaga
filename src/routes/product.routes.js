@@ -5,14 +5,12 @@ const controller = new ProductController();
 
 const router = Router();
 
-router.get("/", controller.getProducts);
-
-router.get("/:pid", controller.getProductById);
-
-router.post("/", productValidator, controller.create);
-
-router.put("/:pid", controller.update);
-
-router.delete("/:pid", controller.delete);
+router
+  .get("/", controller.getProducts)
+  .get("/:pid", controller.getProductById)
+  .post("/", productValidator, controller.create)
+  .put("/:pid", controller.update)
+  .delete("/:pid", controller.delete)
+  .get("/dto/:pid", controller.getDtoProductById);
 
 export default router;

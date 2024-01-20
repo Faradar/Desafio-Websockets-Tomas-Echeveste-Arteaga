@@ -6,36 +6,6 @@ export default class ChatDaoMongoDB extends Daos {
     super(ChatModel);
   }
 
-  // async getChats() {
-  //   try {
-  //     const response = await ChatModel.find({});
-  //     return response;
-  //   } catch (error) {
-  //     console.error("Error fetching chats:", error);
-  //     throw error;
-  //   }
-  // }
-
-  // async getChatById(id) {
-  //   try {
-  //     const response = await ChatModel.findById(id);
-  //     return response;
-  //   } catch (error) {
-  //     console.error(`Error getting chat with ${id} id:`, error);
-  //     throw error;
-  //   }
-  // }
-
-  // async createChat(obj) {
-  //   try {
-  //     const response = await ChatModel.create(obj);
-  //     return response;
-  //   } catch (error) {
-  //     console.error("Error creating chat:", error);
-  //     throw error;
-  //   }
-  // }
-
   async updateChat(id, obj) {
     try {
       const response = await ChatModel.findByIdAndUpdate(id, obj, {
@@ -57,14 +27,4 @@ export default class ChatDaoMongoDB extends Daos {
       throw error;
     }
   }
-
-  // async deleteChatById(id) {
-  //   try {
-  //     const response = await ChatModel.findByIdAndDelete(id);
-  //     return response;
-  //   } catch (error) {
-  //     console.error(`Error deleting ${id} chat: ${error}`);
-  //     throw error;
-  //   }
-  // }
 }

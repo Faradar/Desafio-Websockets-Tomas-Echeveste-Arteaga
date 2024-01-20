@@ -1,5 +1,7 @@
 import Services from "./class.services.js";
 import { userDao } from "../factory/factory.js";
+import UserRepository from "../factory/repository/user.repository.js";
+const userRepository = new UserRepository();
 
 export default class UserService extends Services {
   constructor() {
@@ -32,13 +34,14 @@ export default class UserService extends Services {
     }
   }
 
-  // async getById(id) {
-  //   try {
-  //     const userExist = await userDao.getById(id);
-  //     return userExist;
-  //   } catch (error) {
-  //     console.log(error);
-  //     throw new Error(error);
-  //   }
-  // }
+  async getDtoUserById(id) {
+    try {
+      const user = await userRepository.getDtoUserById(id);
+      if (!user) return false;
+      else return user;
+    } catch (error) {
+      console.error(`Error in getDtoUserById service: ${error.message}`);
+      throw error;
+    }
+  }
 }

@@ -6,16 +6,6 @@ export default class CartDaoMongoDB extends Daos {
     super(CartModel);
   }
 
-  // async getCarts() {
-  //   try {
-  //     const response = await CartModel.find({});
-  //     return response;
-  //   } catch (error) {
-  //     console.error(`Error fetching carts: ${error.message}`);
-  //     throw error;
-  //   }
-  // }
-
   async getCartById(id) {
     try {
       const response = await CartModel.findById(id)
@@ -27,16 +17,6 @@ export default class CartDaoMongoDB extends Daos {
       throw error;
     }
   }
-
-  // async createCart(obj) {
-  //   try {
-  //     const response = await CartModel.create(obj);
-  //     return response;
-  //   } catch (error) {
-  //     console.error(`Error creating cart with obj ${obj}: ${error.message}`);
-  //     throw error;
-  //   }
-  // }
 
   async saveProductToCart(idCart, idProd) {
     try {

@@ -97,20 +97,12 @@ export default class UserController extends Controllers {
 
   async currentUser(req, res, next) {
     try {
-      const user = req.session.user;
-      if (user) {
-        const sanitizedUser = {
-          first_name: user.first_name,
-          last_name: user.last_name,
-          email: user.email,
-          age: user.age,
-          role: user.role,
-          isGithub: user.isGithub,
-          isGoogle: user.isGoogle,
-        };
-        res.status(200).json(sanitizedUser);
-      } else {
+      const userId = req.session.user._id;
+      const user = await userService.getDtoUserById(userId);
+      if (!user) {
         res.status(400).json({ message: "Something went wrong" });
+      } else {
+        res.status(200).json(user);
       }
     } catch (error) {
       next(error);
