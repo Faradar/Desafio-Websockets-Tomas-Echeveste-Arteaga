@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   checkAuthenticated,
   checkNotAuthenticated,
+  checkUser,
 } from "../middlewares/auth.js";
 import ViewController from "../controllers/views.controllers.js";
 const controller = new ViewController();
@@ -17,14 +18,16 @@ router
   .get("/login-error", checkNotAuthenticated, controller.loginError)
   .get("/products", checkAuthenticated, controller.products)
   .get("/products/:pid", checkAuthenticated, controller.productDetails)
-  .get("/carts/:cid", checkAuthenticated, controller.cartDetails)
-  .get("*", (req, res) => {
-    res.status(404).send("Ruta inexistente");
-  });
+  .get("/carts/:cid", checkUser, checkAuthenticated, controller.cartDetails);
 
 // Extra views using websocket
 router
   .get("/realtimeproducts", checkAuthenticated, controller.realTimeProducts)
-  .get("/chat", checkAuthenticated, controller.chat);
+  .get("/chat", checkUser, checkAuthenticated, controller.chat);
+
+// 404 page
+router.get("*", (req, res) => {
+  res.status(404).send("Ruta inexistente");
+});
 
 export default router;
