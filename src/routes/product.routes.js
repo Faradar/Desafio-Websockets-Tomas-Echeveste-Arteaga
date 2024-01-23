@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { productValidator } from "../middlewares/productValidator.js";
-import { checkAdmin, checkUser } from "../middlewares/auth.js";
+import { checkAdmin } from "../middlewares/auth.js";
 import ProductController from "../controllers/product.controllers.js";
 const controller = new ProductController();
 

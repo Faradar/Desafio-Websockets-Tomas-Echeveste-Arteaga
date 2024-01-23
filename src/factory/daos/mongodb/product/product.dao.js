@@ -59,4 +59,18 @@ export default class ProductDaoMongoDB extends Daos {
       throw error;
     }
   }
+
+  async updateProductStock(productId, newStock) {
+    try {
+      const updatedProduct = await ProductModel.findByIdAndUpdate(
+        productId,
+        { $set: { stock: newStock } },
+        { new: true }
+      );
+      return updatedProduct;
+    } catch (error) {
+      console.error(`Error updating the product stock: ${error.message}`);
+      throw error;
+    }
+  }
 }

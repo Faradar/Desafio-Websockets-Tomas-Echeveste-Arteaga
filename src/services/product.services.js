@@ -57,4 +57,24 @@ export default class ProductService extends Services {
       throw error;
     }
   }
+
+  async updateProductStock(productId, newStock) {
+    try {
+      // Perform validation or other business logic if needed
+      if (newStock < 0) {
+        throw new Error("Invalid stock value");
+      }
+
+      // Use the DAO to update the product stock
+      const updatedProduct = await prodDao.updateProductStock(
+        productId,
+        newStock
+      );
+
+      return updatedProduct;
+    } catch (error) {
+      console.error(`Error in updateProductStock service: ${error.message}`);
+      throw error;
+    }
+  }
 }

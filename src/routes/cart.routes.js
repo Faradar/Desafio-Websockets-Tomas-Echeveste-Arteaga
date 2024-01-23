@@ -13,6 +13,7 @@ router
   .put("/:cid", controller.updateCart)
   .put("/:cid/products/:pid", controller.updateProductQuantity)
   .delete("/:cid", controller.deleteProductsFromCart)
-  .delete("/:cid/products/:pid", controller.deleteProductFromCart);
+  .delete("/:cid/products/:pid", controller.deleteProductFromCart)
+  .post("/:cid/purchase", controller.generateTicket);
 
 export default router;

@@ -35,6 +35,6 @@ export const mongoStoreOptions = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 120000,
+    maxAge: 1200000,
   },
 };

@@ -1,10 +1,11 @@
-import config from "../config/config.js";
+// import config from "../config/config.js";
 import { __dirname } from "../utils.js";
 
 // MongoDB
 import CartDaoMongoDB from "./daos/mongodb/cart/cart.dao.js";
 import ChatDaoMongoDB from "./daos/mongodb/chat/chat.dao.js";
 import ProductDaoMongoDB from "./daos/mongodb/product/product.dao.js";
+import TicketDaoMongoDB from "./daos/mongodb/ticket/ticket.dao.js";
 import UserDaoMongoDB from "./daos/mongodb/user/user.dao.js";
 import { ConnectMongoDB } from "../config/connection.js";
 
@@ -15,6 +16,7 @@ import ProductDaoFS from "./daos/filesystem/product.dao.js";
 let cartDao;
 let chatDao;
 let prodDao;
+let ticketDao;
 let userDao;
 let persistence = process.argv[2];
 // const persistence = config.PERSISTENCE;
@@ -32,6 +34,7 @@ switch (persistence) {
     cartDao = new CartDaoMongoDB();
     chatDao = new ChatDaoMongoDB();
     prodDao = new ProductDaoMongoDB();
+    ticketDao = new TicketDaoMongoDB();
     userDao = new UserDaoMongoDB();
     console.log("Persistence is : ", persistence);
     break;
@@ -40,9 +43,10 @@ switch (persistence) {
     cartDao = new CartDaoMongoDB();
     chatDao = new ChatDaoMongoDB();
     prodDao = new ProductDaoMongoDB();
+    ticketDao = new TicketDaoMongoDB();
     userDao = new UserDaoMongoDB();
     console.log("Persistence is : MONGO");
     break;
 }
 
-export { cartDao, chatDao, prodDao, userDao };
+export { cartDao, chatDao, prodDao, ticketDao, userDao };

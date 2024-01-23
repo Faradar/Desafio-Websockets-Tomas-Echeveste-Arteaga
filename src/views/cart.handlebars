@@ -11,6 +11,11 @@
   {{/each}}
 </ul>
 
+<!-- Buy Button -->
+<form action="/api/carts/{{cart._id}}/purchase" method="post">
+  <button type="submit">Checkout</button>
+</form>
+
 <!-- Profile link -->
 <a href="/profile">Check your Profile</a>
 
