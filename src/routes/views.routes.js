@@ -18,7 +18,8 @@ router
   .get("/login-error", checkNotAuthenticated, controller.loginError)
   .get("/products", checkAuthenticated, controller.products)
   .get("/products/:pid", checkAuthenticated, controller.productDetails)
-  .get("/carts/:cid", checkUser, checkAuthenticated, controller.cartDetails);
+  .get("/carts/:cid", checkUser, checkAuthenticated, controller.cartDetails)
+  .get("/checkout", checkUser, checkAuthenticated, controller.checkout);
 
 // Extra views using websocket
 router

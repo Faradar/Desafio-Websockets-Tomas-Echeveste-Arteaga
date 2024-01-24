@@ -107,4 +107,17 @@ export default class ViewController {
   loginError(req, res) {
     res.render("login-error", { style: "product.css" });
   }
+
+  async checkout(req, res, next) {
+    try {
+      // Retrieve ticket details from query parameters
+      const { code, datetime, amount, purchaser } = req.query;
+      // Render the checkout page with the ticket details
+      res.render("checkout", {
+        ticket: { code, purchase_datetime: datetime, amount, purchaser },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

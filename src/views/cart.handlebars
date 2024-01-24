@@ -6,7 +6,17 @@
     <li>
       <a href="/products/{{this.product._id}}">{{this.product.title}}</a>
       - Quantity:
-      {{this.quantity}}
+      <button class="quantity-btn" data-product-id="{{this.product._id}}" cart-id="{{../cart._id}}" data-action="subtract">-</button>
+      <span class="quantity">{{this.quantity}}</span>
+      <button class="quantity-btn" data-product-id="{{this.product._id}}" cart-id="{{../cart._id}}" data-action="add">+</button>
+
+      <!-- Delete Button -->
+      <button
+        class="delete-product"
+        data-product-id="{{this.product._id}}"
+        cart-id="{{../cart._id}}"
+      >Delete</button>
+    </li>
     </li>
   {{/each}}
 </ul>
@@ -26,3 +36,5 @@
 <form action="/api/sessions/logout" method="post">
   <button type="submit">Logout</button>
 </form>
+
+<script src="../js/cart.js"></script>

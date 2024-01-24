@@ -115,9 +115,16 @@ export default class CartController extends Controllers {
       const { _id } = req.session.user;
       const { cid } = req.params;
       const ticket = await service.generateTicket(_id, cid);
-      // console.log("ticket is:", ticket);
-      if (!ticket) res.status(404).json({ msg: "Error generate ticket" });
-      else res.status(200).json(ticket);
+      if (!ticket) {
+        res.status(404).json({ msg: "Error generate ticket" });
+      } else {
+        // res.status(200).json(ticket);
+        res
+          .status(201)
+          .redirect(
+            `/checkout?code=${ticket.code}&datetime=${ticket.purchase_datetime}&amount=${ticket.amount}&purchaser=${ticket.purchaser}`
+          );
+      }
     } catch (error) {
       next(error.message);
     }
