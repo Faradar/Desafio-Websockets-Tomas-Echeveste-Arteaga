@@ -133,7 +133,7 @@ export default class CartService extends Services {
 
       let amountAcc = 0;
       const productsToUpdateStock = [];
-      const productsNotProcessed = [];
+      const unprocessedProducts = [];
 
       for (const p of cart.products) {
         const idProd = p.product._id.toString();
@@ -155,15 +155,21 @@ export default class CartService extends Services {
         } else {
           // Handle the case where the purchased quantity exceeds the available stock
           console.log(`Insufficient stock for product with ID ${idProd}`);
-          productsNotProcessed.push(idProd);
+
+          // Add information to unprocessedProducts array
+          unprocessedProducts.push({
+            productId: idProd,
+            title: prodFromDB.title,
+            quantity: p.quantity,
+          });
         }
       }
 
       // Check if any products couldn't be processed
-      if (productsNotProcessed.length > 0) {
+      if (unprocessedProducts.length > 0) {
         console.log(
           "Some products have insufficient stock. They will not be processed:",
-          productsNotProcessed
+          unprocessedProducts
         );
       }
 
@@ -195,7 +201,7 @@ export default class CartService extends Services {
       // cart.save();
 
       //retornar el ticket
-      return ticket;
+      return { ticket, unprocessedProducts };
     } catch (error) {
       throw new Error(error);
     }

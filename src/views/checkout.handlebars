@@ -5,4 +5,13 @@
 <p><strong>Amount:</strong> ${{ticket.amount}}</p>
 <p><strong>Purchaser's Email:</strong> {{ticket.purchaser}}</p>
 
+{{#if unprocessedProducts.length}}
+  <p><strong>Unprocessed Products:</strong></p>
+  <ul>
+    {{#each unprocessedProducts}}
+      <li>Product ID: {{this.productId}} - Product Name: {{this.title}} - Quantity: {{this.quantity}}
+    {{/each}}
+  </ul>
+{{/if}}
+
 <a href="/products">Back to Home</a>
