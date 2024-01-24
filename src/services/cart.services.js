@@ -123,23 +123,21 @@ export default class CartService extends Services {
 
   async generateTicket(userId, cartId) {
     try {
-      //buscar el usuario
       const user = await userService.getById(userId);
       if (!user) return false;
-
-      //buscar el carrito
       const cart = await cartDao.getById(cartId);
       if (!cart) return false;
 
       let amountAcc = 0;
       const productsToUpdateStock = [];
       const unprocessedProducts = [];
+      const purchasedProducts = [];
 
       for (const p of cart.products) {
         const idProd = p.product._id.toString();
         const prodFromDB = await productService.getProductById(idProd);
 
-        //verifico si la cantidad que tengo en el carrito supera al stock del producto en db
+        // compare quantity in cart to DB
         if (p.quantity <= prodFromDB.stock) {
           const amount = p.quantity * prodFromDB.price;
           amountAcc += amount;
@@ -150,8 +148,12 @@ export default class CartService extends Services {
             newStock: prodFromDB.stock - p.quantity,
           });
 
-          // const newStock = prodFromDB.stock - p.quantity;
-          // await productService.updateProductStock(idProd, newStock);
+          // Add product to purchasedProducts array
+          purchasedProducts.push({
+            productId: idProd,
+            title: prodFromDB.title,
+            quantity: p.quantity,
+          });
         } else {
           // Handle the case where the purchased quantity exceeds the available stock
           console.log(`Insufficient stock for product with ID ${idProd}`);
@@ -173,7 +175,7 @@ export default class CartService extends Services {
         );
       }
 
-      //crear el ticket
+      //create the ticket
       const ticket = await ticketDao.create({
         code: uuidv4(),
         purchase_datetime: new Date().toLocaleString(),
@@ -196,12 +198,7 @@ export default class CartService extends Services {
       cart.products = remainingProducts;
       await cart.save();
 
-      //vaciar el carrito
-      // cart.products = [];
-      // cart.save();
-
-      //retornar el ticket
-      return { ticket, unprocessedProducts };
+      return { ticket, purchasedProducts, unprocessedProducts };
     } catch (error) {
       throw new Error(error);
     }

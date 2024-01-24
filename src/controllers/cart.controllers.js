@@ -114,13 +114,13 @@ export default class CartController extends Controllers {
     try {
       const { _id } = req.session.user;
       const { cid } = req.params;
-      const { ticket, unprocessedProducts } = await service.generateTicket(
-        _id,
-        cid
-      );
+      const { ticket, purchasedProducts, unprocessedProducts } =
+        await service.generateTicket(_id, cid);
       if (!ticket) {
         res.status(404).json({ msg: "Error generate ticket" });
       } else {
+        const serializedpurchasedProducts = JSON.stringify(purchasedProducts);
+
         const serializedUnprocessedProducts =
           JSON.stringify(unprocessedProducts);
 
@@ -131,7 +131,9 @@ export default class CartController extends Controllers {
               ticket.purchase_datetime
             }&amount=${ticket.amount}&purchaser=${
               ticket.purchaser
-            }&unprocessedProducts=${encodeURIComponent(
+            }&purchasedProducts=${encodeURIComponent(
+              serializedpurchasedProducts
+            )}&unprocessedProducts=${encodeURIComponent(
               serializedUnprocessedProducts
             )}`
           );

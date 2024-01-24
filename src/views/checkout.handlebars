@@ -5,6 +5,15 @@
 <p><strong>Amount:</strong> ${{ticket.amount}}</p>
 <p><strong>Purchaser's Email:</strong> {{ticket.purchaser}}</p>
 
+{{#if purchasedProducts.length}}
+  <p><strong>Purchased Products:</strong></p>
+  <ul>
+    {{#each purchasedProducts}}
+      <li>Product ID: {{this.productId}} - Product Name: {{this.title}} - Quantity: {{this.quantity}}</li>
+    {{/each}}
+  </ul>
+{{/if}}
+
 {{#if unprocessedProducts.length}}
   <p><strong>Unprocessed Products:</strong></p>
   <ul>

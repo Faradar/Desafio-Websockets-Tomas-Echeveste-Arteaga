@@ -110,26 +110,34 @@ export default class ViewController {
 
   async checkout(req, res, next) {
     try {
-      // Retrieve ticket details from query parameters
-      const { code, datetime, amount, purchaser, unprocessedProducts } =
-        req.query;
+      const {
+        code,
+        datetime,
+        amount,
+        purchaser,
+        purchasedProducts,
+        unprocessedProducts,
+      } = req.query;
 
+      let decodedPurchased;
       let decodedUnprocessed;
 
-      // Check if unprocessedProducts is provided and not an empty string
+      if (purchasedProducts) {
+        decodedPurchased = JSON.parse(decodeURIComponent(purchasedProducts));
+      } else {
+        decodedPurchased = [];
+      }
+
       if (unprocessedProducts) {
-        // Parse the decoded string into an array
         decodedUnprocessed = JSON.parse(
           decodeURIComponent(unprocessedProducts)
         );
-        console.log(decodedUnprocessed);
       } else {
-        // If not provided or empty, set it to an empty array
         decodedUnprocessed = [];
       }
-      // Render the checkout page with the ticket details
       res.render("checkout", {
         ticket: { code, purchase_datetime: datetime, amount, purchaser },
+        purchasedProducts: decodedPurchased,
         unprocessedProducts: decodedUnprocessed,
       });
     } catch (error) {
