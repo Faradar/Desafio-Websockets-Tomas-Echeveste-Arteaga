@@ -81,7 +81,7 @@ export default class ViewController {
       if (!cart) {
         res.status(404).json({ message: "Cart not found" });
       } else {
-        res.render("cart", { style: "product.css", cart });
+        res.render("cart", { style: "cart.css", cart });
       }
     } catch (error) {
       next(error);
@@ -136,6 +136,7 @@ export default class ViewController {
         decodedUnprocessed = [];
       }
       res.render("checkout", {
+        style: "product.css",
         ticket: { code, purchase_datetime: datetime, amount, purchaser },
         purchasedProducts: decodedPurchased,
         unprocessedProducts: decodedUnprocessed,
