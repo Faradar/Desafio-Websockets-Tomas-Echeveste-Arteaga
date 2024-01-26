@@ -13,18 +13,15 @@ export default class ChatDaoMongoDB extends Daos {
       });
       return response;
     } catch (error) {
-      console.error(`Error updating ${id} chat: ${error}`);
-      throw error;
+      throw new Error("Error in updateChat dao");
     }
   }
 
   async deleteChats() {
     try {
       await ChatModel.deleteMany({});
-      console.log("Chats deleted successfully");
     } catch (error) {
-      console.error("Error deleting all chats:", error);
-      throw error;
+      throw new Error("Error in deleteChats dao");
     }
   }
 }

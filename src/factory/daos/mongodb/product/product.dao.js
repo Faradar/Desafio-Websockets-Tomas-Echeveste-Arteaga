@@ -12,8 +12,7 @@ export default class ProductDaoMongoDB extends Daos {
       const response = await ProductModel.find({}).lean();
       return response;
     } catch (error) {
-      console.error(`Error fetching all products: ${error.message}`);
-      throw error;
+      throw new Error("Error in getAllProducts dao");
     }
   }
 
@@ -35,8 +34,7 @@ export default class ProductDaoMongoDB extends Daos {
       });
       return response;
     } catch (error) {
-      console.error(`Error fetching products with queries: ${error.message}`);
-      throw error;
+      throw new Error("Error in getProducts dao");
     }
   }
 
@@ -45,8 +43,7 @@ export default class ProductDaoMongoDB extends Daos {
       const response = await ProductModel.distinct("category");
       return response;
     } catch (error) {
-      console.error(`Error fetching categories: ${error.message}`);
-      throw error;
+      throw new Error("Error in getCategories dao");
     }
   }
 
@@ -55,8 +52,7 @@ export default class ProductDaoMongoDB extends Daos {
       const response = await ProductModel.findById(id).lean();
       return response;
     } catch (error) {
-      console.error(`Error fetching product by ID ${id}: ${error.message}`);
-      throw error;
+      throw new Error("Error in getProductById dao");
     }
   }
 
@@ -69,8 +65,7 @@ export default class ProductDaoMongoDB extends Daos {
       );
       return updatedProduct;
     } catch (error) {
-      console.error(`Error updating the product stock: ${error.message}`);
-      throw error;
+      throw new Error("Error in updateProductStock dao");
     }
   }
 }

@@ -1,6 +1,6 @@
 import Services from "./class.services.js";
 import { prodDao } from "../factory/factory.js";
-import { generateMockProduct } from "../utils.js";
+import generateMockProduct from "../utils/faker.js";
 import ProductRepository from "../factory/repository/product.repository.js";
 const prodRepository = new ProductRepository();
 
@@ -14,8 +14,7 @@ export default class ProductService extends Services {
     try {
       return await prodDao.getAllProducts();
     } catch (error) {
-      console.error(`Error in getAllProducts service: ${error.message}`);
-      throw error;
+      throw new Error("Error in getAllProducts service");
     }
   }
 
@@ -23,8 +22,7 @@ export default class ProductService extends Services {
     try {
       return await prodDao.getProducts(page, limit, sort, query);
     } catch (error) {
-      console.error(`Error in getProducts service: ${error.message}`);
-      throw error;
+      throw new Error("Error in getProducts service");
     }
   }
 
@@ -33,29 +31,27 @@ export default class ProductService extends Services {
       const categories = await prodDao.getCategories();
       return categories;
     } catch (error) {
-      console.log(error);
+      throw new Error("Error in getCategories service");
     }
   }
 
   async getProductById(id) {
     try {
       const prod = await prodDao.getProductById(id);
-      if (!prod) return false;
+      if (!prod) throw new Error("Product not found");
       else return prod;
     } catch (error) {
-      console.error(`Error in getProductById service: ${error.message}`);
-      throw error;
+      throw new Error("Error in getProductById service");
     }
   }
 
   async getDtoProductById(id) {
     try {
       const prod = await prodRepository.getDtoProductById(id);
-      if (!prod) return false;
+      if (!prod) throw new Error("Product not found");
       else return prod;
     } catch (error) {
-      console.error(`Error in getDtoProductById service: ${error.message}`);
-      throw error;
+      throw new Error("Error in getDtoProductById service");
     }
   }
 
@@ -74,23 +70,21 @@ export default class ProductService extends Services {
 
       return updatedProduct;
     } catch (error) {
-      console.error(`Error in updateProductStock service: ${error.message}`);
-      throw error;
+      throw new Error("Error in updateProductStock service");
     }
   }
 
-  async createProductMock(cant = 100) {
+  async generateMockProduct(cant = 100) {
     try {
       const products = [];
       for (let i = 0; i < cant; i++) {
         const product = generateMockProduct();
         products.push(product);
       }
-      const mock = await prodDao.create(products);
-      return mock;
+      // const mock = await prodDao.create(products);
+      return products;
     } catch (error) {
-      console.error(`Error in createProductMock service: ${error.message}`);
-      throw error;
+      throw new Error("Error in generateMockProduct service");
     }
   }
 }

@@ -1,3 +1,6 @@
+import { errorsDictionary } from "../utils/http.response.js";
+import { HttpResponse } from "../utils/http.response.js";
+const httpResponse = new HttpResponse();
 import Controllers from "./class.controller.js";
 import UserService from "../services/user.services.js";
 const userService = new UserService();
@@ -29,7 +32,8 @@ export default class UserController extends Controllers {
           age: 0,
           _id: "admin",
         };
-        res.status(200).redirect("/products");
+        res.status(200).redirect("/products"); // Comment this line to login with postman/thunderclient
+        // return httpResponse.Ok(res, req.session.user); // Uncomment this line to login with postman/thunderclient
       } else {
         const userId = req.session.passport.user;
         if (userId) {
@@ -37,7 +41,8 @@ export default class UserController extends Controllers {
           req.session.user = {
             ...user._doc,
           };
-          res.status(200).redirect("/products");
+          res.status(200).redirect("/products"); // Comment this line to login with postman/thunderclient
+          // return httpResponse.Ok(res, user); // Uncomment this line to login with postman/thunderclient
         } else {
           res.status(401).redirect("/login-error");
         }
@@ -51,8 +56,7 @@ export default class UserController extends Controllers {
     try {
       req.session.destroy((err) => {
         if (err) {
-          console.error(err);
-          return res.status(500).send("Error destroying session");
+          return httpResponse.ServerError(res, err, "Error destroying session");
         }
         res.redirect("/login");
       });
@@ -112,9 +116,9 @@ export default class UserController extends Controllers {
         user = await userService.getDtoUserById(userId);
       }
       if (!user) {
-        res.status(400).json({ message: "Something went wrong" });
+        return httpResponse.NotFound(res, user, errorsDictionary.USER_404);
       } else {
-        res.status(200).json(user);
+        return httpResponse.Ok(res, user);
       }
     } catch (error) {
       next(error);

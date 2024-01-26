@@ -1,3 +1,6 @@
+import { errorsDictionary } from "../utils/http.response.js";
+import { HttpResponse } from "../utils/http.response.js";
+const httpResponse = new HttpResponse();
 import Controllers from "./class.controller.js";
 import ProductService from "../services/product.services.js";
 const service = new ProductService();
@@ -33,7 +36,7 @@ export default class ProductController extends Controllers {
             (query ? `&query=${query}` : "")
           : null,
       };
-      res.status(200).json(response);
+      return httpResponse.Ok(res, response);
     } catch (error) {
       next(error);
     }
@@ -44,9 +47,13 @@ export default class ProductController extends Controllers {
       const { pid } = req.params;
       const product = await service.getProductById(pid);
       if (!product) {
-        res.status(404).json({ message: "Product not found" });
+        return httpResponse.NotFound(
+          res,
+          product,
+          errorsDictionary.PRODUCT_404
+        );
       } else {
-        res.status(200).json(product);
+        return httpResponse.Ok(res, product);
       }
     } catch (error) {
       next(error);
@@ -58,20 +65,24 @@ export default class ProductController extends Controllers {
       const { pid } = req.params;
       const product = await service.getDtoProductById(pid);
       if (!product) {
-        res.status(404).json({ message: "Product not found" });
+        return httpResponse.NotFound(
+          res,
+          product,
+          errorsDictionary.PRODUCT_404
+        );
       } else {
-        res.status(200).json(product);
+        return httpResponse.Ok(res, product);
       }
     } catch (error) {
       next(error);
     }
   }
 
-  async createProductMock(req, res, next) {
+  async generateMockProduct(req, res, next) {
     try {
       const { cant } = req.query;
-      const response = await service.createProductMock(cant);
-      res.status(200).json({ products: response });
+      const response = await service.generateMockProduct(cant);
+      return httpResponse.Ok(res, { products: response });
     } catch (error) {
       next(error);
     }

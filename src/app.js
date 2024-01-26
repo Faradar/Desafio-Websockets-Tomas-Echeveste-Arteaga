@@ -12,7 +12,7 @@ import "./passport/local.strategies.js";
 import "./passport/github.strategies.js";
 import "./passport/google.strategies.js";
 import { Server } from "socket.io";
-import { __dirname } from "./utils.js";
+import { __dirname } from "./utils/utils.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { mongoStoreOptions } from "./config/connection.js";
 import config from "./config/config.js";

@@ -20,7 +20,7 @@ router
   )
   .post(
     "/login",
-    checkNotAuthenticated,
+    checkNotAuthenticated, // Comment this line to login with postman/thunderclient
     passport.authenticate("login"),
     controller.login
   )

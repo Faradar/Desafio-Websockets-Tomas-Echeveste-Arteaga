@@ -8,7 +8,7 @@ export default class Daos {
       const response = await this.model.find({});
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error("Error in getAll dao");
     }
   }
 
@@ -17,7 +17,7 @@ export default class Daos {
       const response = await this.model.findById(id);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error("Error in getById dao");
     }
   }
 
@@ -26,7 +26,7 @@ export default class Daos {
       const response = await this.model.create(obj);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error("Error in create dao");
     }
   }
 
@@ -35,7 +35,7 @@ export default class Daos {
       await this.model.updateOne({ _id: id }, obj);
       return obj;
     } catch (error) {
-      console.log(error);
+      throw new Error("Error in update dao");
     }
   }
 
@@ -44,7 +44,7 @@ export default class Daos {
       const response = await this.model.findByIdAndDelete(id);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error("Error in delete dao");
     }
   }
 }

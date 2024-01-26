@@ -1,3 +1,6 @@
+import { errorsDictionary } from "../utils/http.response.js";
+import { HttpResponse } from "../utils/http.response.js";
+const httpResponse = new HttpResponse();
 import ViewService from "../services/views.services.js";
 const service = new ViewService();
 
@@ -60,7 +63,11 @@ export default class ViewController {
       const { pid } = req.params;
       const product = await service.getProductById(pid);
       if (!product) {
-        res.status(404).json({ message: "Product not found" });
+        return httpResponse.NotFound(
+          res,
+          product,
+          errorsDictionary.PRODUCT_404
+        );
       } else {
         const response = {
           status: "success",
@@ -79,7 +86,7 @@ export default class ViewController {
       const { cid } = req.params;
       const cart = await service.getCartById(cid);
       if (!cart) {
-        res.status(404).json({ message: "Cart not found" });
+        return httpResponse.NotFound(res, cart, errorsDictionary.CART_404);
       } else {
         res.render("cart", { style: "cart.css", cart });
       }

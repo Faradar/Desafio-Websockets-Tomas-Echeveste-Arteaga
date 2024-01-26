@@ -1,3 +1,6 @@
+import { HttpResponse } from "../utils/http.response.js";
+const httpResponse = new HttpResponse();
+
 export function checkAuthenticated(req, res, next) {
   if (req.session.user) {
     return next();
@@ -16,12 +19,12 @@ export function checkAdmin(req, res, next) {
   if (req.session.user && req.session.user.role === "admin") {
     return next();
   }
-  res.status(403).json({ message: "You are not an admin" });
+  return httpResponse.Forbidden(res, req.session.user, "You are not an admin");
 }
 
 export function checkUser(req, res, next) {
   if (req.session.user && req.session.user.role === "user") {
     return next();
   }
-  res.status(403).json({ message: "You are not a user" });
+  return httpResponse.Forbidden(res, req.session.user, "You are not a user");
 }

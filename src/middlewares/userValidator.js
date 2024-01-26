@@ -1,4 +1,6 @@
 import config from "../config/config.js";
+import { HttpResponse } from "../utils/http.response.js";
+const httpResponse = new HttpResponse();
 
 export const userValidator = (req, res, next) => {
   const user = req.body;
@@ -18,7 +20,7 @@ export const userValidator = (req, res, next) => {
     user.password === undefined ||
     typeof user.password !== "string"
   ) {
-    res.status(400).json({ message: "Invalid body" });
+    return httpResponse.BadRequest(res, user, "Invalid user");
   } else {
     next();
   }

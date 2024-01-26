@@ -17,11 +17,10 @@ export default class CartService extends Services {
   async getCartById(id) {
     try {
       const cart = await cartDao.getCartById(id);
-      if (!cart) return false;
+      if (!cart) throw new Error("Cart not found");
       else return cart;
     } catch (error) {
-      console.error(`Error in getCartById service: ${error.message}`);
-      throw error;
+      throw new Error("Error in getCartById service");
     }
   }
 
@@ -33,14 +32,13 @@ export default class CartService extends Services {
         if (productExists) {
           return await cartDao.saveProductToCart(idCart, idProd);
         } else {
-          console.log("Product not found");
+          throw new Error("Product not found");
         }
       } else {
-        console.log("Cart not found");
+        throw new Error("Cart not found");
       }
     } catch (error) {
-      console.error(`Error in saveProductToCart service: ${error.message}`);
-      throw error;
+      throw new Error("Error in saveProductToCart service");
     }
   }
 
@@ -56,14 +54,17 @@ export default class CartService extends Services {
           !Number.isInteger(product.quantity) ||
           product.quantity <= 0
         ) {
-          throw new Error("Invalid product format");
+          return httpResponse.BadRequest(
+            res,
+            product,
+            "Invalid product or quantity value"
+          );
         }
       });
       const updatedCart = await cartDao.updateCart(idCart, newProducts);
       return updatedCart;
     } catch (error) {
-      console.error(`Error in updateCart service: ${error.message}`);
-      throw error;
+      throw new Error("Error in updateCart service");
     }
   }
 
@@ -75,14 +76,13 @@ export default class CartService extends Services {
         if (productExists) {
           return await cartDao.updateProductQuantity(idCart, idProd, quantity);
         } else {
-          console.log("Product not found");
+          throw new Error("Product not found");
         }
       } else {
-        console.log("Cart not found");
+        throw new Error("Cart not found");
       }
     } catch (error) {
-      console.error(`Error in updateProductQuantity service: ${error.message}`);
-      throw error;
+      throw new Error("Error in updateProductQuantity service");
     }
   }
 
@@ -92,13 +92,10 @@ export default class CartService extends Services {
       if (cartExists) {
         return await cartDao.deleteProductsFromCart(idCart);
       } else {
-        console.log("Cart not found");
+        throw new Error("Cart not found");
       }
     } catch (error) {
-      console.error(
-        `Error in deleteProductsFromCart service: ${error.message}`
-      );
-      throw error;
+      throw new Error("Error in deleteProductsFromCart service");
     }
   }
 
@@ -110,14 +107,13 @@ export default class CartService extends Services {
         if (productExists) {
           return await cartDao.deleteProductFromCart(idCart, idProd);
         } else {
-          console.log("Product not found");
+          throw new Error("Product not found");
         }
       } else {
-        console.log("Cart not found");
+        throw new Error("Cart not found");
       }
     } catch (error) {
-      console.error(`Error in deleteProductFromCart service: ${error.message}`);
-      throw error;
+      throw new Error("Error in deleteProductFromCart service");
     }
   }
 
@@ -156,7 +152,7 @@ export default class CartService extends Services {
           });
         } else {
           // Handle the case where the purchased quantity exceeds the available stock
-          console.log(`Insufficient stock for product with ID ${idProd}`);
+          // throw new Error(`Insufficient stock for product with ID ${idProd}`);
 
           // Add information to unprocessedProducts array
           unprocessedProducts.push({
@@ -168,12 +164,12 @@ export default class CartService extends Services {
       }
 
       // Check if any products couldn't be processed
-      if (unprocessedProducts.length > 0) {
-        console.log(
-          "Some products have insufficient stock. They will not be processed:",
-          unprocessedProducts
-        );
-      }
+      // if (unprocessedProducts.length > 0) {
+      //   throw new Error(
+      //     "Some products have insufficient stock. They will not be processed:",
+      //     unprocessedProducts
+      //   );
+      // }
 
       //create the ticket
       const ticket = await ticketDao.create({
@@ -200,7 +196,7 @@ export default class CartService extends Services {
 
       return { ticket, purchasedProducts, unprocessedProducts };
     } catch (error) {
-      throw new Error(error);
+      throw new Error("Error in generateTicket service");
     }
   }
 }

@@ -13,8 +13,7 @@ export default class CartDaoMongoDB extends Daos {
         .lean();
       return response;
     } catch (error) {
-      console.error(`Error fetching cart with ID ${id}: ${error.message}`);
-      throw error;
+      throw new Error("Error in getCartById dao");
     }
   }
 
@@ -39,10 +38,7 @@ export default class CartDaoMongoDB extends Daos {
       );
       return response;
     } catch (error) {
-      console.error(
-        `Error saving the ${idProd} product to the ${idCart} cart: ${error.message}`
-      );
-      throw error;
+      throw new Error("Error in saveProductToCart dao");
     }
   }
 
@@ -56,10 +52,7 @@ export default class CartDaoMongoDB extends Daos {
 
       return updatedCart;
     } catch (error) {
-      console.error(
-        `Error updating the products in the ${idCart} cart: ${error.message}`
-      );
-      throw error;
+      throw new Error("Error in updateCart dao");
     }
   }
 
@@ -72,10 +65,7 @@ export default class CartDaoMongoDB extends Daos {
       );
       return updatedCart;
     } catch (error) {
-      console.error(
-        `Error updating the ${idProd} product quantity in the ${idCart} cart: ${error.message}`
-      );
-      throw error;
+      throw new Error("Error in updateProductQuantity dao");
     }
   }
 
@@ -86,13 +76,9 @@ export default class CartDaoMongoDB extends Daos {
         { $set: { products: [] } },
         { new: true }
       );
-      console.log("Products deleted from the cart =", updatedCart);
       return updatedCart;
     } catch (error) {
-      console.error(
-        `Error deleting the products from the ${idCart} cart: ${error.message}`
-      );
-      throw error;
+      throw new Error("Error in deleteProductsFromCart dao");
     }
   }
 
@@ -107,13 +93,9 @@ export default class CartDaoMongoDB extends Daos {
         { products: updatedProducts },
         { new: true }
       );
-      console.log("Product deleted from the cart =", updatedProducts);
       return response;
     } catch (error) {
-      console.error(
-        `Error deleting the ${idProd} product from the ${idCart} cart: ${error.message}`
-      );
-      throw error;
+      throw new Error("Error in deleteProductFromCart dao");
     }
   }
 }

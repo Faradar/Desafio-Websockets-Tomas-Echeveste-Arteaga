@@ -19,7 +19,7 @@ export default class CartDaoFS {
         return [];
       }
     } catch (error) {
-      console.error("Error when querying the cart: ", error);
+      throw new Error("Error when querying the cart");
     }
   }
 
@@ -32,7 +32,7 @@ export default class CartDaoFS {
       }
       return cart;
     } catch (error) {
-      console.error("Error when searching for the user: ", error);
+      throw new Error("Error when searching for the user");
     }
   }
 
@@ -45,10 +45,9 @@ export default class CartDaoFS {
       const cartsFile = await this.getCarts();
       cartsFile.push(cart);
       await fs.promises.writeFile(this.path, JSON.stringify(cartsFile));
-      console.log("Cart created successfully");
       return cart;
     } catch (error) {
-      console.error("Error creating the cart: ", error);
+      throw new Error("Error creating the cart");
     }
   }
 
@@ -77,17 +76,15 @@ export default class CartDaoFS {
             carts[index] = cartExists;
           }
           await fs.promises.writeFile(this.path, JSON.stringify(carts));
-          console.log("cart exists = ", cartExists);
-          console.log("carts = ", carts);
           return cartExists;
         } else {
-          console.log("Product not found");
+          throw new Error("Product not found");
         }
       } else {
-        console.log("Cart not found");
+        throw new Error("Cart not found");
       }
     } catch (error) {
-      console.error("Error saving the product to the cart: ", error);
+      throw new Error("Error saving the product to the cart");
     }
   }
 }

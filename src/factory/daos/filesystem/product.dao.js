@@ -16,10 +16,7 @@ export default class ProductDaoFS {
         return [];
       }
     } catch (error) {
-      console.error(
-        "Could not find the product under the following error:",
-        error
-      );
+      throw new Error("Could not find the products");
     }
   }
 
@@ -32,10 +29,7 @@ export default class ProductDaoFS {
       }
       return false;
     } catch (error) {
-      console.error(
-        "Could not find the product under the following error: ",
-        error
-      );
+      throw new Error("Could not find the product");
     }
   }
 
@@ -49,13 +43,9 @@ export default class ProductDaoFS {
       const products = await this.getProducts();
       products.push(product);
       await fs.promises.writeFile(this.path, JSON.stringify(products));
-      console.log("Product created succesfully");
       return product;
     } catch (error) {
-      console.error(
-        "Could not create the product under the following error: ",
-        error
-      );
+      throw new Error("Could not create the product");
     }
   }
 
@@ -73,12 +63,8 @@ export default class ProductDaoFS {
       };
       products[productIndex] = updatedProduct;
       await fs.promises.writeFile(this.path, JSON.stringify(products));
-      console.log("Product updated succesfully");
     } catch (error) {
-      console.error(
-        "Could not update the product under the following error: ",
-        error
-      );
+      throw new Error("Could not update the product");
     }
   }
 
@@ -91,12 +77,8 @@ export default class ProductDaoFS {
       }
       products.splice(productIndex, 1);
       await fs.promises.writeFile(this.path, JSON.stringify(products));
-      console.log("Product deleted succesfully");
     } catch (error) {
-      console.error(
-        "Could not delete the product under the following error: ",
-        error
-      );
+      throw new Error("Could not delete the product");
     }
   }
 }

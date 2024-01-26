@@ -16,8 +16,7 @@ export default class UserService extends Services {
       }
       return { success: true, user: registeredUser };
     } catch (error) {
-      console.error(`Error in registerUser: ${error.message}`);
-      throw error;
+      throw new Error("Error in register service");
     }
   }
 
@@ -29,8 +28,7 @@ export default class UserService extends Services {
       }
       return { success: true, user: loggedInUser };
     } catch (error) {
-      console.error(`Error in loginUser: ${error.message}`);
-      throw error;
+      throw new Error("Error in login service");
     }
   }
 
@@ -40,8 +38,7 @@ export default class UserService extends Services {
       if (!user) return false;
       else return user;
     } catch (error) {
-      console.error(`Error in getDtoUserById service: ${error.message}`);
-      throw error;
+      throw new Error("Error in getDtoUserById service");
     }
   }
 }

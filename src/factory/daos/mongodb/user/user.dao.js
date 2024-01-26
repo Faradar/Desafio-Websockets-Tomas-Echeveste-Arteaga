@@ -1,7 +1,7 @@
 import Daos from "../class.dao.js";
 import { UserModel } from "./user.model.js";
 import { CartModel } from "../cart/cart.model.js";
-import { createHash, isValidPass } from "../../../../utils.js";
+import { createHash, isValidPass } from "../../../../utils/bcrypt.js";
 
 export default class UserDaoMongoDB extends Daos {
   constructor() {
@@ -29,8 +29,7 @@ export default class UserDaoMongoDB extends Daos {
         return newUser;
       } else return false;
     } catch (error) {
-      console.error(`Error registering ${user} user: ${error.message}`);
-      throw error;
+      throw new Error("Error in register dao");
     }
   }
 
@@ -42,10 +41,7 @@ export default class UserDaoMongoDB extends Daos {
         return !pass ? false : userExist;
       } else return false;
     } catch (error) {
-      console.error(
-        `Error logging in the ${email} and ${password} credentials: ${error.message}`
-      );
-      throw error;
+      throw new Error("Error in login dao");
     }
   }
 
@@ -57,8 +53,7 @@ export default class UserDaoMongoDB extends Daos {
       }
       return false;
     } catch (error) {
-      console.log(error);
-      throw new Error(error);
+      throw new Error("Error in getByEmail dao");
     }
   }
 }
