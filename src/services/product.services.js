@@ -1,5 +1,6 @@
 import Services from "./class.services.js";
 import { prodDao } from "../factory/factory.js";
+import { generateMockProduct } from "../utils.js";
 import ProductRepository from "../factory/repository/product.repository.js";
 const prodRepository = new ProductRepository();
 
@@ -74,6 +75,21 @@ export default class ProductService extends Services {
       return updatedProduct;
     } catch (error) {
       console.error(`Error in updateProductStock service: ${error.message}`);
+      throw error;
+    }
+  }
+
+  async createProductMock(cant = 100) {
+    try {
+      const products = [];
+      for (let i = 0; i < cant; i++) {
+        const product = generateMockProduct();
+        products.push(product);
+      }
+      const mock = await prodDao.create(products);
+      return mock;
+    } catch (error) {
+      console.error(`Error in createProductMock service: ${error.message}`);
       throw error;
     }
   }

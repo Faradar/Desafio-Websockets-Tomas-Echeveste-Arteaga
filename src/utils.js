@@ -27,3 +27,20 @@ export const createHash = (password) => {
 export const isValidPass = (password, user) => {
   return compareSync(password, user.password);
 };
+
+/* ------------------------------------ - ----------------------------------- */
+
+import { faker } from "@faker-js/faker";
+
+export const generateMockProduct = () => {
+  return {
+    status: true,
+    title: faker.commerce.productName(),
+    description: faker.commerce.productDescription(),
+    code: faker.string.uuid(),
+    price: faker.commerce.price(),
+    stock: faker.number.int({ max: 500 }),
+    category: faker.commerce.department(),
+    thumbnails: Array.from({ length: 3 }, () => faker.image.url()),
+  };
+};

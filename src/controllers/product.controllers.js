@@ -66,4 +66,14 @@ export default class ProductController extends Controllers {
       next(error);
     }
   }
+
+  async createProductMock(req, res, next) {
+    try {
+      const { cant } = req.query;
+      const response = await service.createProductMock(cant);
+      res.status(200).json({ products: response });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

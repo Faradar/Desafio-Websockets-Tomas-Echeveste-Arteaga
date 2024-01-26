@@ -12,6 +12,7 @@ router
   .post("/", checkAdmin, productValidator, controller.create)
   .put("/:pid", checkAdmin, controller.update)
   .delete("/:pid", checkAdmin, controller.delete)
-  .get("/dto/:pid", controller.getDtoProductById);
+  .get("/dto/:pid", controller.getDtoProductById)
+  .post("/mockingproducts", controller.createProductMock);
 
 export default router;
