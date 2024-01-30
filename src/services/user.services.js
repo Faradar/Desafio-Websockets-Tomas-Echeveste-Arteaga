@@ -1,6 +1,6 @@
 import Services from "./class.services.js";
-import { userDao } from "../factory/factory.js";
-import UserRepository from "../factory/repository/user.repository.js";
+import { userDao } from "../persistence/factory.js";
+import UserRepository from "../persistence/repository/user.repository.js";
 const userRepository = new UserRepository();
 
 export default class UserService extends Services {

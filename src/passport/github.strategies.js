@@ -1,6 +1,6 @@
 import { Strategy as GithubStrategy } from "passport-github2";
 import passport from "passport";
-import { userDao } from "../factory/factory.js";
+import { userDao } from "../persistence/factory.js";
 import config from "../config/config.js";
 
 const strategyOptions = {

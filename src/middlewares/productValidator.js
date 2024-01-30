@@ -1,7 +1,8 @@
+import { ProductModel } from "../persistence/daos/mongodb/product/product.model.js";
 import { HttpResponse } from "../utils/http.response.js";
 const httpResponse = new HttpResponse();
 
-export const productValidator = (req, res, next) => {
+export const productValidator = async (req, res, next) => {
   const product = req.body;
   const validationErrors = [];
 
@@ -39,7 +40,25 @@ export const productValidator = (req, res, next) => {
   if (product.category === undefined || typeof product.category !== "string") {
     validationErrors.push("Category must be a non-empty string.");
   }
+
+  try {
+    const existingProduct = await ProductModel.findOne({ code: product.code });
+
+    if (existingProduct) {
+      validationErrors.push("Product with this code already exists");
+    }
+  } catch (error) {
+    return httpResponse.ServerError(
+      res,
+      error,
+      `Error checking product code uniqueness: ${error.message}`
+    );
+  }
+
   if (validationErrors.length > 0) {
+    console.log(
+      `Required properties: title, description, code, price, stock, category. Validation errors: ${validationErrors}`
+    );
     return httpResponse.BadRequest(
       res,
       { errors: validationErrors },

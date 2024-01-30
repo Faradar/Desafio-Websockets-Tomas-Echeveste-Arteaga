@@ -1,7 +1,7 @@
 import Services from "./class.services.js";
-import { prodDao } from "../factory/factory.js";
+import { prodDao } from "../persistence/factory.js";
 import generateMockProduct from "../utils/faker.js";
-import ProductRepository from "../factory/repository/product.repository.js";
+import ProductRepository from "../persistence/repository/product.repository.js";
 const prodRepository = new ProductRepository();
 
 export default class ProductService extends Services {

@@ -1,6 +1,6 @@
 import Services from "./class.services.js";
-import { cartDao } from "../factory/factory.js";
-import { ticketDao } from "../factory/factory.js";
+import { cartDao } from "../persistence/factory.js";
+import { ticketDao } from "../persistence/factory.js";
 import { Types } from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 
