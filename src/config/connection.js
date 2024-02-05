@@ -1,6 +1,7 @@
 import { connect } from "mongoose";
 import MongoStore from "connect-mongo";
 import config from "./config.js";
+import { devLogger } from "../utils/logger.js";
 
 const connectionString = config.MONGO_URL;
 
@@ -13,11 +14,11 @@ export class ConnectMongoDB {
 
   static getInstance() {
     if (this.#instance) {
-      console.log("You are already connected to MongoDB");
+      devLogger.info("You are already connected to MongoDB");
       return this.#instance;
     } else {
       this.#instance = new ConnectMongoDB();
-      console.log("Connected to MongoDB!");
+      devLogger.info("Connected to MongoDB!");
       return this.#instance;
     }
   }

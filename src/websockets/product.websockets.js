@@ -1,15 +1,16 @@
+import { devLogger } from "../utils/logger.js";
 import ProductService from "../services/product.services.js";
 const service = new ProductService();
 
 function productWebSocket(productNamespace) {
   productNamespace.on("connection", async (socket) => {
-    console.log(`🟢 User ${socket.id} connected to products`);
+    devLogger.info(`🟢 User ${socket.id} connected to products`);
 
     try {
       const products = await service.getAllProducts();
       socket.emit("updateProducts", products);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      devLogger.error("Error fetching products:", error);
     }
 
     socket.on("addProduct", async (productData) => {
@@ -22,13 +23,13 @@ function productWebSocket(productNamespace) {
           socket.emit("productCreationFailed", "Failed to create the product.");
         }
       } catch (error) {
-        console.error("Error adding a new product:", error);
+        devLogger.error("Error adding a new product:", error);
         socket.emit("productCreationFailed", "Failed to create the product.");
       }
     });
 
     socket.on("disconnect", () => {
-      console.log(`🔴 User ${socket.id} disconnected from the products`);
+      devLogger.info(`🔴 User ${socket.id} disconnected from the products`);
     });
   });
 }

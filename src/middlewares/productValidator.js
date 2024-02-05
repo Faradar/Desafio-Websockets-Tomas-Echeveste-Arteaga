@@ -1,6 +1,7 @@
 import { ProductModel } from "../persistence/daos/mongodb/product/product.model.js";
 import { HttpResponse } from "../utils/http.response.js";
 const httpResponse = new HttpResponse();
+import { devLogger } from "../utils/logger.js";
 
 export const productValidator = async (req, res, next) => {
   const product = req.body;
@@ -56,7 +57,7 @@ export const productValidator = async (req, res, next) => {
   }
 
   if (validationErrors.length > 0) {
-    console.log(
+    devLogger.error(
       `Required properties: title, description, code, price, stock, category. Validation errors: ${validationErrors}`
     );
     return httpResponse.BadRequest(

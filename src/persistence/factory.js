@@ -1,5 +1,6 @@
 // import config from "../config/config.js";
 import { __dirname } from "../utils/utils.js";
+import { devLogger } from "../utils/logger.js";
 
 // MongoDB
 import CartDaoMongoDB from "./daos/mongodb/cart/cart.dao.js";
@@ -27,7 +28,7 @@ switch (persistence) {
     prodDao = new ProductDaoFS(
       __dirname + "/daos/filesystem/data/products.json"
     );
-    console.log("Persistence is : ", persistence);
+    devLogger.info("Persistence is : ", persistence);
     break;
   case "MONGO":
     ConnectMongoDB.getInstance();
@@ -36,7 +37,7 @@ switch (persistence) {
     prodDao = new ProductDaoMongoDB();
     ticketDao = new TicketDaoMongoDB();
     userDao = new UserDaoMongoDB();
-    console.log("Persistence is : ", persistence);
+    devLogger.info("Persistence is : ", persistence);
     break;
   default:
     ConnectMongoDB.getInstance();
@@ -45,7 +46,7 @@ switch (persistence) {
     prodDao = new ProductDaoMongoDB();
     ticketDao = new TicketDaoMongoDB();
     userDao = new UserDaoMongoDB();
-    console.log("Persistence is : MONGO");
+    devLogger.info("Persistence is : MONGO");
     break;
 }
 

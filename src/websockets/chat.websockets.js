@@ -1,13 +1,14 @@
+import { devLogger } from "../utils/logger.js";
 import ChatService from "../services/chat.services.js";
 const service = new ChatService();
 
 function chatWebSocket(chatNamespace) {
   chatNamespace.on("connection", async (socket) => {
-    console.log(`🟢 User ${socket.id} connected to the chat`);
+    devLogger.info(`🟢 User ${socket.id} connected to the chat`);
     chatNamespace.emit("messages", await service.getAll());
 
     socket.on("newUser", (user) => {
-      console.log(`👤 User ${user} has logged on`);
+      devLogger.info(`👤 User ${user} has logged on`);
     });
 
     socket.on("chat:message", async (data) => {
@@ -24,7 +25,7 @@ function chatWebSocket(chatNamespace) {
     });
 
     socket.on("disconnect", () => {
-      console.log(`🔴 User ${socket.id} disconnected from the chat`);
+      devLogger.info(`🔴 User ${socket.id} disconnected from the chat`);
     });
   });
 }
