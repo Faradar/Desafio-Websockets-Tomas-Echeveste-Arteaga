@@ -4,6 +4,8 @@ const httpResponse = new HttpResponse();
 import Controllers from "./class.controller.js";
 import CartService from "../services/cart.services.js";
 const service = new CartService();
+import EmailController from "./email.controllers.js";
+const emailController = new EmailController();
 
 export default class CartController extends Controllers {
   constructor() {
@@ -136,9 +138,23 @@ export default class CartController extends Controllers {
         );
       } else {
         const serializedpurchasedProducts = JSON.stringify(purchasedProducts);
-
         const serializedUnprocessedProducts =
           JSON.stringify(unprocessedProducts);
+
+        // Send email with ticket details
+        const emailOptions = {
+          dest: req.session.user.email,
+          name: req.session.user.first_name,
+          ticketDetails: {
+            code: ticket.code,
+            purchase_datetime: ticket.purchase_datetime,
+            amount: ticket.amount,
+            purchaser: ticket.purchaser,
+            purchasedProducts,
+            unprocessedProducts,
+          },
+        };
+        await emailController.sendGmail(emailOptions);
 
         res
           .status(201)

@@ -149,6 +149,7 @@ export default class CartService extends Services {
             productId: idProd,
             title: prodFromDB.title,
             quantity: p.quantity,
+            price: prodFromDB.price,
           });
         } else {
           // Handle the case where the purchased quantity exceeds the available stock
@@ -159,6 +160,7 @@ export default class CartService extends Services {
             productId: idProd,
             title: prodFromDB.title,
             quantity: p.quantity,
+            price: prodFromDB.price,
           });
         }
       }

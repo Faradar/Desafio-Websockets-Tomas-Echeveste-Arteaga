@@ -9,7 +9,13 @@
   <p><strong>Purchased Products:</strong></p>
   <ul>
     {{#each purchasedProducts}}
-      <li>Product ID: {{this.productId}} - Product Name: {{this.title}} - Quantity: {{this.quantity}}</li>
+      <li>Product ID:
+        {{this.productId}}
+        - Product Name:
+        {{this.title}}
+        - Quantity:
+        {{this.quantity}}
+        - Price: ${{this.price}}</li>
     {{/each}}
   </ul>
 {{/if}}
@@ -18,7 +24,13 @@
   <p><strong>Unprocessed Products:</strong></p>
   <ul>
     {{#each unprocessedProducts}}
-      <li>Product ID: {{this.productId}} - Product Name: {{this.title}} - Quantity: {{this.quantity}}
+      <li>Product ID:
+        {{this.productId}}
+        - Product Name:
+        {{this.title}}
+        - Quantity:
+        {{this.quantity}}
+        - Price: ${{this.price}}</li>
     {{/each}}
   </ul>
 {{/if}}
