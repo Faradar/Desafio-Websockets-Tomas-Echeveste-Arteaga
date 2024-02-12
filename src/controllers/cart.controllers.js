@@ -141,20 +141,21 @@ export default class CartController extends Controllers {
         const serializedUnprocessedProducts =
           JSON.stringify(unprocessedProducts);
 
-        // Send email with ticket details
-        const emailOptions = {
-          dest: req.session.user.email,
-          name: req.session.user.first_name,
-          ticketDetails: {
-            code: ticket.code,
-            purchase_datetime: ticket.purchase_datetime,
-            amount: ticket.amount,
-            purchaser: ticket.purchaser,
-            purchasedProducts,
-            unprocessedProducts,
-          },
-        };
-        await emailController.sendGmail(emailOptions);
+        if (purchasedProducts.length > 0) {
+          const emailOptions = {
+            dest: req.session.user.email,
+            name: req.session.user.first_name,
+            ticketDetails: {
+              code: ticket.code,
+              purchase_datetime: ticket.purchase_datetime,
+              amount: ticket.amount,
+              purchaser: ticket.purchaser,
+              purchasedProducts,
+              unprocessedProducts,
+            },
+          };
+          await emailController.sendGmail(emailOptions);
+        }
 
         res
           .status(201)

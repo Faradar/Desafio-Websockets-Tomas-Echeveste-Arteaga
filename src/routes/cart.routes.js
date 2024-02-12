@@ -6,7 +6,7 @@ const controller = new CartController();
 const router = Router();
 
 router
-  .get("/", controller.getCarts)
+  // .get("/", controller.getCarts) // Only for testing
   .get("/:cid", controller.getCartById)
   .post("/", controller.create)
   .post("/:cid/products/:pid", checkUser, controller.saveProductToCart)

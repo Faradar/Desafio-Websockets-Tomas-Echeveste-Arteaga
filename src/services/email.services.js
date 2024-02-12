@@ -13,4 +13,11 @@ export default class EmailService {
       },
     });
   }
+
+  async sendMail(user, service, token = null) {
+    try {
+    } catch (error) {
+      throw new Error("Error in sendMail service");
+    }
+  }
 }

@@ -5,8 +5,8 @@
 <p><strong>Amount:</strong> ${{ticket.amount}}</p>
 <p><strong>Purchaser's Email:</strong> {{ticket.purchaser}}</p>
 
+<p><strong>Purchased Products:</strong></p>
 {{#if purchasedProducts.length}}
-  <p><strong>Purchased Products:</strong></p>
   <ul>
     {{#each purchasedProducts}}
       <li>Product ID:
@@ -18,6 +18,12 @@
         - Price: ${{this.price}}</li>
     {{/each}}
   </ul>
+{{else}}
+  {{#if unprocessedProducts.length}}
+    <p>Products could
+      <strong>not</strong>
+      be purchased due to lack of stock</p>
+  {{/if}}
 {{/if}}
 
 {{#if unprocessedProducts.length}}
