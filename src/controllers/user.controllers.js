@@ -124,4 +124,39 @@ export default class UserController extends Controllers {
       next(error);
     }
   }
+
+  async resetPass(req, res, next) {
+    try {
+      const tokenResetPass = await userService.resetPass(req.body.email);
+      if (tokenResetPass) {
+        res.cookie("tokenpass", tokenResetPass, {
+          httpOnly: true,
+          secure: true,
+        });
+        res.status(200).redirect("/forgotPassword/success");
+      } else
+        return httpResponse.NotFound(
+          res,
+          `email "${req.body.email}" not found`
+        );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updatePass(req, res, next) {
+    try {
+      const { password } = req.body;
+      const { tokenpass } = req.cookies;
+      if (!tokenpass)
+        return httpResponse.Forbidden(res, "Token not found or expired");
+      const updPass = await userService.updatePass(password, tokenpass);
+      if (!updPass)
+        return httpResponse.BadRequest(res, "Password must be different");
+      res.clearCookie("tokenpass");
+      return httpResponse.Ok(res, updPass);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

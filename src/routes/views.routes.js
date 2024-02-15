@@ -19,10 +19,13 @@ router
   .get("/products", checkAuthenticated, controller.products)
   .get("/products/:pid", checkAuthenticated, controller.productDetails)
   .get("/carts/:cid", checkUser, checkAuthenticated, controller.cartDetails)
-  .get("/checkout", checkUser, checkAuthenticated, controller.checkout);
+  .get("/checkout", checkUser, checkAuthenticated, controller.checkout)
+  .get("/forgotPassword", controller.forgotPass)
+  .get("/forgotPassword/success", controller.forgotPass2)
+  .get("/resetPassword", controller.resetPass)
+  .get("/resetPassword/success", controller.resetPass2)
 
-// Extra views using websocket
-router
+  // Extra views using websocket
   .get("/realtimeproducts", checkAuthenticated, controller.realTimeProducts)
   .get("/chat", checkUser, checkAuthenticated, controller.chat);
 

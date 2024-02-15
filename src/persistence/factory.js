@@ -1,4 +1,4 @@
-// import config from "../config/config.js";
+import config from "../config/config.js";
 import { __dirname } from "../utils/utils.js";
 import { devLogger } from "../utils/logger.js";
 
@@ -19,8 +19,8 @@ let chatDao;
 let prodDao;
 let ticketDao;
 let userDao;
-let persistence = process.argv[2];
-// const persistence = config.PERSISTENCE;
+// let persistence = process.argv[2];
+const persistence = config.PERSISTENCE;
 
 switch (persistence) {
   case "FS":

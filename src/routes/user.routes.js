@@ -41,6 +41,8 @@ router
     }),
     controller.google
   )
-  .get("/current", checkAuthenticated, controller.currentUser);
+  .get("/current", checkAuthenticated, controller.currentUser)
+  .post("/resetPassword", controller.resetPass)
+  .put("/newPassword", controller.updatePass);
 
 export default router;

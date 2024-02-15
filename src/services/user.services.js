@@ -2,6 +2,8 @@ import Services from "./class.services.js";
 import { userDao } from "../persistence/factory.js";
 import UserRepository from "../persistence/repository/user.repository.js";
 const userRepository = new UserRepository();
+import EmailService from "./email.services.js";
+const emailService = new EmailService();
 
 export default class UserService extends Services {
   constructor() {
@@ -41,4 +43,29 @@ export default class UserService extends Services {
       throw new Error("Error in getDtoUserById service");
     }
   }
+
+  async resetPass(email) {
+    try {
+      const token = await userDao.resetPass(email);
+      if (token.token)
+        return await emailService.resetPassMail(
+          token.user,
+          "resetPass",
+          token.token
+        );
+      else return false;
+    } catch (error) {
+      throw new Error("Error in resetPass service");
+    }
+  }
+
+  updatePass = async (pass, token) => {
+    try {
+      const response = await userDao.updatePass(pass, token);
+      if (!response) return false;
+      return response;
+    } catch (error) {
+      throw new Error("Error in updatePass service");
+    }
+  };
 }

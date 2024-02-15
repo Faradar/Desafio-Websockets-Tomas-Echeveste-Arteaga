@@ -152,4 +152,20 @@ export default class ViewController {
       next(error);
     }
   }
+
+  forgotPass(req, res) {
+    res.render("forgot-pass", { style: "product.css" });
+  }
+
+  forgotPass2(req, res) {
+    res.render("forgot-pass2", { style: "product.css" });
+  }
+
+  resetPass(req, res) {
+    res.render("reset-pass", { style: "product.css" });
+  }
+
+  resetPass2(req, res) {
+    res.render("reset-pass2", { style: "product.css" });
+  }
 }

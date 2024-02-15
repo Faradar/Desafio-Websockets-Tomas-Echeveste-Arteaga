@@ -4,8 +4,8 @@ const httpResponse = new HttpResponse();
 import Controllers from "./class.controller.js";
 import CartService from "../services/cart.services.js";
 const service = new CartService();
-import EmailController from "./email.controllers.js";
-const emailController = new EmailController();
+import EmailService from "../services/email.services.js";
+const emailService = new EmailService();
 
 export default class CartController extends Controllers {
   constructor() {
@@ -126,7 +126,7 @@ export default class CartController extends Controllers {
 
   async generateTicket(req, res, next) {
     try {
-      const { _id } = req.session.user;
+      const { _id, email, first_name } = req.session.user;
       const { cid } = req.params;
       const { ticket, purchasedProducts, unprocessedProducts } =
         await service.generateTicket(_id, cid);
@@ -142,19 +142,15 @@ export default class CartController extends Controllers {
           JSON.stringify(unprocessedProducts);
 
         if (purchasedProducts.length > 0) {
-          const emailOptions = {
-            dest: req.session.user.email,
-            name: req.session.user.first_name,
-            ticketDetails: {
-              code: ticket.code,
-              purchase_datetime: ticket.purchase_datetime,
-              amount: ticket.amount,
-              purchaser: ticket.purchaser,
-              purchasedProducts,
-              unprocessedProducts,
-            },
+          const ticketDetails = {
+            code: ticket.code,
+            purchase_datetime: ticket.purchase_datetime,
+            amount: ticket.amount,
+            purchaser: ticket.purchaser,
+            purchasedProducts,
+            unprocessedProducts,
           };
-          await emailController.sendGmail(emailOptions);
+          await emailService.checkoutMail(email, first_name, ticketDetails);
         }
 
         res
