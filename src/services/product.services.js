@@ -4,6 +4,9 @@ import generateMockProduct from "../utils/faker.js";
 import ProductRepository from "../persistence/repository/product.repository.js";
 const prodRepository = new ProductRepository();
 
+import UserService from "./user.services.js";
+const userService = new UserService();
+
 export default class ProductService extends Services {
   constructor() {
     super(prodDao);

@@ -68,4 +68,14 @@ export default class UserService extends Services {
       throw new Error("Error in updatePass service");
     }
   };
+
+  togglePremium = async (id) => {
+    try {
+      const response = await userDao.togglePremium(id);
+      if (!response) return false;
+      return response;
+    } catch (error) {
+      throw new Error("Error in togglePremium service");
+    }
+  };
 }

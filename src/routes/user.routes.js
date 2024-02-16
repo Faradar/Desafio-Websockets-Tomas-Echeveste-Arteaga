@@ -3,6 +3,7 @@ import { userValidator } from "../middlewares/userValidator.js";
 import {
   checkNotAuthenticated,
   checkAuthenticated,
+  checkAdmin,
 } from "../middlewares/auth.js";
 import UserController from "../controllers/user.controllers.js";
 const controller = new UserController();
@@ -20,7 +21,7 @@ router
   )
   .post(
     "/login",
-    checkNotAuthenticated, // Comment this line to login with postman/thunderclient
+    checkNotAuthenticated,
     passport.authenticate("login"),
     controller.login
   )
@@ -43,6 +44,7 @@ router
   )
   .get("/current", checkAuthenticated, controller.currentUser)
   .post("/resetPassword", controller.resetPass)
-  .put("/newPassword", controller.updatePass);
+  .put("/newPassword", controller.updatePass)
+  .put("/premium/:uid", checkAdmin, controller.togglePremium);
 
 export default router;

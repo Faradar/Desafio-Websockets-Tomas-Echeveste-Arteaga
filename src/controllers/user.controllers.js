@@ -1,7 +1,7 @@
 import { errorsDictionary } from "../utils/http.response.js";
 import { HttpResponse } from "../utils/http.response.js";
 const httpResponse = new HttpResponse();
-import Controllers from "./class.controller.js";
+import Controllers from "./class.controllers.js";
 import UserService from "../services/user.services.js";
 const userService = new UserService();
 import config from "../config/config.js";
@@ -32,8 +32,7 @@ export default class UserController extends Controllers {
           age: 0,
           _id: "admin",
         };
-        res.status(200).redirect("/products"); // Comment this line to login with postman/thunderclient
-        // return httpResponse.Ok(res, req.session.user); // Uncomment this line to login with postman/thunderclient
+        res.status(200).redirect("/products");
       } else {
         const userId = req.session.passport.user;
         if (userId) {
@@ -41,8 +40,7 @@ export default class UserController extends Controllers {
           req.session.user = {
             ...user._doc,
           };
-          res.status(200).redirect("/products"); // Comment this line to login with postman/thunderclient
-          // return httpResponse.Ok(res, user); // Uncomment this line to login with postman/thunderclient
+          res.status(200).redirect("/products");
         } else {
           res.status(401).redirect("/login-error");
         }
@@ -155,6 +153,16 @@ export default class UserController extends Controllers {
         return httpResponse.BadRequest(res, "Password must be different");
       res.clearCookie("tokenpass");
       return httpResponse.Ok(res, updPass);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async togglePremium(req, res, next) {
+    try {
+      const { uid } = req.params;
+      const user = await userService.togglePremium(uid);
+      return httpResponse.Ok(res, user, "User role updated successfully");
     } catch (error) {
       next(error);
     }

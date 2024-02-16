@@ -1,6 +1,11 @@
 import { Router } from "express";
-import { productValidator } from "../middlewares/productValidator.js";
-import { checkAdmin } from "../middlewares/auth.js";
+import {
+  productValidator,
+  createValidator,
+  updateValidator,
+  deleteValidator,
+} from "../middlewares/productValidator.js";
+import { checkPremium } from "../middlewares/auth.js";
 import ProductController from "../controllers/product.controllers.js";
 const controller = new ProductController();
 
@@ -8,11 +13,11 @@ const router = Router();
 
 router
   .get("/", controller.getProducts)
-  .get("/:pid", controller.getProductById)
-  .post("/", checkAdmin, productValidator, controller.create)
-  .put("/:pid", checkAdmin, controller.update)
-  .delete("/:pid", checkAdmin, controller.delete)
-  .get("/dto/:pid", controller.getDtoProductById)
+  .get("/:id", controller.getProductById)
+  .post("/", checkPremium, productValidator, createValidator, controller.create)
+  .put("/:id", checkPremium, updateValidator, controller.update)
+  .delete("/:id", checkPremium, deleteValidator, controller.delete)
+  .get("/dto/:id", controller.getDtoProductById)
   .post("/mockingproducts", controller.generateMockProduct);
 
 export default router;

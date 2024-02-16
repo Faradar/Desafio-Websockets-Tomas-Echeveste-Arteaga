@@ -99,4 +99,19 @@ export default class UserDaoMongoDB extends Daos {
       throw new Error("Error in updatePass dao");
     }
   }
+
+  async togglePremium(id) {
+    try {
+      const user = await this.getById(id);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      if (user.role === "admin") return false;
+      user.role = user.role === "user" ? "premium" : "user";
+      await this.update(id, user);
+      return user;
+    } catch (error) {
+      throw new Error("Error in togglePremium dao");
+    }
+  }
 }

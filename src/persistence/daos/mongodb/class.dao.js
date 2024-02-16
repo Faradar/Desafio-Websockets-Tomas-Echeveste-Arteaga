@@ -26,6 +26,7 @@ export default class Daos {
       const response = await this.model.create(obj);
       return response;
     } catch (error) {
+      console.log(error);
       throw new Error("Error in create dao");
     }
   }

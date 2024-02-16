@@ -1,7 +1,7 @@
 import { errorsDictionary } from "../utils/http.response.js";
 import { HttpResponse } from "../utils/http.response.js";
 const httpResponse = new HttpResponse();
-import Controllers from "./class.controller.js";
+import Controllers from "./class.controllers.js";
 import ProductService from "../services/product.services.js";
 const service = new ProductService();
 
@@ -44,8 +44,8 @@ export default class ProductController extends Controllers {
 
   async getProductById(req, res, next) {
     try {
-      const { pid } = req.params;
-      const product = await service.getProductById(pid);
+      const { id } = req.params;
+      const product = await service.getProductById(id);
       if (!product) {
         return httpResponse.NotFound(
           res,
@@ -62,8 +62,8 @@ export default class ProductController extends Controllers {
 
   async getDtoProductById(req, res, next) {
     try {
-      const { pid } = req.params;
-      const product = await service.getDtoProductById(pid);
+      const { id } = req.params;
+      const product = await service.getDtoProductById(id);
       if (!product) {
         return httpResponse.NotFound(
           res,

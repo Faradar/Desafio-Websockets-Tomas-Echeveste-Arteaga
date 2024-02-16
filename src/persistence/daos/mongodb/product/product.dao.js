@@ -68,4 +68,17 @@ export default class ProductDaoMongoDB extends Daos {
       throw new Error("Error in updateProductStock dao");
     }
   }
+
+  async updateProductOwner(productId, ownerId) {
+    try {
+      const updatedProduct = await ProductModel.findByIdAndUpdate(
+        productId,
+        { $set: { owner: ownerId } },
+        { new: true }
+      );
+      return updatedProduct;
+    } catch (error) {
+      throw new Error("Error in updateProductOwner dao");
+    }
+  }
 }

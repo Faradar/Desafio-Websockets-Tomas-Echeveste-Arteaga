@@ -1,7 +1,7 @@
 import { errorsDictionary } from "../utils/http.response.js";
 import { HttpResponse } from "../utils/http.response.js";
 const httpResponse = new HttpResponse();
-import Controllers from "./class.controller.js";
+import Controllers from "./class.controllers.js";
 import CartService from "../services/cart.services.js";
 const service = new CartService();
 import EmailService from "../services/email.services.js";

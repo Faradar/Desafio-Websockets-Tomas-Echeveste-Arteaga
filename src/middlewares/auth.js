@@ -16,15 +16,32 @@ export function checkNotAuthenticated(req, res, next) {
 }
 
 export function checkAdmin(req, res, next) {
-  if (req.session.user && req.session.user.role === "admin") {
+  if (!req.user) {
+    return httpResponse.Forbidden(res, req.user, "User is not defined");
+  } else if (req.user.role === "admin") {
     return next();
   }
-  return httpResponse.Forbidden(res, req.session.user, "You are not an admin");
+  return httpResponse.Forbidden(res, req.user, "You are not an admin");
 }
 
 export function checkUser(req, res, next) {
-  if (req.session.user && req.session.user.role === "user") {
+  if (!req.user) {
+    return httpResponse.Forbidden(res, req.user, "User is not defined");
+  } else if (req.user.role === "user" || req.user.role === "premium") {
     return next();
   }
-  return httpResponse.Forbidden(res, req.session.user, "You are not a user");
+  return httpResponse.Forbidden(res, req.user, "You are not a user");
+}
+
+export function checkPremium(req, res, next) {
+  if (!req.user) {
+    return httpResponse.Forbidden(res, req.user, "User is not defined");
+  } else if (req.user.role === "premium" || req.user.role === "admin") {
+    return next();
+  }
+  return httpResponse.Forbidden(
+    res,
+    req.user,
+    "You are not a premium user or an admin"
+  );
 }
