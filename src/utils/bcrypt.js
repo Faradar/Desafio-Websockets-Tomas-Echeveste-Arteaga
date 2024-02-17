@@ -1,16 +1,24 @@
 import { hashSync, genSaltSync, compareSync } from "bcrypt";
 
-//registro
+// register
+
+/**
+ * function that performs password encryption through bcryptjs with the hashSync method.
+ * Receives unencrypted password,
+ * returns encrypted password
+ * @param password type string
+ * @returns encrypted/hashed password
+ */
 export const createHash = (password) => {
   return hashSync(password, genSaltSync(10));
 };
 
-//login
+// login
 
 /**
  *
- * @param {*} password contraseña proporcionada por el usuario, sin hashear
- * @param {*} user usuario existente en base de datos
+ * @param {*} password user-provided password, unhashed
+ * @param {*} user existing user in database
  * @returns boolean
  */
 

@@ -19,7 +19,7 @@ export default class CartDaoFS {
         return [];
       }
     } catch (error) {
-      throw new Error("Error when querying the cart");
+      throw new Error(error.message);
     }
   }
 
@@ -32,7 +32,7 @@ export default class CartDaoFS {
       }
       return cart;
     } catch (error) {
-      throw new Error("Error when searching for the user");
+      throw new Error(error.message);
     }
   }
 
@@ -47,7 +47,7 @@ export default class CartDaoFS {
       await fs.promises.writeFile(this.path, JSON.stringify(cartsFile));
       return cart;
     } catch (error) {
-      throw new Error("Error creating the cart");
+      throw new Error(error.message);
     }
   }
 
@@ -84,7 +84,7 @@ export default class CartDaoFS {
         throw new Error("Cart not found");
       }
     } catch (error) {
-      throw new Error("Error saving the product to the cart");
+      throw new Error(error.message);
     }
   }
 }

@@ -4,9 +4,6 @@ import generateMockProduct from "../utils/faker.js";
 import ProductRepository from "../persistence/repository/product.repository.js";
 const prodRepository = new ProductRepository();
 
-import UserService from "./user.services.js";
-const userService = new UserService();
-
 export default class ProductService extends Services {
   constructor() {
     super(prodDao);
@@ -17,7 +14,7 @@ export default class ProductService extends Services {
     try {
       return await prodDao.getAllProducts();
     } catch (error) {
-      throw new Error("Error in getAllProducts service");
+      throw new Error(error.message);
     }
   }
 
@@ -25,7 +22,7 @@ export default class ProductService extends Services {
     try {
       return await prodDao.getProducts(page, limit, sort, query);
     } catch (error) {
-      throw new Error("Error in getProducts service");
+      throw new Error(error.message);
     }
   }
 
@@ -34,7 +31,7 @@ export default class ProductService extends Services {
       const categories = await prodDao.getCategories();
       return categories;
     } catch (error) {
-      throw new Error("Error in getCategories service");
+      throw new Error(error.message);
     }
   }
 
@@ -44,7 +41,7 @@ export default class ProductService extends Services {
       if (!prod) throw new Error("Product not found");
       else return prod;
     } catch (error) {
-      throw new Error("Error in getProductById service");
+      throw new Error(error.message);
     }
   }
 
@@ -54,7 +51,7 @@ export default class ProductService extends Services {
       if (!prod) throw new Error("Product not found");
       else return prod;
     } catch (error) {
-      throw new Error("Error in getDtoProductById service");
+      throw new Error(error.message);
     }
   }
 
@@ -73,7 +70,7 @@ export default class ProductService extends Services {
 
       return updatedProduct;
     } catch (error) {
-      throw new Error("Error in updateProductStock service");
+      throw new Error(error.message);
     }
   }
 
@@ -87,7 +84,7 @@ export default class ProductService extends Services {
       // const mock = await prodDao.create(products);
       return products;
     } catch (error) {
-      throw new Error("Error in generateMockProduct service");
+      throw new Error(error.message);
     }
   }
 }

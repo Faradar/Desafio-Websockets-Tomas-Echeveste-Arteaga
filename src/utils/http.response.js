@@ -1,4 +1,4 @@
-import { devLogger, prodLogger } from "./logger.js";
+import { devLogger } from "./logger.js";
 
 const httpStatus = {
   OK: 200,
@@ -9,13 +9,6 @@ const httpStatus = {
   FORBIDDEN: 403,
   NOT_FOUND: 404,
   INTERNAL_SERVER_ERROR: 500,
-};
-
-export const errorsDictionary = {
-  CART_404: "Cart not found",
-  ITEM_404: "Item not found",
-  PRODUCT_404: "Product not found",
-  USER_404: "User not found",
 };
 
 export class HttpResponse {

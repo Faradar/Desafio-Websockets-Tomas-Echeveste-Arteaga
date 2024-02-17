@@ -7,7 +7,7 @@ export default class Services {
     try {
       return await this.dao.getAll();
     } catch (error) {
-      throw new Error("Error in getAll service");
+      throw new Error(error.message);
     }
   };
 
@@ -17,7 +17,7 @@ export default class Services {
       if (!item) return false;
       else return item;
     } catch (error) {
-      throw new Error("Error in getById service");
+      throw new Error(error.message);
     }
   };
 
@@ -27,7 +27,7 @@ export default class Services {
       if (!newItem) return false;
       else return newItem;
     } catch (error) {
-      throw new Error("Error in create service");
+      throw new Error(error.message);
     }
   };
 
@@ -37,7 +37,7 @@ export default class Services {
       if (!item) return false;
       else return await this.dao.update(id, obj);
     } catch (error) {
-      throw new Error("Error in update service");
+      throw new Error(error.message);
     }
   };
 
@@ -45,7 +45,7 @@ export default class Services {
     try {
       return await this.dao.delete(id);
     } catch (error) {
-      throw new Error("Error in delete service");
+      throw new Error(error.message);
     }
   };
 }

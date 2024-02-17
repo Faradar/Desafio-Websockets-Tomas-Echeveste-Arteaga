@@ -1,5 +1,6 @@
 import { ProductModel } from "../persistence/daos/mongodb/product/product.model.js";
-import { HttpResponse, errorsDictionary } from "../utils/http.response.js";
+import { HttpResponse } from "../utils/http.response.js";
+import errorsDictionary from "../utils/errors.dictionary.js";
 const httpResponse = new HttpResponse();
 import { devLogger } from "../utils/logger.js";
 

@@ -16,7 +16,7 @@ export default class ProductDaoFS {
         return [];
       }
     } catch (error) {
-      throw new Error("Could not find the products");
+      throw new Error(error.message);
     }
   }
 
@@ -29,7 +29,7 @@ export default class ProductDaoFS {
       }
       return false;
     } catch (error) {
-      throw new Error("Could not find the product");
+      throw new Error(error.message);
     }
   }
 
@@ -45,7 +45,7 @@ export default class ProductDaoFS {
       await fs.promises.writeFile(this.path, JSON.stringify(products));
       return product;
     } catch (error) {
-      throw new Error("Could not create the product");
+      throw new Error(error.message);
     }
   }
 
@@ -64,7 +64,7 @@ export default class ProductDaoFS {
       products[productIndex] = updatedProduct;
       await fs.promises.writeFile(this.path, JSON.stringify(products));
     } catch (error) {
-      throw new Error("Could not update the product");
+      throw new Error(error.message);
     }
   }
 
@@ -78,7 +78,7 @@ export default class ProductDaoFS {
       products.splice(productIndex, 1);
       await fs.promises.writeFile(this.path, JSON.stringify(products));
     } catch (error) {
-      throw new Error("Could not delete the product");
+      throw new Error(error.message);
     }
   }
 }

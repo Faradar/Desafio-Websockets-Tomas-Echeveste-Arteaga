@@ -13,7 +13,7 @@ export default class CartDaoMongoDB extends Daos {
         .lean();
       return response;
     } catch (error) {
-      throw new Error("Error in getCartById dao");
+      throw new Error(error.message);
     }
   }
 
@@ -38,7 +38,7 @@ export default class CartDaoMongoDB extends Daos {
       );
       return response;
     } catch (error) {
-      throw new Error("Error in saveProductToCart dao");
+      throw new Error(error.message);
     }
   }
 
@@ -52,7 +52,7 @@ export default class CartDaoMongoDB extends Daos {
 
       return updatedCart;
     } catch (error) {
-      throw new Error("Error in updateCart dao");
+      throw new Error(error.message);
     }
   }
 
@@ -65,7 +65,7 @@ export default class CartDaoMongoDB extends Daos {
       );
       return updatedCart;
     } catch (error) {
-      throw new Error("Error in updateProductQuantity dao");
+      throw new Error(error.message);
     }
   }
 
@@ -78,7 +78,7 @@ export default class CartDaoMongoDB extends Daos {
       );
       return updatedCart;
     } catch (error) {
-      throw new Error("Error in deleteProductsFromCart dao");
+      throw new Error(error.message);
     }
   }
 
@@ -95,7 +95,7 @@ export default class CartDaoMongoDB extends Daos {
       );
       return response;
     } catch (error) {
-      throw new Error("Error in deleteProductFromCart dao");
+      throw new Error(error.message);
     }
   }
 }

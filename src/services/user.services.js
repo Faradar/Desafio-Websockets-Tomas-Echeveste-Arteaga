@@ -18,7 +18,7 @@ export default class UserService extends Services {
       }
       return { success: true, user: registeredUser };
     } catch (error) {
-      throw new Error("Error in register service");
+      throw new Error(error.message);
     }
   }
 
@@ -30,7 +30,7 @@ export default class UserService extends Services {
       }
       return { success: true, user: loggedInUser };
     } catch (error) {
-      throw new Error("Error in login service");
+      throw new Error(error.message);
     }
   }
 
@@ -40,7 +40,7 @@ export default class UserService extends Services {
       if (!user) return false;
       else return user;
     } catch (error) {
-      throw new Error("Error in getDtoUserById service");
+      throw new Error(error.message);
     }
   }
 
@@ -55,7 +55,7 @@ export default class UserService extends Services {
         );
       else return false;
     } catch (error) {
-      throw new Error("Error in resetPass service");
+      throw new Error(error.message);
     }
   }
 
@@ -65,7 +65,7 @@ export default class UserService extends Services {
       if (!response) return false;
       return response;
     } catch (error) {
-      throw new Error("Error in updatePass service");
+      throw new Error(error.message);
     }
   };
 
@@ -75,7 +75,7 @@ export default class UserService extends Services {
       if (!response) return false;
       return response;
     } catch (error) {
-      throw new Error("Error in togglePremium service");
+      throw new Error(error.message);
     }
   };
 }

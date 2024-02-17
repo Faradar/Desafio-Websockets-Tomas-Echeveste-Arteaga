@@ -26,7 +26,7 @@ export default class EmailService {
       const response = await this.transporter.sendMail(gmailOptions);
       return response;
     } catch (error) {
-      throw new Error("Error in sendGmail service");
+      throw new Error(error.message);
     }
   }
 
@@ -78,7 +78,7 @@ export default class EmailService {
       );
       return response;
     } catch (error) {
-      throw new Error("Error in checkoutMail service");
+      throw new Error(error.message);
     }
   }
 
@@ -115,10 +115,10 @@ export default class EmailService {
           ? "Forgotten Password"
           : "";
 
-      const response = await this.sendGmail(email, subj, msg);
+      await this.sendGmail(email, subj, msg);
       if (token !== null) return token;
     } catch (error) {
-      throw new Error("Error in resetPassMail service");
+      throw new Error(error.message);
     }
   }
 }

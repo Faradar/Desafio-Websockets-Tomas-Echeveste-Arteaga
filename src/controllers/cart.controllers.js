@@ -1,4 +1,4 @@
-import { errorsDictionary } from "../utils/http.response.js";
+import errorsDictionary from "../utils/errors.dictionary.js";
 import { HttpResponse } from "../utils/http.response.js";
 const httpResponse = new HttpResponse();
 import Controllers from "./class.controllers.js";

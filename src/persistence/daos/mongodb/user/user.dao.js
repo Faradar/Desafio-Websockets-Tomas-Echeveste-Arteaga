@@ -47,7 +47,7 @@ export default class UserDaoMongoDB extends Daos {
         return newUser;
       } else return false;
     } catch (error) {
-      throw new Error("Error in register dao");
+      throw new Error(error.message);
     }
   }
 
@@ -59,7 +59,7 @@ export default class UserDaoMongoDB extends Daos {
         return !pass ? false : userExist;
       } else return false;
     } catch (error) {
-      throw new Error("Error in login dao");
+      throw new Error(error.message);
     }
   }
 
@@ -71,7 +71,7 @@ export default class UserDaoMongoDB extends Daos {
       }
       return false;
     } catch (error) {
-      throw new Error("Error in getByEmail dao");
+      throw new Error(error.message);
     }
   }
 
@@ -83,7 +83,7 @@ export default class UserDaoMongoDB extends Daos {
         return { token, user: userExist };
       } else return false;
     } catch (error) {
-      throw new Error("Error in resetPass dao");
+      throw new Error(error.message);
     }
   }
 
@@ -96,7 +96,7 @@ export default class UserDaoMongoDB extends Daos {
       const newPass = createHash(pass);
       return await this.update(user._id, { password: newPass });
     } catch (error) {
-      throw new Error("Error in updatePass dao");
+      throw new Error(error.message);
     }
   }
 
@@ -111,7 +111,7 @@ export default class UserDaoMongoDB extends Daos {
       await this.update(id, user);
       return user;
     } catch (error) {
-      throw new Error("Error in togglePremium dao");
+      throw new Error(error.message);
     }
   }
 }

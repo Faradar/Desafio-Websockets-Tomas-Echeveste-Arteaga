@@ -20,7 +20,7 @@ export default class CartService extends Services {
       if (!cart) throw new Error("Cart not found");
       else return cart;
     } catch (error) {
-      throw new Error("Error in getCartById service");
+      throw new Error(error.message);
     }
   }
 
@@ -38,7 +38,7 @@ export default class CartService extends Services {
         throw new Error("Cart not found");
       }
     } catch (error) {
-      throw new Error("Error in saveProductToCart service");
+      throw new Error(error.message);
     }
   }
 
@@ -64,7 +64,7 @@ export default class CartService extends Services {
       const updatedCart = await cartDao.updateCart(idCart, newProducts);
       return updatedCart;
     } catch (error) {
-      throw new Error("Error in updateCart service");
+      throw new Error(error.message);
     }
   }
 
@@ -82,7 +82,7 @@ export default class CartService extends Services {
         throw new Error("Cart not found");
       }
     } catch (error) {
-      throw new Error("Error in updateProductQuantity service");
+      throw new Error(error.message);
     }
   }
 
@@ -95,7 +95,7 @@ export default class CartService extends Services {
         throw new Error("Cart not found");
       }
     } catch (error) {
-      throw new Error("Error in deleteProductsFromCart service");
+      throw new Error(error.message);
     }
   }
 
@@ -113,7 +113,7 @@ export default class CartService extends Services {
         throw new Error("Cart not found");
       }
     } catch (error) {
-      throw new Error("Error in deleteProductFromCart service");
+      throw new Error(error.message);
     }
   }
 
@@ -165,14 +165,6 @@ export default class CartService extends Services {
         }
       }
 
-      // Check if any products couldn't be processed
-      // if (unprocessedProducts.length > 0) {
-      //   throw new Error(
-      //     "Some products have insufficient stock. They will not be processed:",
-      //     unprocessedProducts
-      //   );
-      // }
-
       //create the ticket
       const ticket = await ticketDao.create({
         code: uuidv4(),
@@ -198,7 +190,7 @@ export default class CartService extends Services {
 
       return { ticket, purchasedProducts, unprocessedProducts };
     } catch (error) {
-      throw new Error("Error in generateTicket service");
+      throw new Error(error.message);
     }
   }
 }

@@ -8,7 +8,7 @@ export default class ViewService {
     try {
       return await service.getAllProducts();
     } catch (error) {
-      throw new Error("Error in views getAllProducts service");
+      throw new Error(error.message);
     }
   }
 
@@ -16,7 +16,7 @@ export default class ViewService {
     try {
       return await service.getProducts(page, limit, sort, query);
     } catch (error) {
-      throw new Error("Error in views getProducts service");
+      throw new Error(error.message);
     }
   }
 
@@ -25,7 +25,7 @@ export default class ViewService {
       const categories = await service.getCategories();
       return categories;
     } catch (error) {
-      throw new Error("Error in views getCategories service");
+      throw new Error(error.message);
     }
   }
 
@@ -33,7 +33,7 @@ export default class ViewService {
     try {
       return await service.getProductById(id);
     } catch (error) {
-      throw new Error("Error in views getProductById service");
+      throw new Error(error.message);
     }
   }
 
@@ -41,7 +41,7 @@ export default class ViewService {
     try {
       return await cartService.getCartById(id);
     } catch (error) {
-      throw new Error("Error in views getCartById service");
+      throw new Error(error.message);
     }
   }
 }

@@ -13,7 +13,7 @@ export default class ChatDaoMongoDB extends Daos {
       });
       return response;
     } catch (error) {
-      throw new Error("Error in updateChat dao");
+      throw new Error(error.message);
     }
   }
 
@@ -21,7 +21,7 @@ export default class ChatDaoMongoDB extends Daos {
     try {
       await ChatModel.deleteMany({});
     } catch (error) {
-      throw new Error("Error in deleteChats dao");
+      throw new Error(error.message);
     }
   }
 }
