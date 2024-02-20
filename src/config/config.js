@@ -17,4 +17,5 @@ export default {
   NODEMAILER_PORT: process.env.NODEMAILER_PORT,
   SECRET_JWT: process.env.SECRET_JWT,
   SECRET_COOKIES: process.env.SECRET_COOKIES,
+  LOGGER: process.env.LOGGER,
 };

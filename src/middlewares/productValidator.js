@@ -2,7 +2,7 @@ import { ProductModel } from "../persistence/daos/mongodb/product/product.model.
 import { HttpResponse } from "../utils/http.response.js";
 import errorsDictionary from "../utils/errors.dictionary.js";
 const httpResponse = new HttpResponse();
-import { devLogger } from "../utils/logger.js";
+import logger from "../utils/logger.js";
 
 export const productValidator = async (req, res, next) => {
   const product = req.body;
@@ -58,7 +58,7 @@ export const productValidator = async (req, res, next) => {
   }
 
   if (validationErrors.length > 0) {
-    devLogger.error(
+    logger.error(
       `Required properties: title, description, code, price, stock, category. Validation errors: ${validationErrors}`
     );
     return httpResponse.BadRequest(

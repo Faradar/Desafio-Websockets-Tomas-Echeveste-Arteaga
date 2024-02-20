@@ -16,7 +16,7 @@ import { __dirname } from "./utils/utils.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { mongoStoreOptions } from "./config/connection.js";
 import config from "./config/config.js";
-import { devLogger } from "./utils/logger.js";
+import logger from "./utils/logger.js";
 
 const app = express();
 app.use(express.json());
@@ -53,7 +53,7 @@ app.use(errorHandler);
 // Server
 const port = config.PORT;
 const httpServer = app.listen(port, () => {
-  devLogger.info(`Server running on port ${port}`);
+  logger.info(`Server running on port ${port}`);
 });
 
 // Websockets

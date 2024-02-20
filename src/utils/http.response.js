@@ -1,4 +1,4 @@
-import { devLogger } from "./logger.js";
+import logger from "./logger.js";
 
 const httpStatus = {
   OK: 200,
@@ -13,7 +13,7 @@ const httpStatus = {
 
 export class HttpResponse {
   Ok(res, data, msg = "Success") {
-    devLogger.info(msg, data);
+    logger.info(msg, data);
     return res.status(httpStatus.OK).json({
       status: httpStatus.OK,
       message: msg,
@@ -22,7 +22,7 @@ export class HttpResponse {
   }
 
   Created(res, data, msg = "Created") {
-    devLogger.info(msg, data);
+    logger.info(msg, data);
     return res.status(httpStatus.CREATED).json({
       status: httpStatus.CREATED,
       message: msg,
@@ -31,7 +31,7 @@ export class HttpResponse {
   }
 
   NoContent(res, data, msg = "No Content") {
-    devLogger.info(msg, data);
+    logger.info(msg, data);
     return res.status(httpStatus.NO_CONTENT).json({
       status: httpStatus.NO_CONTENT,
       message: msg,
@@ -40,7 +40,7 @@ export class HttpResponse {
   }
 
   BadRequest(res, data, msg = "Bad Request") {
-    devLogger.error(msg, data);
+    logger.error(msg, data);
     return res.status(httpStatus.BAD_REQUEST).json({
       status: httpStatus.BAD_REQUEST,
       message: msg,
@@ -49,7 +49,7 @@ export class HttpResponse {
   }
 
   Unauthorized(res, data, msg = "Unauthorized") {
-    devLogger.error(msg, data);
+    logger.error(msg, data);
     return res.status(httpStatus.UNAUTHORIZED).json({
       status: httpStatus.UNAUTHORIZED,
       message: msg,
@@ -58,7 +58,7 @@ export class HttpResponse {
   }
 
   Forbidden(res, data, msg = "Forbidden") {
-    devLogger.error(msg, data);
+    logger.error(msg, data);
     return res.status(httpStatus.FORBIDDEN).json({
       status: httpStatus.FORBIDDEN,
       message: msg,
@@ -67,7 +67,7 @@ export class HttpResponse {
   }
 
   NotFound(res, data, msg = "Not Found") {
-    devLogger.error(msg, data);
+    logger.error(msg, data);
     return res.status(httpStatus.NOT_FOUND).json({
       status: httpStatus.NOT_FOUND,
       message: msg,
@@ -76,7 +76,7 @@ export class HttpResponse {
   }
 
   ServerError(res, data, msg = "Internal Server Error") {
-    devLogger.error(msg, data);
+    logger.error(msg, data);
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
       status: httpStatus.INTERNAL_SERVER_ERROR,
       message: msg,
