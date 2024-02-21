@@ -146,9 +146,10 @@ export default class UserController extends Controllers {
     try {
       const { password } = req.body;
       const { tokenpass } = req.cookies;
-      if (!tokenpass)
-        return httpResponse.Forbidden(res, "Token not found or expired");
+      if (!tokenpass) return httpResponse.Unauthorized(res, "Token not found");
       const updPass = await userService.updatePass(password, tokenpass);
+      if (updPass === "TokenExpired")
+        return httpResponse.Unauthorized(res, "Token expired");
       if (!updPass)
         return httpResponse.BadRequest(res, "Password must be different");
       res.clearCookie("tokenpass");

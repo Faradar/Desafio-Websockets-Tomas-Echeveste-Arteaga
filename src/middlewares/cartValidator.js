@@ -5,7 +5,7 @@ const httpResponse = new HttpResponse();
 
 export const saveProductValidator = async (req, res, next) => {
   const product = await ProductModel.findById(req.params.pid);
-  const { user } = req;
+  const { user } = req.session;
   if (!product) {
     return httpResponse.NotFound(res, product, errorsDictionary.PRODUCT_404);
   }

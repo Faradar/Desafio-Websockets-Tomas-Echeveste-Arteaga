@@ -1,0 +1,264 @@
+paths:
+  /products:
+    get:
+      summary: Retrieve all products
+      description: Returns a list of all products with pagination information.
+      tags:
+        - Products
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: The page number for pagination.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+          description: The maximum number of products per page.
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: ["asc", "desc"]
+          description: Sort order for products (ascending or descending by price).
+        - in: query
+          name: query
+          schema:
+            type: string
+          description: Filter products by category.
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductsResponse"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a new product
+      description: Endpoint for creating a new product. Only available to admins or premium users.
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductCreateRequest"
+      responses:
+        201:
+          description: Product successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /products/{id}:
+    get:
+      summary: Retrieve a product by ID
+      description: Retrieves information about a specific product by its ID.
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the product.
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Update a product by ID
+      description: Update an existing product with the specified ID. Only the owner of the product can update it.
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the product to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductUpdateRequest"
+      responses:
+        200:
+          description: Item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete a product by ID
+      description: Deletes a product with the specified ID. An admin can delete any product while a premium user can only delete a product they own.
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the product to delete.
+      responses:
+        200:
+          description: Item deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /products/dto/{id}:
+    get:
+      summary: Get product details (DTO) by ID
+      description: Retrieves product details using Data Transfer Object (DTO) by the specified ID.
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the product to retrieve details for.
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductDTOResponse"
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /products/mockingproducts:
+    post:
+      summary: Generate mock products
+      description: Generates a specified number of mock product. These are not stored in the database.
+      tags:
+        - Products
+      parameters:
+        - in: query
+          name: cant
+          schema:
+            type: integer
+          required: false
+          description: The number of mock products to generate. Default is 100.
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MockProductsResponse"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"

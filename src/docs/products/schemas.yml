@@ -1,0 +1,252 @@
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The unique identifier of the product.
+        status:
+          type: boolean
+          description: Indicates the status of the product.
+        title:
+          type: string
+          description: The title of the product.
+        description:
+          type: string
+          description: A description of the product.
+        code:
+          type: string
+          description: The unique code identifying the product.
+        price:
+          type: number
+          description: The price of the product.
+        stock:
+          type: integer
+          description: The available stock quantity of the product.
+        category:
+          type: string
+          description: The category to which the product belongs.
+        thumbnails:
+          type: array
+          items:
+            type: string
+          description: URLs of thumbnails associated with the product.
+        owner:
+          type: string
+          description: The owner of the product.
+        __v:
+          type: integer
+          description: Version key of the product.
+    ProductWithPagination:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicates the status of the response.
+        payload:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+          description: List of products.
+        totalPages:
+          type: integer
+          description: Total number of pages for pagination.
+        prevPage:
+          type: integer
+          description: The page number of the previous page.
+        nextPage:
+          type: integer
+          description: The page number of the next page.
+        page:
+          type: integer
+          description: The current page number.
+        hasPrevPage:
+          type: boolean
+          description: Indicates if there is a previous page.
+        hasNextPage:
+          type: boolean
+          description: Indicates if there is a next page.
+        prevLink:
+          type: string
+          nullable: true
+          description: Link to the previous page.
+        nextLink:
+          type: string
+          nullable: true
+          description: Link to the next page.
+    ProductDTO:
+      type: object
+      properties:
+        nameProd:
+          type: string
+          description: The name of the product.
+        descriptionProd:
+          type: string
+          description: The description of the product.
+        priceProd:
+          type: number
+          description: The price of the product.
+        stockProd:
+          type: number
+          description: The stock quantity of the product.
+    ProductMock:
+      type: object
+      properties:
+        status:
+          type: boolean
+          description: The status of the product.
+        title:
+          type: string
+          description: The title of the product.
+        description:
+          type: string
+          description: The description of the product.
+        code:
+          type: string
+          description: The unique code of the product.
+        price:
+          type: number
+          format: float
+          description: The price of the product.
+        stock:
+          type: integer
+          description: The stock quantity of the product.
+        category:
+          type: string
+          description: The category of the product.
+        thumbnails:
+          type: array
+          items:
+            type: string
+          description: URLs of thumbnails associated with the product.
+    ProductCreateRequest:
+      type: object
+      required:
+        - title
+        - description
+        - code
+        - price
+        - stock
+        - category
+      properties:
+        title:
+          type: string
+          description: The title of the product.
+        description:
+          type: string
+          description: The description of the product.
+        code:
+          type: string
+          description: The code of the product.
+        price:
+          type: number
+          description: The price of the product.
+        stock:
+          type: number
+          description: The stock quantity of the product.
+        category:
+          type: string
+          description: The category of the product.
+        thumbnails:
+          type: array
+          items:
+            type: string
+          description: URLs of thumbnails associated with the product.
+    ProductUpdateRequest:
+      type: object
+      properties:
+        status:
+          type: boolean
+          description: The updated status of the product.
+        title:
+          type: string
+          description: The updated title of the product.
+        description:
+          type: string
+          description: The updated description of the product.
+        code:
+          type: string
+          description: The updated code of the product.
+        price:
+          type: number
+          description: The updated price of the product.
+        stock:
+          type: number
+          description: The updated stock quantity of the product.
+        category:
+          type: string
+          description: The updated category of the product.
+        thumbnails:
+          type: array
+          items:
+            type: string
+          description: Updated URLs of thumbnails associated with the product.
+        owner:
+          type: string
+          description: The updated owner of the product.
+    ProductResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: The status code of the response.
+        message:
+          type: string
+          description: A message describing the result of the operation.
+        data:
+          $ref: "#/components/schemas/Product"
+    ProductsResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: The status code of the response.
+        message:
+          type: string
+          description: A message describing the result of the operation.
+        data:
+          $ref: "#/components/schemas/ProductWithPagination"
+    ProductDTOResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: The status code of the response.
+        message:
+          type: string
+          description: A message describing the result of the operation.
+        data:
+          $ref: "#/components/schemas/ProductDTO"
+    MockProductsResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: The status code of the response.
+        message:
+          type: string
+          description: A message describing the result of the operation.
+        data:
+          type: object
+          properties:
+            products:
+              type: array
+              items:
+                $ref: "#/components/schemas/ProductMock"
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: The HTTP status code of the error.
+        message:
+          type: string
+          description: A message describing the error.
+        data:
+          description: Additional data related to the error, if any.
+          oneOf:
+            - type: object
+            - type: array
+            - type: string
+            - type: number

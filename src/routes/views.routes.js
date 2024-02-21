@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  checkHome,
   checkAuthenticated,
   checkNotAuthenticated,
   checkUser,
@@ -10,7 +11,7 @@ const controller = new ViewController();
 const router = Router();
 
 router
-  .get("/", checkAuthenticated, controller.home)
+  .get("/", checkHome, controller.home)
   .get("/login", checkNotAuthenticated, controller.login)
   .get("/register", checkNotAuthenticated, controller.register)
   .get("/profile", checkAuthenticated, controller.profile)

@@ -80,8 +80,8 @@ export default class ProductController extends Controllers {
 
   async generateMockProduct(req, res, next) {
     try {
-      const { cant } = req.query;
-      const response = await service.generateMockProduct(cant);
+      const { amount } = req.query;
+      const response = await service.generateMockProduct(amount);
       return httpResponse.Ok(res, { products: response });
     } catch (error) {
       next(error);

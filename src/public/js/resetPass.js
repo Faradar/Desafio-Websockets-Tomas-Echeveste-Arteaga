@@ -15,6 +15,11 @@ document
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          // Token expired or not found, redirect to /forgotPassword
+          window.location.href = "/forgotPassword";
+          return;
+        }
         const errorData = await response.json();
         displayErrorMessage(JSON.stringify(errorData)); // Display JSON data
         throw new Error("Server error");

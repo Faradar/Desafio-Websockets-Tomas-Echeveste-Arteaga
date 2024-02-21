@@ -17,8 +17,13 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 import { mongoStoreOptions } from "./config/connection.js";
 import config from "./config/config.js";
 import logger from "./utils/logger.js";
+import info from "./docs/info.js";
+import swaggerUI from "swagger-ui-express";
+import swaggerJSDoc from "swagger-jsdoc";
 
 const app = express();
+const specs = swaggerJSDoc(info);
+app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(specs));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));

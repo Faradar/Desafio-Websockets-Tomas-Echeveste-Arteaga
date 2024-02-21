@@ -66,7 +66,7 @@ export default class Controllers {
         const itemUpd = await this.service.delete(id);
         if (!itemUpd)
           return httpResponse.BadRequest(res, itemUpd, "Error deleting item");
-        else return httpResponse.NoContent(res, itemUpd, "Item deleted");
+        else return httpResponse.Ok(res, itemUpd, "Item deleted");
       }
     } catch (error) {
       next(error);

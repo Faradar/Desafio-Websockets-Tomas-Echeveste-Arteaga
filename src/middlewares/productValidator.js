@@ -82,9 +82,22 @@ export const createValidator = async (req, res, next) => {
 
 export const updateValidator = async (req, res, next) => {
   const product = await ProductModel.findById(req.params.id);
-  const { user } = req;
+  const { user, body } = req;
   if (!product) {
     return httpResponse.NotFound(res, product, errorsDictionary.PRODUCT_404);
+  }
+
+  if (body.hasOwnProperty("code")) {
+    const existingCode = await ProductModel.findOne({
+      code: body.code,
+    });
+    if (existingCode) {
+      return httpResponse.BadRequest(
+        res,
+        body.code,
+        "A product with this code already exists"
+      );
+    }
   }
 
   if (user.role === "premium" && user.email === product.owner) {
@@ -103,7 +116,6 @@ export const updateValidator = async (req, res, next) => {
 export const deleteValidator = async (req, res, next) => {
   const product = await ProductModel.findById(req.params.id);
   const { user } = req;
-  console.log(user);
   if (!product) {
     return httpResponse.NotFound(res, product, errorsDictionary.PRODUCT_404);
   }

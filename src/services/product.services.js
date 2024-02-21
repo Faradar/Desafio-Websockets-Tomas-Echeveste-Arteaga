@@ -74,14 +74,14 @@ export default class ProductService extends Services {
     }
   }
 
-  async generateMockProduct(cant = 100) {
+  async generateMockProduct(amount = 100) {
     try {
       const products = [];
-      for (let i = 0; i < cant; i++) {
+      for (let i = 0; i < amount; i++) {
         const product = generateMockProduct();
         products.push(product);
       }
-      // const mock = await prodDao.create(products);
+      // const mock = await prodDao.create(products); // Uncomment if you want to store products in DB
       return products;
     } catch (error) {
       throw new Error(error.message);

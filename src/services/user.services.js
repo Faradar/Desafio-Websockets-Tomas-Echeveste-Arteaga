@@ -1,4 +1,7 @@
 import Services from "./class.services.js";
+import jwt from "jsonwebtoken";
+import config from "../config/config.js";
+import { createHash, isValidPass } from "../utils/bcrypt.js";
 import { userDao } from "../persistence/factory.js";
 import UserRepository from "../persistence/repository/user.repository.js";
 const userRepository = new UserRepository();
@@ -8,6 +11,22 @@ const emailService = new EmailService();
 export default class UserService extends Services {
   constructor() {
     super(userDao);
+  }
+
+  /**
+   * Generate user token
+   * @param {*} user
+   * @param {*} timeExp
+   * @returns token
+   */
+  generateToken(user, timeExp) {
+    const payload = {
+      userId: user._id,
+    };
+    const token = jwt.sign(payload, config.SECRET_JWT, {
+      expiresIn: timeExp,
+    });
+    return token;
   }
 
   async register(user) {
@@ -46,28 +65,34 @@ export default class UserService extends Services {
 
   async resetPass(email) {
     try {
-      const token = await userDao.resetPass(email);
-      if (token.token)
-        return await emailService.resetPassMail(
-          token.user,
-          "resetPass",
-          token.token
-        );
-      else return false;
+      const user = await userDao.resetPass(email);
+      if (user) {
+        const token = this.generateToken(user, "1h");
+        return await emailService.resetPassMail(user, "resetPass", token);
+      } else {
+        return false;
+      }
     } catch (error) {
       throw new Error(error.message);
     }
   }
 
-  updatePass = async (pass, token) => {
+  async updatePass(pass, token) {
     try {
-      const response = await userDao.updatePass(pass, token);
-      if (!response) return false;
-      return response;
+      const decodedToken = jwt.verify(token, config.SECRET_JWT);
+      const user = await this.getById(decodedToken.userId);
+      const isEqual = isValidPass(pass, user);
+      if (isEqual) return false;
+      const newPass = createHash(pass);
+      return await this.update(user._id, { password: newPass });
     } catch (error) {
-      throw new Error(error.message);
+      if (error.name === "TokenExpiredError") {
+        return "TokenExpired";
+      } else {
+        throw new Error(error.message);
+      }
     }
-  };
+  }
 
   togglePremium = async (id) => {
     try {
