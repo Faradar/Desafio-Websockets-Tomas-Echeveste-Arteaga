@@ -72,6 +72,14 @@ passport.deserializeUser(async (id, done) => {
     };
     return done(null, adminUser);
   }
-  const user = await userDao.getById(id);
-  return done(null, user);
+  try {
+    const user = await userDao.getById(id);
+    if (!user) {
+      return done(new Error("User not found"));
+    }
+    return done(null, user);
+  } catch (error) {
+    logger.error(error);
+    return done(error);
+  }
 });
