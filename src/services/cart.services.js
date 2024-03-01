@@ -17,7 +17,7 @@ export default class CartService extends Services {
   async getCartById(id) {
     try {
       const cart = await cartDao.getCartById(id);
-      if (!cart) throw new Error("Cart not found");
+      if (!cart) return false;
       else return cart;
     } catch (error) {
       throw new Error(error.message);
@@ -32,10 +32,10 @@ export default class CartService extends Services {
         if (productExists) {
           return await cartDao.saveProductToCart(idCart, idProd);
         } else {
-          throw new Error("Product not found");
+          return "Product not found";
         }
       } else {
-        throw new Error("Cart not found");
+        return "Cart not found";
       }
     } catch (error) {
       throw new Error(error.message);
@@ -76,10 +76,10 @@ export default class CartService extends Services {
         if (productExists) {
           return await cartDao.updateProductQuantity(idCart, idProd, quantity);
         } else {
-          throw new Error("Product not found");
+          return "Product not found";
         }
       } else {
-        throw new Error("Cart not found");
+        return "Cart not found";
       }
     } catch (error) {
       throw new Error(error.message);
@@ -92,7 +92,7 @@ export default class CartService extends Services {
       if (cartExists) {
         return await cartDao.deleteProductsFromCart(idCart);
       } else {
-        throw new Error("Cart not found");
+        return "Cart not found";
       }
     } catch (error) {
       throw new Error(error.message);
@@ -107,10 +107,10 @@ export default class CartService extends Services {
         if (productExists) {
           return await cartDao.deleteProductFromCart(idCart, idProd);
         } else {
-          throw new Error("Product not found");
+          return "Product not found";
         }
       } else {
-        throw new Error("Cart not found");
+        return "Cart not found";
       }
     } catch (error) {
       throw new Error(error.message);
@@ -152,9 +152,6 @@ export default class CartService extends Services {
             price: prodFromDB.price,
           });
         } else {
-          // Handle the case where the purchased quantity exceeds the available stock
-          // throw new Error(`Insufficient stock for product with ID ${idProd}`);
-
           // Add information to unprocessedProducts array
           unprocessedProducts.push({
             productId: idProd,

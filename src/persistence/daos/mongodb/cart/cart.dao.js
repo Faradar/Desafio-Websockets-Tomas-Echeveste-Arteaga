@@ -44,13 +44,15 @@ export default class CartDaoMongoDB extends Daos {
 
   async updateCart(idCart, newProducts) {
     try {
-      const updatedCart = await CartModel.findByIdAndUpdate(
+      const cartExists = await CartModel.findById(idCart);
+      if (!cartExists) return false;
+      const response = await CartModel.findByIdAndUpdate(
         idCart,
         { products: newProducts },
         { new: true }
       );
 
-      return updatedCart;
+      return response;
     } catch (error) {
       throw new Error(error.message);
     }

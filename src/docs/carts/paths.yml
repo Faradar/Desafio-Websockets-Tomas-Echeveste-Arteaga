@@ -1,0 +1,356 @@
+paths:
+  /api/carts/{cid}:
+    get:
+      summary: Retrieve cart by ID
+      description: Retrieves the cart details by its ID.
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          required: true
+          description: The ID of the cart to retrieve.
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: The status code of the response.
+                  message:
+                    type: string
+                    description: A message describing the result of the operation.
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: The ID of the cart.
+                      user:
+                        type: string
+                        description: The ID of the user who owns the cart.
+                      products:
+                        type: array
+                        description: The list of products in the cart.
+                        items:
+                          type: object
+                          properties:
+                            product:
+                              $ref: "#/components/schemas/Product"
+                              description: The product in the cart.
+                            quantity:
+                              type: integer
+                              description: The quantity of the product in the cart.
+                      __v:
+                        type: integer
+                        description: Version key of the cart.
+        404:
+          description: Cart not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Edit cart
+      description: Edits the specified cart. Only the owner of the cart can add products to it but they can't add products they own.
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          required: true
+          description: The ID of the cart to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                products:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/ProductInCart"
+                  description: The list of products to update in the cart.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartResponse"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Products from Cart
+      description: Delete all products from the user's cart.
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: The ID of the cart.
+          schema:
+            type: string
+            example: "65dd12e3d0dd0052ad1e94d0"
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/carts/{cid}/products/{pid}:
+    post:
+      summary: Add product to cart
+      description: Adds a product to the specified cart. Only the owner of the cart can add products to it and they can't add products they own. If successful, it redirects to the users cart page.
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          required: true
+          description: The ID of the cart.
+        - in: path
+          name: pid
+          schema:
+            type: string
+          required: true
+          description: The ID of the product to add to the cart.
+      responses:
+        308:
+          description: Permanent Redirect
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: The URL of the updated cart.
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Update Product Quantity in Cart
+      description: Update the quantity of a product in the user's cart.
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: The ID of the cart.
+          schema:
+            type: string
+            example: "65dd12e3d0dd0052ad1e94d0"
+        - in: path
+          name: pid
+          required: true
+          description: The ID of the product.
+          schema:
+            type: string
+            example: "6563a6ff22494f1b7eca4bcd"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  description: The new quantity of the product in the cart.
+                  example: 32
+      responses:
+        "200":
+          description: Product quantity updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Product quantity updated successfully
+                  data:
+                    type: object
+                    nullable: true
+                    example: null
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete Product from Cart
+      description: Delete a specific product from the user's cart.
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: The ID of the cart.
+          schema:
+            type: string
+            example: "65dd12e3d0dd0052ad1e94d0"
+        - in: path
+          name: pid
+          required: true
+          description: The ID of the product to delete from the cart.
+          schema:
+            type: string
+            example: "6563a6ff22494f1b7eca4bcd"
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Generate Ticket and Redirect to Checkout
+      description: Generates a ticket for the purchase made from the cart and redirects the user to the checkout page.
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: The ID of the cart.
+          schema:
+            type: string
+            example: "65dd12e3d0dd0052ad1e94d0"
+      responses:
+        308:
+          description: Redirect to checkout page
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: The URL of the updated cart.
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"

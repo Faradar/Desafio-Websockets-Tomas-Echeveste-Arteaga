@@ -42,13 +42,19 @@ export default class CartController extends Controllers {
       const { cid, pid } = req.params;
       const updatedCart = await service.saveProductToCart(cid, pid);
       const userSession = req.session.user;
-      if (!updatedCart)
+      if (!updatedCart) {
         return httpResponse.BadRequest(
           res,
           updatedCart,
           "Cart could not be updated"
         );
-      else res.status(200).redirect(`/carts/${userSession.cart}`);
+      } else if (userSession === "Product not found") {
+        return httpResponse.NotFound(res, pid, errorsDictionary.PRODUCT_404);
+      } else if (userSession === "Cart not found") {
+        return httpResponse.NotFound(res, cid, errorsDictionary.CART_404);
+      } else {
+        res.status(308).redirect(`/carts/${userSession.cart}`);
+      }
     } catch (error) {
       next(error);
     }
@@ -59,6 +65,13 @@ export default class CartController extends Controllers {
       const { cid } = req.params;
       const { products } = req.body;
       const updatedCart = await service.updateCart(cid, products);
+      if (!updatedCart) {
+        return httpResponse.NotFound(
+          res,
+          updatedCart,
+          errorsDictionary.CART_404
+        );
+      }
       return httpResponse.Ok(res, updatedCart, "Cart updated successfully");
     } catch (error) {
       next(error);
@@ -78,11 +91,23 @@ export default class CartController extends Controllers {
         pid,
         quantity
       );
-      return httpResponse.Ok(
-        res,
-        updatedCart,
-        "Product quantity updated successfully"
-      );
+      if (!updatedCart) {
+        return httpResponse.BadRequest(
+          res,
+          updatedCart,
+          "Cart could not be updated"
+        );
+      } else if (updatedCart === "Product not found") {
+        return httpResponse.NotFound(res, pid, errorsDictionary.PRODUCT_404);
+      } else if (updatedCart === "Cart not found") {
+        return httpResponse.NotFound(res, cid, errorsDictionary.CART_404);
+      } else {
+        return httpResponse.Ok(
+          res,
+          updatedCart,
+          "Product quantity updated successfully"
+        );
+      }
     } catch (error) {
       next(error);
     }
@@ -92,11 +117,21 @@ export default class CartController extends Controllers {
     try {
       const { cid } = req.params;
       const updatedCart = await service.deleteProductsFromCart(cid);
-      return httpResponse.NoContent(
-        res,
-        updatedCart,
-        "Products deleted from cart successfully"
-      );
+      if (!updatedCart) {
+        return httpResponse.BadRequest(
+          res,
+          updatedCart,
+          "Cart could not be updated"
+        );
+      } else if (updatedCart === "Cart not found") {
+        return httpResponse.NotFound(res, cid, errorsDictionary.CART_404);
+      } else {
+        return httpResponse.Ok(
+          res,
+          updatedCart,
+          "Products deleted from cart successfully"
+        );
+      }
     } catch (error) {
       next(error);
     }
@@ -110,10 +145,14 @@ export default class CartController extends Controllers {
         return httpResponse.BadRequest(
           res,
           updatedCart,
-          "Product could not be deleted"
+          "Cart could not be updated"
         );
+      } else if (updatedCart === "Product not found") {
+        return httpResponse.NotFound(res, pid, errorsDictionary.PRODUCT_404);
+      } else if (updatedCart === "Cart not found") {
+        return httpResponse.NotFound(res, cid, errorsDictionary.CART_404);
       } else {
-        return httpResponse.NoContent(
+        return httpResponse.Ok(
           res,
           updatedCart,
           "Product deleted from cart successfully"
@@ -154,7 +193,7 @@ export default class CartController extends Controllers {
         }
 
         res
-          .status(201)
+          .status(308)
           .redirect(
             `/checkout?code=${ticket.code}&datetime=${
               ticket.purchase_datetime

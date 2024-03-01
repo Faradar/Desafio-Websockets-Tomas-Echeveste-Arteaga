@@ -1,0 +1,37 @@
+components:
+  schemas:
+    ProductInCart:
+      type: object
+      properties:
+        product:
+          type: string
+          description: The ID of the Product.
+        quantity:
+          type: integer
+          description: The quantity of the product in the cart.
+    CartResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: The status code of the response.
+        message:
+          type: string
+          description: A message describing the result of the operation.
+        data:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: The ID of the cart.
+            user:
+              type: string
+              description: The ID of the user who owns the cart.
+            products:
+              type: array
+              items:
+                $ref: "#/components/schemas/ProductInCart"
+              description: The list of products in the cart.
+            __v:
+              type: integer
+              description: Version key of the cart.
