@@ -67,3 +67,5 @@ const productNamespace = io.of("/product");
 const chatNamespace = io.of("/chat");
 productWebSocket(productNamespace);
 chatWebSocket(chatNamespace);
+
+export default app;

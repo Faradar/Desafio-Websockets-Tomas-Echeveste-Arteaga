@@ -32,7 +32,7 @@ export default class UserController extends Controllers {
           age: 0,
           _id: "admin",
         };
-        res.status(200).redirect("/products");
+        res.status(302).redirect("/products");
       } else {
         const userId = req.session.passport.user;
         if (userId) {
@@ -40,7 +40,7 @@ export default class UserController extends Controllers {
           req.session.user = {
             ...user._doc,
           };
-          res.status(200).redirect("/products");
+          res.status(302).redirect("/products");
         } else {
           res.status(401).redirect("/login-error");
         }

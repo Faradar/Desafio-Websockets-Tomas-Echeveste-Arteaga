@@ -120,10 +120,9 @@ export const deleteValidator = async (req, res, next) => {
     return httpResponse.NotFound(res, product, errorsDictionary.PRODUCT_404);
   }
 
-  if (
-    user.role === "admin" ||
-    (user.role === "premium" && user.email === product.owner)
-  ) {
+  if (user.role === "admin") {
+    next();
+  } else if (user.role === "premium" && user.email === product.owner) {
     next();
   } else {
     return httpResponse.Forbidden(
