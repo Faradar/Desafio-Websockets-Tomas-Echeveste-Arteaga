@@ -35,15 +35,21 @@ export default class UserController extends Controllers {
         res.status(302).redirect("/products");
       } else {
         const userId = req.session.passport.user;
-        if (userId) {
-          const user = await userService.getById(userId);
-          req.session.user = {
-            ...user._doc,
-          };
-          res.status(302).redirect("/products");
-        } else {
+        if (!userId) {
           res.status(401).redirect("/login-error");
         }
+        const user = await userService.getById(userId);
+        if (!user) {
+          res.status(401).redirect("/login-error");
+        }
+        user.last_connection = new Date();
+        await user.save();
+        req.session.user = {
+          ...user._doc,
+        };
+        console.log(user);
+        console.log(req.session.user);
+        res.status(302).redirect("/products");
       }
     } catch (error) {
       next(error);
@@ -52,6 +58,10 @@ export default class UserController extends Controllers {
 
   async logout(req, res, next) {
     try {
+      const userId = req.session.passport.user;
+      const user = await userService.getById(userId);
+      user.last_connection = new Date();
+      await user.save();
       req.session.destroy((err) => {
         if (err) {
           return httpResponse.ServerError(res, err, "Error destroying session");
