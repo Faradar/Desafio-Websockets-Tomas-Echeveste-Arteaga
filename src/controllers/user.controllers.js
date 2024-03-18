@@ -66,6 +66,12 @@ export default class UserController extends Controllers {
         if (err) {
           return httpResponse.ServerError(res, err, "Error destroying session");
         }
+        res.clearCookie("connect.sid", {
+          httpOnly: true,
+          sameSite: "lax",
+          path: "/",
+          secure: true,
+        });
         res.redirect("/login");
       });
     } catch (error) {
