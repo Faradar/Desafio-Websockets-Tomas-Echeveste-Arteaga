@@ -47,8 +47,6 @@ export default class UserController extends Controllers {
         req.session.user = {
           ...user._doc,
         };
-        console.log(user);
-        console.log(req.session.user);
         res.status(302).redirect("/products");
       }
     } catch (error) {
@@ -58,10 +56,12 @@ export default class UserController extends Controllers {
 
   async logout(req, res, next) {
     try {
-      const userId = req.session.passport.user;
-      const user = await userService.getById(userId);
-      user.last_connection = new Date();
-      await user.save();
+      if (req.session.passport.user !== "admin") {
+        const userId = req.session.passport.user;
+        const user = await userService.getById(userId);
+        user.last_connection = new Date();
+        await user.save();
+      }
       req.session.destroy((err) => {
         if (err) {
           return httpResponse.ServerError(res, err, "Error destroying session");
@@ -133,6 +133,15 @@ export default class UserController extends Controllers {
     }
   }
 
+  async users(req, res, next) {
+    try {
+      const users = await userService.getDtoUsers();
+      return httpResponse.Ok(res, users);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async resetPass(req, res, next) {
     try {
       const tokenResetPass = await userService.resetPass(req.body.email);
@@ -174,6 +183,22 @@ export default class UserController extends Controllers {
       const { uid } = req.params;
       const user = await userService.togglePremium(uid);
       return httpResponse.Ok(res, user, "User role updated successfully");
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteInactive(req, res, next) {
+    try {
+      const inactiveUsers = await userService.deleteInactive();
+      if (!inactiveUsers) {
+        return httpResponse.NotFound(res, "Inactive users not found");
+      }
+      return httpResponse.Ok(
+        res,
+        inactiveUsers,
+        "Inactive users have been deleted and notified."
+      );
     } catch (error) {
       next(error);
     }

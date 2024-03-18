@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import config from "../config/config.js";
 import { createHash, isValidPass } from "../utils/bcrypt.js";
 import { userDao } from "../persistence/factory.js";
+import { UserModel } from "../persistence/daos/mongodb/user/user.model.js";
+import { CartModel } from "../persistence/daos/mongodb/cart/cart.model.js";
 import UserRepository from "../persistence/repository/user.repository.js";
 const userRepository = new UserRepository();
 import EmailService from "./email.services.js";
@@ -63,6 +65,16 @@ export default class UserService extends Services {
     }
   }
 
+  async getDtoUsers() {
+    try {
+      const users = await userRepository.getDtoUsers();
+      if (!users) return false;
+      else return users;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
   async resetPass(email) {
     try {
       const user = await userDao.resetPass(email);
@@ -103,4 +115,40 @@ export default class UserService extends Services {
       throw new Error(error.message);
     }
   };
+
+  async deleteInactive() {
+    try {
+      // const twoDaysAgo = new Date();
+      // twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+
+      // const inactiveUsers = await UserModel.find({
+      //   last_connection: { $lt: twoDaysAgo },
+      // });
+
+      // This code can replace the code above for testing 5 minute inactive users
+      const oneMinuteAgo = new Date();
+      oneMinuteAgo.setMinutes(oneMinuteAgo.getMinutes() - 1);
+
+      const inactiveUsers = await UserModel.find({
+        last_connection: { $lt: oneMinuteAgo },
+      });
+      if (!inactiveUsers) return false;
+      for (const user of inactiveUsers) {
+        const msg = `
+        <h1>Dear ${user.first_name},</h1>
+        <p>Your account has been deleted due to inactivity. If you wish to reactivate your account, please contact support.</p>
+        `;
+        await emailService.sendGmail(
+          user.email,
+          "Account Deletion Due to Inactivity",
+          msg
+        );
+        await CartModel.findByIdAndDelete(user.cart); // Deletes the cart referenced by the user
+        await UserModel.findByIdAndDelete(user._id);
+      }
+      return inactiveUsers;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }

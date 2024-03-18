@@ -4,9 +4,7 @@ import config from "../config/config.js";
 export default class EmailService {
   constructor() {
     this.transporter = createTransport({
-      host: config.NODEMAILER_HOST,
-      port: config.NODEMAILER_PORT,
-      secure: true,
+      service: config.NODEMAILER_SERVICE,
       auth: {
         user: config.NODEMAILER_EMAIL,
         pass: config.NODEMAILER_PASSWORD,

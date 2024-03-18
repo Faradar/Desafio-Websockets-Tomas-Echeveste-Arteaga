@@ -42,9 +42,11 @@ router
     }),
     controller.google
   )
-  .get("/current", checkAuthenticated, controller.currentUser)
+  .get("/currentUser", checkAuthenticated, controller.currentUser)
+  .get("/users", checkAdmin, controller.users)
   .post("/resetPassword", controller.resetPass)
   .put("/newPassword", controller.updatePass)
-  .put("/premium/:uid", checkAdmin, controller.togglePremium);
+  .put("/premium/:uid", checkAdmin, controller.togglePremium)
+  .delete("/deleteInactive", checkAdmin, controller.deleteInactive);
 
 export default router;
