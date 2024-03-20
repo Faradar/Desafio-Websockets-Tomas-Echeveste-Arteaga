@@ -2,6 +2,8 @@ import ProductService from "./product.services.js";
 const service = new ProductService();
 import CartService from "./cart.services.js";
 const cartService = new CartService();
+import UserService from "./user.services.js";
+const userService = new UserService();
 
 export default class ViewService {
   async getAllProducts() {
@@ -40,6 +42,14 @@ export default class ViewService {
   async getCartById(id) {
     try {
       return await cartService.getCartById(id);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async getUsers() {
+    try {
+      return await userService.getDtoUsers();
     } catch (error) {
       throw new Error(error.message);
     }

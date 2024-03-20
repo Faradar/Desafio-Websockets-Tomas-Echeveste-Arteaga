@@ -118,20 +118,20 @@ export default class UserService extends Services {
 
   async deleteInactive() {
     try {
-      // const twoDaysAgo = new Date();
-      // twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-
-      // const inactiveUsers = await UserModel.find({
-      //   last_connection: { $lt: twoDaysAgo },
-      // });
-
-      // This code can replace the code above for testing 5 minute inactive users
-      const oneMinuteAgo = new Date();
-      oneMinuteAgo.setMinutes(oneMinuteAgo.getMinutes() - 1);
+      const twoDaysAgo = new Date();
+      twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
 
       const inactiveUsers = await UserModel.find({
-        last_connection: { $lt: oneMinuteAgo },
+        last_connection: { $lt: twoDaysAgo },
       });
+
+      // This code can replace the code above for testing 5 minute inactive users
+      // const oneMinuteAgo = new Date();
+      // oneMinuteAgo.setMinutes(oneMinuteAgo.getMinutes() - 1);
+
+      // const inactiveUsers = await UserModel.find({
+      //   last_connection: { $lt: oneMinuteAgo },
+      // });
       if (!inactiveUsers) return false;
       for (const user of inactiveUsers) {
         const msg = `
@@ -147,6 +147,23 @@ export default class UserService extends Services {
         await UserModel.findByIdAndDelete(user._id);
       }
       return inactiveUsers;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async deleteUser(id) {
+    try {
+      const user = await this.getById(id);
+      if (!user) return false;
+      const msg = `
+      <h1>Dear ${user.first_name},</h1>
+      <p>Your account has been deleted. If you wish to reactivate your account, please contact support.</p>
+      `;
+      await emailService.sendGmail(user.email, "Account Deletion", msg);
+      await CartModel.findByIdAndDelete(user.cart); // Deletes the cart referenced by the user
+      await UserModel.findByIdAndDelete(user._id);
+      return user;
     } catch (error) {
       throw new Error(error.message);
     }

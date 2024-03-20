@@ -43,10 +43,11 @@ router
     controller.google
   )
   .get("/currentUser", checkAuthenticated, controller.currentUser)
-  .get("/users", checkAdmin, controller.users)
+  .get("/users", checkAdmin, controller.getAllUsers)
   .post("/resetPassword", controller.resetPass)
   .put("/newPassword", controller.updatePass)
   .put("/premium/:uid", checkAdmin, controller.togglePremium)
-  .delete("/deleteInactive", checkAdmin, controller.deleteInactive);
+  .delete("/deleteInactive", checkAdmin, controller.deleteInactive)
+  .delete("/deleteUser/:uid", checkAdmin, controller.deleteUser);
 
 export default router;

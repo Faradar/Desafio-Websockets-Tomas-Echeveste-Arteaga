@@ -2,7 +2,13 @@
 
 <h3>Welcome, {{user.first_name}} {{user.last_name}}! Your role is: {{user.role}}</h3>
 
-<h4>For more information, check your <a href="/profile">profile page</a> or your <a href="/carts/{{user.cart}}">cart page</a></h4>
+{{#ifAdmin user}}
+ <!-- Text for admin users -->
+ <h4>For more information, check your <a href="/profile">profile page</a> or see all the <a href="/users">users</a></h4>
+{{else}}
+ <!-- Text for non-admin users -->
+ <h4>For more information, check your <a href="/profile">profile page</a> or your <a href="/carts/{{user.cart}}">cart page</a></h4>
+{{/ifAdmin}}
 
 {{#each payload}}
   <div>
@@ -11,11 +17,15 @@
     <p>Category: {{this.category}}</p>
     <!-- Link to view full details -->
     <a href="/products/{{_id}}">View Details</a>
-    <!-- Button to add to users cart -->
-    <form action="/api/carts/{{../user.cart}}/products/{{_id}}" method="post">
-      <input type="hidden" name="productId" value="{{_id}}" />
-      <input type="submit" value="Add to Cart" />
-    </form>
+    <!-- Conditional "Add to Cart" button -->
+    {{#ifAdmin ../user}}
+      <!-- Do not render the "Add to Cart" button for admin users -->
+    {{else}}
+      <form action="/api/carts/{{../user.cart}}/products/{{_id}}" method="post">
+        <input type="hidden" name="productId" value="{{_id}}" />
+        <input type="submit" value="Add to Cart" />
+      </form>
+    {{/ifAdmin}}
   </div>
 {{/each}}
 

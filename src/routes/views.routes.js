@@ -4,6 +4,7 @@ import {
   checkAuthenticated,
   checkNotAuthenticated,
   checkUser,
+  checkAdmin,
 } from "../middlewares/auth.js";
 import ViewController from "../controllers/views.controllers.js";
 const controller = new ViewController();
@@ -25,6 +26,7 @@ router
   .get("/forgotPassword/success", controller.forgotPass2)
   .get("/resetPassword", controller.resetPass)
   .get("/resetPassword/success", controller.resetPass2)
+  .get("/users", checkAuthenticated, checkAdmin, controller.users)
 
   // Extra views using websocket
   .get("/realtimeproducts", checkAuthenticated, controller.realTimeProducts)

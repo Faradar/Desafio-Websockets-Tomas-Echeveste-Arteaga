@@ -1,0 +1,40 @@
+<h2>List of all the users:</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Full name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Last Connection</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+      <tr data-id="{{this.id}}">
+        <td>{{this.full_name}}</td>
+        <td>{{this.email}}</td>
+        <td class="role-cell">{{this.role}}</td>
+        <td>{{this.last_connection}}</td>
+        <td>
+          <button class="toggle-premium" data-id="{{this.id}}">Toggle Premium</button>
+          <button class="delete-user" data-id="{{this.id}}">Delete User</button>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<!-- Profile link -->
+<a href="/profile">Check your Profile</a>
+
+<!-- Back to Home link -->
+<a href="/products">Start viewing products</a>
+
+<!-- Logout Button -->
+<form action="/api/sessions/logout" method="post">
+  <button type="submit">Logout</button>
+</form>
+
+<script src="../js/users.js"></script>

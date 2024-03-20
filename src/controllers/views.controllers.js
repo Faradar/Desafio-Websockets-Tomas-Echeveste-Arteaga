@@ -168,4 +168,16 @@ export default class ViewController {
   resetPass2(req, res) {
     res.render("reset-pass2", { style: "product.css" });
   }
+
+  async users(req, res, next) {
+    try {
+      const users = await service.getUsers();
+      if (!users) {
+        return httpResponse.NotFound(res, users, errorsDictionary.USER_404);
+      }
+      res.render("users", { style: "users.css", users });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

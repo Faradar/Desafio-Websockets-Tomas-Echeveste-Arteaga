@@ -7,6 +7,10 @@ const userService = new UserService();
 import config from "../config/config.js";
 
 export default class UserController extends Controllers {
+  constructor() {
+    super(userService);
+  }
+
   async register(req, res, next) {
     try {
       const userId = req.session.passport.user;
@@ -139,7 +143,7 @@ export default class UserController extends Controllers {
     }
   }
 
-  async users(req, res, next) {
+  async getAllUsers(req, res, next) {
     try {
       const users = await userService.getDtoUsers();
       return httpResponse.Ok(res, users);
@@ -205,6 +209,19 @@ export default class UserController extends Controllers {
         inactiveUsers,
         "Inactive users have been deleted and notified."
       );
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteUser(req, res, next) {
+    try {
+      const { uid } = req.params;
+      const user = await userService.deleteUser(uid);
+      if (!user) {
+        return httpResponse.NotFound(res, "User not found");
+      }
+      return httpResponse.Ok(res, user, "User deleted successfully");
     } catch (error) {
       next(error);
     }

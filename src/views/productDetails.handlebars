@@ -7,11 +7,17 @@
 <p>Thumbnails: {{product.thumbnails}}</p>
 <p>ID: {{product._id}}</p>
 
-<!-- Add to hardcoded Cart form -->
-<form action="/api/carts/{{user.cart}}/products/{{product._id}}" method="post">
-  <input type="hidden" name="productId" value="{{product._id}}" />
-  <input type="submit" value="Add to Cart" />
-</form>
+{{#ifAdmin user}}
+  <!-- Do not render the "Add to Cart" button for admin users -->
+{{else}}
+  <form
+    action="/api/carts/{{user.cart}}/products/{{product._id}}"
+    method="post"
+  >
+    <input type="hidden" name="productId" value="{{product._id}}" />
+    <input type="submit" value="Add to Cart" />
+  </form>
+{{/ifAdmin}}
 
 <!-- Back to Products link -->
 <a href="/products">Back to Products</a>

@@ -4,8 +4,14 @@
 <p>Age: {{user.age}}</p>
 <p>Role: {{user.role}}</p>
 
-<!-- User Cart link -->
-<a href="/carts/{{user.cart}}">View your cart</a>
+<!-- Conditional link based on user role -->
+{{#ifAdmin user}}
+  <!-- Users Page link for admin -->
+  <a href="/users">View all the users</a>
+{{else}}
+  <!-- User Cart link for non-admin -->
+  <a href="/carts/{{user.cart}}">View your cart</a>
+{{/ifAdmin}}
 
 <!-- Back to Home link -->
 <a href="/products">Start viewing products</a>

@@ -37,6 +37,15 @@ const hbs = handlebars.create({
     isInArray: function (value, array) {
       return array && array.includes(value);
     },
+    ifAdmin: function (user, options) {
+      if (user.role === "admin") {
+        // If the user is an admin, render the link to the users page
+        return options.fn(this);
+      } else {
+        // If the user is not an admin, render the link to the cart
+        return options.inverse(this);
+      }
+    },
   },
 });
 app.engine("handlebars", hbs.engine);
