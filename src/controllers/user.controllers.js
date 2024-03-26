@@ -60,8 +60,8 @@ export default class UserController extends Controllers {
 
   async logout(req, res, next) {
     try {
-      if (req.session.passport.user !== "admin") {
-        const userId = req.session.passport.user;
+      if (req.session.user.role !== "admin") {
+        const userId = req.session.user._id;
         const user = await userService.getById(userId);
         user.last_connection = new Date();
         await user.save();

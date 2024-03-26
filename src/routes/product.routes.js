@@ -16,7 +16,7 @@ router
   .get("/:id", controller.getProductById)
   .post("/", checkPremium, productValidator, createValidator, controller.create)
   .put("/:id", checkPremium, updateValidator, controller.update)
-  .delete("/:id", checkPremium, deleteValidator, controller.delete)
+  .delete("/:id", checkPremium, deleteValidator, controller.deleteProduct)
   .get("/dto/:id", controller.getDtoProductById)
   .post("/mockingproducts", controller.generateMockProduct);
 
