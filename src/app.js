@@ -65,7 +65,7 @@ app.use("/", viewRoutes);
 app.use(errorHandler);
 
 // Server
-const port = config.PORT;
+const port = config.PORT || 8080;
 const httpServer = app.listen(port, () => {
   logger.info(`Server running on port ${port}`);
 });
