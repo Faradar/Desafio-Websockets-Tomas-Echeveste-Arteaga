@@ -1,5 +1,5 @@
 paths:
-  /api/carts/{cid}:
+  /carts/{cid}:
     get:
       summary: Retrieve cart by ID
       description: Retrieves the cart details by its ID.
@@ -149,7 +149,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /api/carts/{cid}/products/{pid}:
+  /carts/{cid}/products/{pid}:
     post:
       summary: Add product to cart
       description: Adds a product to the specified cart. Only the owner of the cart can add products to it and they can't add products they own. If successful, it redirects to the users cart page.
@@ -319,7 +319,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /api/carts/{cid}/purchase:
+  /carts/{cid}/purchase:
     post:
       summary: Generate Ticket and Redirect to Checkout
       description: Generates a ticket for the purchase made from the cart and redirects the user to the checkout page.

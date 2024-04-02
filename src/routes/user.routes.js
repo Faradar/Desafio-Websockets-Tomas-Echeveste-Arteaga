@@ -16,13 +16,19 @@ router
     "/register",
     checkNotAuthenticated,
     userValidator,
-    passport.authenticate("register"),
+    passport.authenticate("register", {
+      failureRedirect: "/register-error",
+      failureMessage: true,
+    }),
     controller.register
   )
   .post(
     "/login",
     checkNotAuthenticated,
-    passport.authenticate("login"),
+    passport.authenticate("login", {
+      failureRedirect: "/login-error",
+      failureMessage: true,
+    }),
     controller.login
   )
   .post("/logout", checkAuthenticated, controller.logout)

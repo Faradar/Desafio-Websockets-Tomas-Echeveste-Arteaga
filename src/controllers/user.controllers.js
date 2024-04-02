@@ -17,7 +17,7 @@ export default class UserController extends Controllers {
       if (userId) {
         res.status(201).redirect("/login");
       } else {
-        res.status(400).redirect("/register-error");
+        res.status(401).redirect("/register-error");
       }
     } catch (error) {
       next(error);

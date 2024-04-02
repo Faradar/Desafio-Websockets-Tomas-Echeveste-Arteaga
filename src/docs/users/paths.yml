@@ -1,0 +1,426 @@
+paths:
+  /sessions/register:
+    post:
+      summary: Register a new user
+      description: Register a new user by providing their details. If already logged in you will be redirected to your profile page.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            type: object
+            required:
+              - first_name
+              - last_name
+              - email
+              - age
+              - password
+            properties:
+              first_name:
+                type: string
+                description: The user's first name.
+                example: "John"
+              last_name:
+                type: string
+                description: The user's last name.
+                example: "Doe"
+              email:
+                type: string
+                format: email
+                description: The user's email address.
+                example: "user@example.com"
+              age:
+                type: integer
+                description: The user's age.
+                example: 25
+              password:
+                type: string
+                description: The user's password.
+                example: "securepassword123"
+      responses:
+        200:
+          description: Register attempt completed. Redirects to the login page on success or to the register-error page on failure.
+          headers:
+            Location:
+              schema:
+                type: string
+                description: The URL to which the user is redirected. This could be the login page or the register-error page.
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /sessions/login:
+    post:
+      summary: Login a user
+      description: Log in a user by providing their email and password.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+                format: email
+                description: The user's email address.
+                example: "user@example.com"
+              password:
+                type: string
+                description: The user's password.
+                example: "securepassword123"
+      responses:
+        200:
+          description: Login attempt completed. Redirects to the products page on success or to the login-error page on failure.
+          headers:
+            Location:
+              schema:
+                type: string
+                description: The URL to which the user is redirected. This could be the products page or the login-error page.
+        500:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /sessions/logout:
+    post:
+      summary: Logout a user
+      description: Log out a user by destroying the session and clearing the session cookie. For non-admin users, this operation also updates their `last_connection` property to the current date and time.
+      tags:
+        - Users
+      responses:
+        200:
+          description: User logged out successfully and redirected to the login page.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: connect.sid=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Lax; Secure
+        500:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /sessions/github:
+    get:
+      summary: Initiate GitHub OAuth authentication
+      description: Redirects the user to GitHub for authentication. After successful authentication, GitHub redirects the user back to the application with an authorization code.
+      tags:
+        - Users
+      responses:
+        "302":
+          description: Redirect to GitHub for authentication.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: https://github.com/login/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_CALLBACK_URL&scope=user%3Aemail&state=YOUR_STATE_VALUE
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /sessions/oauth2/redirect/accounts.google.com:
+    get:
+      summary: Google OAuth callback
+      description: Callback endpoint for Google OAuth. Google redirects the user here after successful authentication. The application then handles the user's session based on the authentication result.
+      tags:
+        - Users
+      responses:
+        "200":
+          description: User authenticated successfully and redirected to the products page.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: connect.sid=YOUR_SESSION_ID; Path=/; HttpOnly; SameSite=Lax; Secure
+        "401":
+          description: Authentication failed, redirected to the login-error page.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: http://localhost:8080/login-error
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /sessions/currentUser:
+    get:
+      summary: Retrieve current user information
+      description: Retrieves the current user's information based on the session. For admin users, it returns a predefined admin user object.
+      tags:
+        - Users
+      responses:
+        200:
+          description: Current user information retrieved successfully.
+          content:
+            application/json:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  format: int32
+                  description: The status code of the response.
+                message:
+                  type: string
+                  description: A message describing the result of the operation.
+                data:
+                  type: object
+                  $ref: "#/components/schemas/UserDTO"
+        404:
+          description: User not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /sessions/users:
+    get:
+      summary: Retrieve all users' information
+      description: Retrieves information for all users. This endpoint is restricted to admin users.
+      tags:
+        - Users
+      responses:
+        200:
+          description: All users' information retrieved successfully.
+          content:
+            application/json:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  example: 200
+                message:
+                  type: string
+                  example: "Success"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/UserDTO"
+        403:
+          description: Access denied. The user is not an admin.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /sessions/resetPassword:
+    post:
+      summary: Initiate password reset
+      description: Initiates the password reset process by sending a reset link to the user's email. The link is valid for 1 hour.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The email address of the user requesting the password reset.
+                  example: "user@example.com"
+      responses:
+        200:
+          description: Redirects to the success page after successful password reset link generation.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: tokenpass=YOUR_TOKEN; HttpOnly; Secure
+            Location:
+              schema:
+                type: string
+                example: http://localhost:8080/forgotPassword/success
+        404:
+          description: Email not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /sessions/newPassword:
+    put:
+      summary: Update user password
+      description: Updates the user's password using a token created when the email was sent on the previous step. The token must be valid (not expired).
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            type: object
+            properties:
+              password:
+                type: string
+                description: The new password for the user
+            required:
+              - password
+      responses:
+        200:
+          description: Redirects to the success page after password has been reset.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: http://localhost:8080/resetPassword/success
+        400:
+          description: Password must be different from the current one
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Token expired or not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+      security:
+        - BearerAuth: []
+  /sessions/premium/{uid}:
+    put:
+      summary: Toggle user role between user and premium
+      description: Toggles the role of a user between "user" and "premium" based on the user ID provided in the URL. This endpoint is accessible only by admins.
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: uid
+          schema:
+            type: string
+          required: true
+          description: The unique identifier of the user whose role is to be toggled
+      responses:
+        200:
+          description: User role updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRes"
+        403:
+          description: User is not defined or You are not an admin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /sessions/deleteInactive:
+    delete:
+      summary: Delete inactive users and notify them
+      description: Deletes users and their carts who have not been active for over two days and sends them a notification email. This endpoint is accessible only by admins.
+      tags:
+        - Users
+      responses:
+        200:
+          description: Inactive users have been deleted and notified
+          content:
+            application/json:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  example: 200
+                message:
+                  type: string
+                  example: "Success"
+                data:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/User"
+        403:
+          description: User is not an admin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /sessions/deleteUser/{uid}:
+    delete:
+      summary: Delete a user and their cart
+      description: Deletes a user and their associated cart based on the provided user ID and sends them a notification email. This endpoint is accessible only by admins.
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: uid
+          schema:
+            type: string
+          required: true
+          description: The unique identifier of the user to be deleted
+      responses:
+        200:
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRes"
+        403:
+          description: User is not an admin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"

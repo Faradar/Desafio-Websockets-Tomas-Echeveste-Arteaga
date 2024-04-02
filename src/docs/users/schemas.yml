@@ -1,0 +1,89 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The unique identifier of the user
+        first_name:
+          type: string
+          description: The first name of the user
+        last_name:
+          type: string
+          description: The last name of the user
+        email:
+          type: string
+          description: The email address of the user
+        age:
+          type: integer
+          description: The age of the user
+        role:
+          type: string
+          description: The role of the user (either "user" or "premium")
+        last_connection:
+          type: string
+          format: date-time
+          description: The last connection date and time of the user
+    UserDTO:
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the user.
+          example: "66032e596b8fc3adb0b0236b"
+        full_name:
+          type: string
+          description: The full name of the user.
+          example: "John Doe"
+        email:
+          type: string
+          description: The email address of the user.
+          example: "john.doe@example.com"
+        age:
+          type: integer
+          format: int32
+          description: The age of the user.
+          example: 30
+        role:
+          type: string
+          description: The role of the user.
+          example: "premium"
+        last_connection:
+          type: string
+          format: date-time
+          description: The last connection timestamp of the user.
+          example: "2024-04-01T17:29:10.110Z"
+    UserResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: The status code of the response.
+        message:
+          type: string
+          description: A message describing the result of the operation.
+        data:
+          type: object
+          $ref: "#/components/schemas/User"
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: The HTTP status code of the error.
+        message:
+          type: string
+          description: A message describing the error.
+        data:
+          description: Additional data related to the error, if any.
+          oneOf:
+            - type: object
+            - type: array
+            - type: string
+            - type: number
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
