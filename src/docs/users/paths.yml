@@ -1,3 +1,6 @@
+tags:
+  - name: Users
+    description: Operations related to user management, including account creation, deletion, and role toggling.
 paths:
   /sessions/register:
     post:

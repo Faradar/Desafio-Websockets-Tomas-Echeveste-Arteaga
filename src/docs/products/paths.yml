@@ -1,3 +1,6 @@
+tags:
+  - name: Products
+    description: Operations related to product management, including listing products, adding new products, and updating product details.
 paths:
   /products:
     get:

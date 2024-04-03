@@ -1,3 +1,6 @@
+tags:
+  - name: Carts
+    description: Operations related to managing user carts, including adding items, removing items, and viewing cart contents.
 paths:
   /carts/{cid}:
     get:
