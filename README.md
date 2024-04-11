@@ -9,6 +9,7 @@
 ## Table of Contents
 
 - [General Info](#general-info)
+- [Architecture](#architecture)
 - [Technologies](#technologies)
 - [Features](#features)
 - [Usage](#usage)
@@ -21,11 +22,26 @@
 
 This project is a fully functioning e-commerce website, designed to facilitate the buying process for products. It includes a simple frontend and robust backend functionalities such as user registration, login, product browsing, cart management, and checkout. The project also features admin capabilities for managing users, including the ability to delete users, assign premium status, and check user details. Additionally, it incorporates a real-time chat functionality using WebSockets and provides comprehensive API documentation with Swagger. The project was primarily conceived as a learning experience, focusing on backend development, NoSQL databases, and REST API creation.
 
+The application focuses on its backend, with the views and frontend serving primarily to demonstrate its functionality. These elements are kept minimal to maintain a focus on the backend's capabilities.
+
 The project leverages Node.js and Express to create a robust API, utilizing JavaScript for server-side logic, CSS for styling, and Handlebars for dynamic HTML rendering. MongoDB serves as the database, with Mongoose providing an elegant solution to model application data. The project integrates authentication and authorization using Passport and JWT, ensuring secure access to user-specific data. Cookies and the Cookie Parser middleware are used for session management, while bcrypt is employed for password hashing.
 
 For logging, the application uses Winston, providing detailed insights into the application's runtime behavior. Additionally, the project includes mailing capabilities with Nodemailer, utilizes Faker for generating mock data, and employs Jest and SuperTest for thorough testing, ensuring the reliability and stability of the backend services.
 
 The project's API documentation is powered by Swagger, offering a comprehensive overview of the API's capabilities and endpoints. This documentation is accessible [_here_](https://pf-backend-faradar.koyeb.app/api/docs/).
+
+## Architecture
+
+The application follows the Model-View-Controller (MVC) design pattern, where the modules within the project are separated by "layers". These layers include:
+
+- Router: Handles the routing of requests to the appropriate controller.
+- Controller: Manages the application's logic and interacts with the service layer.
+- Service: Contains the business logic and interacts with the Data Access Object (DAO) layer.
+- DAO: Responsible for data persistence, following the factory pattern.
+
+Within the persistence layer, the DAO is structured to follow the factory pattern, providing a flexible way to manage data access. Additionally, Data Transfer Objects (DTOs) from the DAO follow the repository pattern, offering a structured approach to data management and retrieval.
+
+This layered architecture, combined with the MVC pattern, ensures a clear separation of concerns, making the application easier to maintain and extend.
 
 ## Technologies
 
