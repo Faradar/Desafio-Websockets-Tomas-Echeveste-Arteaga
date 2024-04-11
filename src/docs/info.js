@@ -5,7 +5,7 @@ export default {
       title: "Project Backend CoderHouse",
       version: "1.0.0",
       description:
-        "This project is a comprehensive backend solution developed for the backend course at CoderHouse created by [Tomás Echeveste Arteaga](https://github.com/Faradar). You can find more about it [here](https://github.com/Faradar/Entrega-Final-Backend-Tomas-Echeveste-Arteaga).\n\n" +
+        "This project, created by [Tomás Echeveste Arteaga](https://github.com/Faradar), is a comprehensive solution developed for the backend course at CoderHouse . You can find more about it [here](https://github.com/Faradar/Entrega-Final-Backend-Tomas-Echeveste-Arteaga).\n\n" +
         "Some useful links:\n" +
         "- [The Project's repository](https://github.com/Faradar/Entrega-Final-Backend-Tomas-Echeveste-Arteaga)\n" +
         "- [The Project's chat](https://pf-backend-faradar.koyeb.app/chat) (requires to be logged in to use)\n" +
