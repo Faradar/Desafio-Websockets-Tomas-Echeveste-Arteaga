@@ -1,108 +1,93 @@
 # Project Backend CoderHouse
 
-> Outline a brief description of your project.
+> This project is an e-commerce API, developed as part of a backend development course at CoderHouse. It focuses on NoSQL databases and REST API creation, utilizing technologies such as Node.js, Express, MongoDB, and WebSockets for real-time chat functionality. The project aims to provide a comprehensive buying experience, including user registration, product browsing, cart management, and checkout.
 
-> Live demo [_here_](pf-backend-faradar.koyeb.app/).
+> Main website [_here_](pf-backend-faradar.koyeb.app/).
+> Documentation [_here_](https://pf-backend-faradar.koyeb.app/api/docs/).
+> Chat, which requires you to be logged in first to use, [_here_](https://pf-backend-faradar.koyeb.app/chat).
 
 ## Table of Contents
 
 - [General Info](#general-info)
 - [Technologies](#technologies)
 - [Features](#features)
-- [Screenshots](#screenshots)
-- [Setup](#setup)
 - [Usage](#usage)
 - [Project Status](#project-status)
 - [Room for Improvement](#room-for-improvement)
 - [Acknowledgements](#acknowledgements)
 - [Contact](#contact)
-<!-- * [License](#license) -->
 
 ## General Info
 
-This project is simple Lorem ipsum dolor generator.
+This project is a fully functioning e-commerce website, designed to facilitate the buying process for products. It includes a simple frontend and robust backend functionalities such as user registration, login, product browsing, cart management, and checkout. The project also features admin capabilities for managing users, including the ability to delete users, assign premium status, and check user details. Additionally, it incorporates a real-time chat functionality using WebSockets and provides comprehensive API documentation with Swagger. The project was primarily conceived as a learning experience, focusing on backend development, NoSQL databases, and REST API creation.
 
-- Provide general information about your project here.
-- What problem does it (intend to) solve?
-- What is the purpose of your project?
-- Why did you undertake it?
-<!-- You don't have to answer all the questions - just the ones relevant to your project. -->
+The project leverages Node.js and Express to create a robust API, utilizing JavaScript for server-side logic, CSS for styling, and Handlebars for dynamic HTML rendering. MongoDB serves as the database, with Mongoose providing an elegant solution to model application data. The project integrates authentication and authorization using Passport and JWT, ensuring secure access to user-specific data. Cookies and the Cookie Parser middleware are used for session management, while bcrypt is employed for password hashing.
+
+For logging, the application uses Winston, providing detailed insights into the application's runtime behavior. Additionally, the project includes mailing capabilities with Nodemailer, utilizes Faker for generating mock data, and employs Jest and SuperTest for thorough testing, ensuring the reliability and stability of the backend services.
+
+The project's API documentation is powered by Swagger, offering a comprehensive overview of the API's capabilities and endpoints. This documentation is accessible [_here_](https://pf-backend-faradar.koyeb.app/api/docs/).
 
 ## Technologies
 
-Project is created with:
+Project is built using:
 
-- Tech 1 - version 1.0
-- Tech 2 - version 2.0
-- Tech 3 - version 3.0
+- NodeJS
+- FileSystem
+- ExpressJS - version 4.18.2
+- Handlebars - version 7.1.2
+- Socket.io - version 4.7.2
+- Toastify
+- connect-mongo - version 5.1.0
+- Mongoose - version 8.0.1
+- mongoose-paginate-v2 - version 1.7.4
+- cookie-parser - version 1.4.6
+- express-session - version 1.17.3
+- bcrypt - version 5.1.1
+- Passport - version 0.7.0
+- passport-local - version 1.0.0
+- passport-google-oauth20 - version 2.0.0
+- passport-github2 - version 0.1.12
+- JWT - version 9.0.2
+- dotenv - version 16.3.1
+- nodemailer - version 6.9.9
+- faker-js - version 8.4.0
+- winston - version 3.11.0
+- uuid - version 9.0.1
+- swagger-jsdoc - version 6.2.8
+- swagger-ui-express - version 5.0.0
+- Jest - version 29.7.0
+- supertest - version 6.3.4
 
 ## Features
 
-List the ready features here:
-
-- Awesome feature 1
-- Awesome feature 2
-- Awesome feature 3
-
-## Screenshots
-
-![Example screenshot](./img/screenshot.png)
-
-<!-- If you have screenshots you'd like to share, include them here. -->
-
-## Setup
-
-To run this project, install it locally using npm:
-
-```
-$ cd ../lorem
-$ npm install
-$ npm start
-```
-
-What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
-
-Proceed to describe how to install / setup one's local environment / get started with the project.
+- Full buyer experience including user registration, login, product browsing, cart management, checkout and ticket
+- Premium user capabilities to create and delete products
+- Admin functionalities to manage users, including deletion, role assignment, and premium status changes
+- Password reset functionality with email verification
+- Real-time chat functionality using WebSockets
+- Comprehensive API documentation with Swagger
 
 ## Usage
 
-How does one go about using it?
-Provide various use cases and code examples here.
-
-`write-your-code-here`
+Users can navigate to the main site, register, and log in to browse products, add them to their cart, and proceed to checkout. Admins can log in with special credentials to manage users and products. The chat functionality is available to logged-in users.
 
 ## Project Status
 
-Project is: _in progress_ / _complete_ / _no longer being worked on_. If you are no longer working on it, provide reasons why.
+Project is: _Finished_
+
+The project is now complete. It was primarily conceived as a learning experience, focusing on backend development, NoSQL databases, and REST API creation. While there are areas for improvement, such as enhancing documentation, frontend development, and optimizing session management, the project's primary goal was to learn and apply new skills. Therefore, no further development is planned at this time.
 
 ## Room for Improvement
 
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
-
-Room for improvement:
-
-- Improvement to be done 1
-- Improvement to be done 2
-
-To do:
-
-- Feature to be added 1
-- Feature to be added 2
+- Documentation could be enhanced.
+- The frontend could be improved for a better user experience.
+- Consider fully replacing Passport with JWT in some cases.
+- Improve validations using specific libraries.
 
 ## Acknowledgements
 
-Give credit here.
-
-- This project was inspired by...
-- This project was based on [this tutorial](https://www.example.com).
-- Many thanks to...
+- Many thanks to Coderhouse for its course.
 
 ## Contact
 
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
-
-<!-- Optional -->
-<!-- ## License -->
-<!-- This project is open source and available under the [... License](). -->
-
-<!-- You don't have to include all sections - just the one's relevant to your project -->
+Created by <a href="https://github.com/faradar" target="_blank" rel="noopener">Tomás Echeveste Arteaga</a> - feel free to contact me at <echeveste.t@gmail.com>
