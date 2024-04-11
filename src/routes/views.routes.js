@@ -33,8 +33,8 @@ router
   .get("/chat", checkUser, checkAuthenticated, controller.chat);
 
 // 404 page
-// router.get("*", (req, res) => {
-//   res.status(404).send("Ruta inexistente");
-// });
+router.get("*", (req, res) => {
+  res.status(404).send("Ruta inexistente");
+});
 
 export default router;
