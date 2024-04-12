@@ -76,7 +76,8 @@ Project is built using:
 
 ## Features
 
-- Full buyer experience including user registration, login, product browsing, cart management, checkout and ticket
+- Full buyer experience including user registration, login, product browsing, cart management, checkout, and the generation of a ticket.
+- Upon the successful completion of the checkout process, an email is sent to the user containing all the details of the ticket.
 - Premium user capabilities to create and delete products
 - Admin functionalities to manage users, including deletion, role assignment, and premium status changes
 - Password reset functionality with email verification
