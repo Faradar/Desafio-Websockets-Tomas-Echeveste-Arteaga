@@ -2,7 +2,7 @@
 
 > This project is an e-commerce API, developed as part of a backend development course at CoderHouse. It focuses on NoSQL databases and REST API creation, utilizing technologies such as Node.js, Express, MongoDB, and WebSockets for real-time chat functionality. The project aims to provide a comprehensive buying experience, including user registration, product browsing, cart management, and checkout.
 
-> Main website [_here_](pf-backend-faradar.koyeb.app/).
+> Main website [_here_](https://pf-backend-faradar.koyeb.app/login).
 > Documentation [_here_](https://pf-backend-faradar.koyeb.app/api/docs/).
 > Chat, which requires you to be logged in first to use, [_here_](https://pf-backend-faradar.koyeb.app/chat).
 
